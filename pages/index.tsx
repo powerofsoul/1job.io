@@ -45,7 +45,7 @@ const IndexTop = styled.div`
 
 const IndexBody = styled.div`
     margin-top: 1rem;
-
+    margin-bottom: 1rem;
     ${DeviceSize.lg} {
         padding-right: 15rem;
         padding-left: 15rem;
