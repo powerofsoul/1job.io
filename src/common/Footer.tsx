@@ -4,7 +4,7 @@ import { Row, Col, Layout } from "antd";
 import Link from "./Link";
 import DeviceSize from "../style/DeviceSize";
 
-const { Footer } = Layout;
+const {Footer} = Layout;
 const StyledFooter = styled(Footer)`
     margin-top: auto;
 `;
@@ -33,16 +33,16 @@ export default () => {
         <Row justify="center">
             <Col xs={24} md={12}>
                 Copyright © 2020
-            </Col>
+                </Col>
             <Col xs={24} md={12}>
-                <FooterDetails>
-                    <div className="links">
+                 <FooterDetails>
+                     <div className="links">
                         <Link className="link" href="/home">Home</Link>
                         <Link className="link" href="/aboutus">About Us</Link>
                         <Link className="link" href="/help">Help</Link>
                         <Link className="link" href="/contact">Contact</Link>
                     </div>
-                </FooterDetails>
+                 </FooterDetails>
             </Col>
         </Row>
     </StyledFooter>
