@@ -37,7 +37,7 @@ export default () => {
             <Col xs={24} md={12}>
                  <FooterDetails>
                      <div className="links">
-                        <Link className="link" href="/home">Home</Link>
+                        <Link className="link" href="/">Home</Link>
                         <Link className="link" href="/aboutus">About Us</Link>
                         <Link className="link" href="/help">Help</Link>
                         <Link className="link" href="/contact">Contact</Link>

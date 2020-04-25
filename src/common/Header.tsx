@@ -2,6 +2,7 @@ import { Col, Row } from "antd";
 import styled from "styled-components";
 import Colors from "../style/Colors";
 import DeviceSize from "../style/DeviceSize";
+import Link from "./Link";
 
 const Header = styled.div`
     width: 100%;
@@ -23,7 +24,7 @@ export default () => {
         <Row>
             <Col xs={24}>
                 <h1>
-                   Jobs Remotely Online
+                   <Link href="/">Jobs Remotely Online</Link>
                 </h1>
             </Col>
         </Row>
