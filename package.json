@@ -19,11 +19,14 @@
   },
   "homepage": "https://github.com/powerofsoul/jobsremotely.online#readme",
   "dependencies": {
+    "@ant-design/icons": "^4.0.6",
+    "@types/styled-components": "^5.1.0",
     "antd": "^4.1.4",
     "next": "^9.3.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2"
+    "react-router-dom": "^5.1.2",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@types/node": "^13.13.2",
