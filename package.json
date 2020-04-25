@@ -27,11 +27,14 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
+    "react-typist": "^2.0.5",
+    "react-typist-loop": "0.0.5",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@types/node": "^13.13.2",
     "@types/react": "^16.9.34",
+    "@types/react-typist": "^2.0.1",
     "typescript": "^3.8.3"
   }
 }

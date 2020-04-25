@@ -1,17 +1,32 @@
 import styled from "styled-components";
 import Colors from "../style/Colors";
-import { HeartTwoTone } from "@ant-design/icons";
+import { Row, Col, Space } from "antd";
+import Typist from "react-typist";
+import TypistLoop from 'react-typist-loop'
 
 const Header = styled.div`
     width: 100%;
-    height: 50px;
-    color: ${Colors.dark_dark};
-    background-color: ${Colors.primary};
+    background-color: ${Colors.light};
+`;
+
+const Title = styled.h1`
+    display: flex;
 `;
 
 export default () => {
     return <Header>
-        Hi with love from Jobs Remotely Online
-        <HeartTwoTone className="hearth"/>
+        <Row>
+            <Col xs={12}>
+                <Title>
+                    <TypistLoop interval={3000}>
+                        {[
+                            'Remote jobs for everyone',
+                            'Updated daily.',
+                            'Boost your career now!',
+                        ].map(text => <Typist key={text} startDelay={1000}>{text}</Typist>)}
+                    </TypistLoop>
+                </Title>
+            </Col>
+        </Row>
     </Header>
 }
