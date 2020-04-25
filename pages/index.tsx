@@ -65,7 +65,8 @@ const defaultJob = () => ({
         "Javascript"
     ],
     likes: Math.floor(Math.random() * 1000),
-    loading: false
+    loading: false,
+    liked:  Math.floor(Math.random() * 10) > 5
 }) as any;
 
 

@@ -4,7 +4,7 @@ import { Button, Tag, Statistic, Skeleton } from "antd";
 import CompanyImage from "./CompanyImage";
 import { useState } from "react";
 import React from "react";
-import { HeartOutlined } from "@ant-design/icons";
+import { HeartOutlined, HeartFilled, HeartTwoTone } from "@ant-design/icons";
 
 interface Props {
     loading: boolean;
@@ -16,6 +16,7 @@ interface Props {
     description: string;
     tags: string[];
     likes: number;
+    liked: boolean;
 }
 
 const JobCard = styled.div`
@@ -31,12 +32,13 @@ const JobCard = styled.div`
         margin-top: 1rem;
     }
 
-    .footer {
+    .header {
         display: flex;
         align-items:center;
 
         .likes {
             margin-left:auto;
+            cursor: pointer;
         }
     }
 `;
@@ -52,8 +54,13 @@ const Component = (props?: Partial<Props>) => {
                 <div>
                     <h3>{props.company}</h3>
                 </div>
-                <div>
-                    <h2>{props.title}</h2>
+                <div className="header">
+                    <div>
+                        <h2>{props.title}</h2>
+                    </div>
+                    <div className="likes">
+                        <Statistic value={props.likes} prefix={props.liked ? <HeartTwoTone twoToneColor={colors.red}/> : <HeartOutlined />} />
+                    </div>
                 </div>
                 <div>
                     <h3>{showMoreDescription ? props.description : props.description?.substr(0, 255) + "..."}</h3>
@@ -63,13 +70,9 @@ const Component = (props?: Partial<Props>) => {
                         {!showMoreDescription ? "Show More" : "Show Less"}
                     </Button>
                 }
-                <div className="footer">
-                    <div className="tags">
-                        {props.tags?.map((t) => <Tag key={t} color="magenta">{t}</Tag>)}
-                    </div>
-                    <div className="likes">
-                        <Statistic value={props.likes} prefix={<HeartOutlined />} />
-                    </div>
+               
+                <div className="tags">
+                    {props.tags?.map((t) => <Tag key={t} color="magenta">{t}</Tag>)}
                 </div>
             </div>
         </Skeleton>
