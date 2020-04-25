@@ -17,7 +17,7 @@ const Header = styled.div`
 export default () => {
     return <Header>
         <Row>
-            <Col xs={12}>
+            <Col xs={24}>
                 <h1>
                    Jobs Remotely Online
                 </h1>
