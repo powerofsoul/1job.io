@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/powerofsoul/jobsremotely.online/issues"
   },
-  "homepage": "https://github.com/powerofsoul/jobsremotely.online#readme"
+  "homepage": "https://github.com/powerofsoul/jobsremotely.online#readme",
+  "dependencies": {
+    "next": "^9.3.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
 }
