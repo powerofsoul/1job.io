@@ -1,4 +1,9 @@
 import Link from '../src/common/Link';
+import styled from 'styled-components';
+
+const Index = styled.div`
+
+`;
 
 const index = () => {
     return <div>
