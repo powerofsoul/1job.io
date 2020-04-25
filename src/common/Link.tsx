@@ -1,6 +1,6 @@
 import { useRouter, Router } from 'next/router'
 
-export default (props: { href: string, children: any }) => {
+export default (props: { href: string, children: any, className?: string }) => {
     const router = useRouter();
 
     const navigateTo = (e: any, href: string) => {
@@ -9,6 +9,7 @@ export default (props: { href: string, children: any }) => {
     }
     
     return <a href={props.href}
+        className={props.className}
         onClick={(e) => navigateTo(e, props.href)}>
         {props.children}
     </a>
