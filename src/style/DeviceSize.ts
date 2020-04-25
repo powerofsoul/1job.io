@@ -7,7 +7,7 @@ export const size = {
 }
 
 export default {
-    xs: `@media (min-width: ${size.xs})`,
+    xs: `@media (min-width: 0)`,
     sm: `@media (min-width: ${size.sm})`,
     md: `@media (min-width: ${size.md})`,
     lg: `@media (min-width: ${size.lg})`,
