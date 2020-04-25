@@ -72,7 +72,7 @@ const Component = (props?: Partial<Props>) => {
                 }
                
                 <div className="tags">
-                    {props.tags?.map((t) => <Tag key={t} color="magenta">{t}</Tag>)}
+                    {props.tags?.map((t) => <Tag key={t} color="blue">{t}</Tag>)}
                 </div>
             </div>
         </Skeleton>
