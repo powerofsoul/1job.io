@@ -1,0 +1,1 @@
+export default () => <div>Here you will post a job</div>
