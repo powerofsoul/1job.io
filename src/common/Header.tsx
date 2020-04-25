@@ -5,8 +5,8 @@ import { HeartTwoTone } from "@ant-design/icons";
 const Header = styled.div`
     width: 100%;
     height: 50px;
-    color: ${Colors.white};
-    background-color: ${Colors.black};
+    color: ${Colors.dark_dark};
+    background-color: ${Colors.primary};
 `;
 
 export default () => {

@@ -10,6 +10,10 @@ const colors =  {
     green: "#5caf75",
     red: "#f44336",
     orange: "#f44336",
+    light: "#f8f8f8",
+    light_dark: "#ccc",
+    light_light: "#ffffff",
+    light_accent: "#efefef",
 } as const;
 
 export default colors;
