@@ -1,0 +1,1 @@
+export default () => <div>Hi we are the best</div>
