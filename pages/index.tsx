@@ -93,9 +93,10 @@ const index = () => {
                 <h2>
                     <TypistLoop interval={3000}>
                         {[
-                            'Remote jobs for everyone',
+                            'Remote jobs for everyone.',
                             'Updated daily.',
                             'Boost your career now!',
+                            'Always fresh!'
                         ].map(text => <Typist key={text} startDelay={1000}>{text}</Typist>)}
                     </TypistLoop>
                 </h2>
