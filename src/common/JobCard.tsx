@@ -45,12 +45,6 @@ const Component = (props?: Partial<Props>) => {
     const [showMoreDescription, setShowMoreDescription] = useState(false);
     const hasBigDescription = props.description?.length > 255;
 
-    React.useEffect(() => {
-        if (!hasBigDescription) {
-            setShowMoreDescription(true);
-        }
-    })
-
     return <JobCard>
         <Skeleton avatar loading={props.loading}>
             <CompanyImage src={props.companyImage} />
