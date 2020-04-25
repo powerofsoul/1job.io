@@ -48,7 +48,7 @@ const Component = (props?: Partial<Props>) => {
     const hasBigDescription = props.description?.length > 255;
 
     return <JobCard>
-        <Skeleton avatar loading={props.loading}>
+        <Skeleton avatar active loading={props.loading}>
             <CompanyImage src={props.companyImage} />
             <div>
                 <div>
