@@ -17,25 +17,27 @@ const JobCard = styled.div`
 
     margin-bottom: 1rem;
 
-    .header {
+    .header, .footer {
         display: flex;
         align-items:center;
+        width: 100%;
 
         .likes {
             margin-left:auto;
             cursor: pointer;
         }
-    }
-
-    .footer {
-        margin-top: 1rem;
-        
-        display: flex;
-        align-items: center;
 
         .location {
             margin-left: auto;
         }
+    }
+
+    .footer {
+        margin-top: 1rem;
+    }
+
+    .job-card-data {
+        width: 100%;
     }
 `;
 
@@ -46,19 +48,17 @@ const Component = (props?: Partial<Job>) => {
     return <JobCard>
         <Skeleton avatar active loading={props.loading}>
             <CompanyImage src={props.companyImage} />
-            <div>
-                <div>
-                    <h3>{props.company}</h3>
-                </div>
+            <div className="job-card-data">
                 <div className="header">
-                    <div>
-                        <Link href={`/job?id=${props.id}`}>
-                            <h2>{props.title}</h2>
-                        </Link>
-                    </div>
+                    <h3>{props.company}</h3>
                     <div className="likes">
                         <Statistic value={props.likes} prefix={props.liked ? <HeartTwoTone twoToneColor={colors.red} /> : <HeartOutlined />} />
                     </div>
+                </div>
+                <div>
+                    <Link href={`/job?id=${props.id}`}>
+                        <h2>{props.title}</h2>
+                    </Link>
                 </div>
                 <div>
                     <h3>{showMoreDescription ? props.description : props.description?.substr(0, 255) + "..."}</h3>
