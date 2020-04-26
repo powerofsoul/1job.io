@@ -17,6 +17,7 @@ interface Props {
     tags: string[];
     likes: number;
     liked: boolean;
+    location: string;
 }
 
 const JobCard = styled.div`
@@ -28,10 +29,6 @@ const JobCard = styled.div`
 
     margin-bottom: 1rem;
 
-    .tags {
-        margin-top: 1rem;
-    }
-
     .header {
         display: flex;
         align-items:center;
@@ -39,6 +36,17 @@ const JobCard = styled.div`
         .likes {
             margin-left:auto;
             cursor: pointer;
+        }
+    }
+
+    .footer {
+        margin-top: 1rem;
+        
+        display: flex;
+        align-items: center;
+
+        .location {
+            margin-left: auto;
         }
     }
 `;
@@ -59,7 +67,7 @@ const Component = (props?: Partial<Props>) => {
                         <h2>{props.title}</h2>
                     </div>
                     <div className="likes">
-                        <Statistic value={props.likes} prefix={props.liked ? <HeartTwoTone twoToneColor={colors.red}/> : <HeartOutlined />} />
+                        <Statistic value={props.likes} prefix={props.liked ? <HeartTwoTone twoToneColor={colors.red} /> : <HeartOutlined />} />
                     </div>
                 </div>
                 <div>
@@ -70,9 +78,16 @@ const Component = (props?: Partial<Props>) => {
                         {!showMoreDescription ? "Show More" : "Show Less"}
                     </Button>
                 }
-               
-                <div className="tags">
-                    {props.tags?.map((t) => <Tag key={t} color="blue">{t}</Tag>)}
+
+                <div className="footer">
+                    <div className="tags">
+                        {props.tags?.map((t) => <Tag key={t} color="blue">{t}</Tag>)}
+                    </div>
+                    <div className="location">
+                        {props.location?.trim() != '' && <span>
+                            <Tag color="volcano">{props.location}</Tag>
+                        </span>}
+                    </div>
                 </div>
             </div>
         </Skeleton>
