@@ -1,14 +1,17 @@
-import styled from 'styled-components';
-import colors from '../src/style/Colors';
+import { FormOutlined } from "@ant-design/icons";
+import { Button } from 'antd';
 import Typist from 'react-typist';
 import TypistLoop from "react-typist-loop";
-import { Button } from 'antd';
-import { FormOutlined } from "@ant-design/icons";
-import Link from '../src/common/Link';
+import { bindActionCreators } from 'redux';
+import styled from 'styled-components';
 import JobCard from '../src/common/JobCard';
+import Link from '../src/common/Link';
+import { Job } from '../src/models/Job';
+import { IAppState } from '../src/redux/configureStore';
+import JobStore from '../src/redux/stores/JobStore';
+import colors from '../src/style/Colors';
 import DeviceSize from '../src/style/DeviceSize';
-import { setTimeout } from 'timers';
-import { useState } from 'react';
+import { connect } from "react-redux";
 
 const IndexTop = styled.div`
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -56,42 +59,12 @@ const IndexBody = styled.div`
     }
 `;
 
-const defaultJob = () => ({
-    title: "Senior software engineer",
-    company: "Florin SRL",
-    featured: true,
-    companyImage: "https://assetstorev1-prd-cdn.unity3d.com/key-image/a6a520a3-bb2a-4433-9643-a157d069247c.jpg",
-    postedOn: new Date(),
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-    tags: [
-        "C#",
-        "Java",
-        "Javascript"
-    ],
-    likes: Math.floor(Math.random() * 1000),
-    loading: false,
-    liked:  Math.floor(Math.random() * 10) > 5,
-    location: "Romania"
-}) as any;
+interface Props {
+    jobs: Job[];
+    loadMoreJobs: () => void;
+}
 
-
-const index = () => {
-    const [jobs, setJobs] = useState([defaultJob()]);
-
- 
-    const loadMoreJobs = () =>  {
- 
-        setJobs([
-            ...jobs,
-            ...[{loading: true}, {loading: true}]
-        ]);
-        setTimeout(() => {
-            setJobs(
-                [...jobs.filter((j) => !j.loading), 
-                 ...[defaultJob(), defaultJob()]
-                ]);
-        }, 3000);
-    }
+const index = (props: Props) => {
     return <div>
         <IndexTop>
             <div className="content">
@@ -114,12 +87,19 @@ const index = () => {
             </div>
         </IndexTop>
         <IndexBody>
-            {jobs.map((j, i) => <JobCard key={i} {...j} />)}
+            {props.jobs.map((j, i) => <JobCard key={i} {...j} />)}
             <div className="load-more">
-                <Button onClick={loadMoreJobs}>Load More</Button>
+                <Button onClick={props.loadMoreJobs}>Load More</Button>
             </div>
         </IndexBody>
     </div>
 }
 
-export default index;
+const mapStateToProps = (store: IAppState): Partial<Props> => ({
+    jobs: store.jobs.jobs
+});
+
+export default connect(
+    mapStateToProps,
+    (dispatch) => bindActionCreators(JobStore.actionCreators, dispatch)
+)(index);

@@ -20,21 +20,28 @@
   "homepage": "https://github.com/powerofsoul/jobsremotely.online#readme",
   "dependencies": {
     "@ant-design/icons": "^4.0.6",
+    "@types/redux-persist": "^4.3.1",
     "@types/styled-components": "^5.1.0",
     "@zeit/next-css": "^1.0.1",
     "antd": "^4.1.4",
     "next": "^9.3.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-typist": "^2.0.5",
     "react-typist-loop": "0.0.5",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@types/node": "^13.13.2",
     "@types/react": "^16.9.34",
+    "@types/react-redux": "^7.1.7",
     "@types/react-typist": "^2.0.1",
+    "@types/redux": "^3.6.0",
     "typescript": "^3.8.3"
   }
 }

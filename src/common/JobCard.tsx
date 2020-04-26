@@ -5,20 +5,7 @@ import CompanyImage from "./CompanyImage";
 import { useState } from "react";
 import React from "react";
 import { HeartOutlined, HeartFilled, HeartTwoTone } from "@ant-design/icons";
-
-interface Props {
-    loading: boolean;
-    title: string;
-    company: string;
-    companyImage: string;
-    featured: boolean;
-    postedOn: Date;
-    description: string;
-    tags: string[];
-    likes: number;
-    liked: boolean;
-    location: string;
-}
+import { Job } from "../models/Job";
 
 const JobCard = styled.div`
     min-height: 5rem;
@@ -51,7 +38,7 @@ const JobCard = styled.div`
     }
 `;
 
-const Component = (props?: Partial<Props>) => {
+const Component = (props?: Partial<Job>) => {
     const [showMoreDescription, setShowMoreDescription] = useState(false);
     const hasBigDescription = props.description?.length > 255;
 
