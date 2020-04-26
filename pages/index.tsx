@@ -1,5 +1,5 @@
-import { FormOutlined } from "@ant-design/icons";
-import { Button } from 'antd';
+import { FormOutlined, ReloadOutlined } from "@ant-design/icons";
+import { Button, Input, Select, Row, Col } from 'antd';
 import Typist from 'react-typist';
 import TypistLoop from "react-typist-loop";
 import { bindActionCreators } from 'redux';
@@ -12,6 +12,7 @@ import JobStore from '../src/redux/stores/JobsStore';
 import colors from '../src/style/Colors';
 import DeviceSize from '../src/style/DeviceSize';
 import { connect } from "react-redux";
+import Search from "antd/lib/input/Search";
 
 const IndexTop = styled.div`
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -49,7 +50,7 @@ const IndexTop = styled.div`
 const IndexBody = styled.div`
     margin-top: 1rem;
     margin-bottom: 1rem;
-    ${DeviceSize.lg} {
+    ${DeviceSize.xl} {
         padding-right: 15rem;
         padding-left: 15rem;
     }
@@ -62,6 +63,7 @@ const IndexBody = styled.div`
 interface Props {
     jobs: Job[];
     loadMoreJobs: () => void;
+    reloadAllJobs: () => void;
 }
 
 const index = (props: Props) => {
@@ -87,6 +89,59 @@ const index = (props: Props) => {
             </div>
         </IndexTop>
         <IndexBody>
+            <Row gutter={[12, 12]}>
+                <Col xs={12} lg={6}>
+                    <Search
+                        placeholder="Job Title"
+                        onSearch={value => console.log(value)}
+                    />
+                </Col>
+                <Col xs={12} lg={3}>
+                    <Select
+                        mode="tags"
+                        size="middle"
+                        options={[{ value: "C#" }, { value: "Java" }, { value: "JS" }, { value: "Typescript" }]}
+                        placeholder="Select Category"
+                        style={{ width: '100%' }}
+                    />
+                </Col>
+                <Col xs={12} lg={3}>
+                    <Select
+                        mode="tags"
+                        size="middle"
+                        options={[{ value: "WorldWide" }, { value: "USA" }, { value: "Europe" }, { value: "Asia" }]}
+                        placeholder="Select Region"
+                        style={{ width: '100%' }}
+                    />
+                </Col>
+                <Col xs={12} lg={3}>
+                    <Select
+                        mode="tags"
+                        size="middle"
+                        options={[{ value: "Junior" }, { value: "Middle" }, { value: "Senior" }, { value: "Lead" }]}
+                        placeholder="Experience level"
+                        style={{ width: '100%' }}
+                    />
+                </Col>
+                <Col xs={12} lg={3}>
+                    <Select
+                        size="middle"
+                        options={[{ value: "Yes" }, { value: "No" }]}
+                        placeholder="Visa Sponsorship"
+                        style={{ width: '100%' }}
+                    />
+                </Col>
+                <Col flex="auto" style={{textAlign: "right"}}>
+                    <h2>
+                        <ReloadOutlined className="reload-icon" title="Reload" onClick={props.reloadAllJobs} />
+                    </h2>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} style={{textAlign: "center"}}>
+                    <Button type="primary">Search</Button>
+                </Col>
+            </Row>
             {props.jobs.map((j, i) => <JobCard key={i} {...j} />)}
             <div className="load-more">
                 <Button onClick={props.loadMoreJobs}>Load More</Button>

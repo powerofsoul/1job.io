@@ -24,6 +24,7 @@ export const defaultJob: () => Job = () => ({
  
 const RECEIVE = "JOB_STORE_RECEIVE";
 const RETRIVE = "JOB_STORE_RETRIVE";
+const RELOAD  = "JOB_STORE_RELOAD";
 
 export type JobStoreType = {
     jobs: Job[]
@@ -40,6 +41,9 @@ const actionCreators = {
         setTimeout(() => {
             dispatch({type: RETRIVE})
         }, 3000)
+    },
+    reloadAllJobs: () => (dispatch, getState: () => IAppState) => {
+        dispatch({type: RELOAD})
     }
 }
 
@@ -60,6 +64,12 @@ const reducer = (state: JobStoreType, action) => {
             jobs: [...state.jobs.filter((j) => !j.loading), 
                 ...[defaultJob(), defaultJob()]
             ]
+        }
+    }
+
+    if(action.type == RELOAD) {
+        return {
+            jobs: [defaultJob(), defaultJob()]
         }
     }
 
