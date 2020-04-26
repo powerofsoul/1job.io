@@ -7,6 +7,7 @@ import React from "react";
 import { HeartOutlined, HeartFilled, HeartTwoTone } from "@ant-design/icons";
 import { Job } from "../models/Job";
 import Link from "./Link";
+import moment from "moment";
 
 const JobCard = styled.div`
     min-height: 5rem;
@@ -54,6 +55,9 @@ const Component = (props?: Partial<Job>) => {
                     <div className="likes">
                         <Statistic value={props.likes} prefix={props.liked ? <HeartTwoTone twoToneColor={colors.red} /> : <HeartOutlined />} />
                     </div>
+                </div>
+                <div>
+                    {moment(props.postedOn).fromNow()}
                 </div>
                 <div>
                     <Link href={`/job?id=${props.id}`}>
