@@ -1,4 +1,4 @@
-import JobStore, { JobStoreType } from "./stores/JobStore";
+import JobStore, { JobStoreType } from "./stores/JobsStore";
 import { applyMiddleware, combineReducers, compose, createStore, Store } from "redux";
 import thunk from "redux-thunk";
 import storage from 'redux-persist/lib/storage'

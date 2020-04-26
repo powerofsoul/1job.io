@@ -8,7 +8,7 @@ import JobCard from '../src/common/JobCard';
 import Link from '../src/common/Link';
 import { Job } from '../src/models/Job';
 import { IAppState } from '../src/redux/configureStore';
-import JobStore from '../src/redux/stores/JobStore';
+import JobStore from '../src/redux/stores/JobsStore';
 import colors from '../src/style/Colors';
 import DeviceSize from '../src/style/DeviceSize';
 import { connect } from "react-redux";
