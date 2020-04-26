@@ -3,7 +3,7 @@ import { IAppState } from "../configureStore";
 
 let fakeId = 0;
 
-const defaultJob: () => Job = () => ({
+export const defaultJob: () => Job = () => ({
     id: (fakeId++).toString(),
     title: "Senior software engineer",
     company: "Florin SRL",
