@@ -6,6 +6,7 @@ import { useState } from "react";
 import React from "react";
 import { HeartOutlined, HeartFilled, HeartTwoTone } from "@ant-design/icons";
 import { Job } from "../models/Job";
+import Link from "./Link";
 
 const JobCard = styled.div`
     min-height: 5rem;
@@ -51,7 +52,9 @@ const Component = (props?: Partial<Job>) => {
                 </div>
                 <div className="header">
                     <div>
-                        <h2>{props.title}</h2>
+                        <Link href={`/job?id=${props.id}`}>
+                            <h2>{props.title}</h2>
+                        </Link>
                     </div>
                     <div className="likes">
                         <Statistic value={props.likes} prefix={props.liked ? <HeartTwoTone twoToneColor={colors.red} /> : <HeartOutlined />} />

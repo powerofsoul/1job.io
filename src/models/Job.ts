@@ -1,5 +1,6 @@
 export interface Job {
     loading: boolean;
+    id: string;
     title: string;
     company: string;
     companyImage: string;
