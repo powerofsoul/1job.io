@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node --project tsconfig.server.json server/index.ts",
+    "dev": "cross-env TS_NODE_PROJECT=tsconfig.server.json node --inspect -r ts-node/register server/index.ts",
     "build:server": "tsc --project tsconfig.server.json",
     "build:next": "next build",
     "build": "npm run build:next && npm run build:server",
-    "start": "NODE_ENV=production node dist/index.js"
+    "start": "cross-env NODE_ENV=production node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "@types/styled-components": "^5.1.0",
     "@zeit/next-css": "^1.0.1",
     "antd": "^4.1.4",
+    "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "glob": "^7.1.6",
     "moment": "^2.24.0",
@@ -50,6 +51,7 @@
     "@types/react-typist": "^2.0.1",
     "@types/redux": "^3.6.0",
     "ts-node": "^8.9.1",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.3"
   }
 }
