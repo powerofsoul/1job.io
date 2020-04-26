@@ -50,6 +50,10 @@ const IndexBody = styled.div`
         padding-right: 15rem;
         padding-left: 15rem;
     }
+
+    .load-more {
+       text-align:center;
+    }
 `;
 
 const defaultJob = () => ({
@@ -111,7 +115,9 @@ const index = () => {
         </IndexTop>
         <IndexBody>
             {jobs.map((j, i) => <JobCard key={i} {...j} />)}
-            <Button onClick={loadMoreJobs}>Load More</Button>
+            <div className="load-more">
+                <Button onClick={loadMoreJobs}>Load More</Button>
+            </div>
         </IndexBody>
     </div>
 }
