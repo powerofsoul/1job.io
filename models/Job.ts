@@ -39,7 +39,6 @@ export const JobSchema = new Schema({
 
 export interface Job extends Document {
     loading: boolean;
-    id: string;
     title: string;
     company: string;
     companyImage: string;
