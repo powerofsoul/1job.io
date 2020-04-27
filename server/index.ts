@@ -9,7 +9,7 @@ const handle = app.getRequestHandler();
 const port = process.env.PORT || 3000;
 import { connect } from "mongoose";
 
-const mongoConnectionUrl = process.env.MONGO_URL || "mongodb://localhost:27017/crm";
+const mongoConnectionUrl = process.env.MONGO_URL || "mongodb://localhost:27017/jobsremotely";
 
 (async () => {
     try {
@@ -25,6 +25,7 @@ const mongoConnectionUrl = process.env.MONGO_URL || "mongodb://localhost:27017/c
         server.all("*", (req: Request, res: Response) => {
             return handle(req, res);
         });
+
         server.listen(port, (err?: any) => {
             if (err) throw err;
             console.log(`> Ready on localhost:${port} - env ${process.env.NODE_ENV}`);
