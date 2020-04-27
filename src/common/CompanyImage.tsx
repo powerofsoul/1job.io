@@ -3,6 +3,7 @@ import styled from "styled-components"
 const CompanyImage = styled.img`
     border-radius: 50%;
     max-height: 5rem;
+    max-width: 5rem;
     object-fit: cover;
     margin-right: 10px;
 `;
