@@ -4,9 +4,10 @@ const router = Router();
 
 glob.sync(__dirname + '/api/**/*.@(ts|js)')
     .map(filename => {
-        const arr = filename.split('/')
-        let name = arr.pop();
+        const arr = filename.split('/').slice(filename.split('/').indexOf('api') + 1);
+        let name = arr.join('/');
         name = name.replace('.ts', '').replace('.js', '')
+        console.log(`/${name.toLowerCase()}`)
         return {
             path: `/${name.toLowerCase()}`,
             router: require(`${filename.replace('.ts', '')}`)
