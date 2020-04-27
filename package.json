@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env TS_NODE_PROJECT=tsconfig.server.json node --inspect -r ts-node/register server/index.ts",
+    "dev": "cross-env TS_NODE_PROJECT=tsconfig.server.json nodemon ./server/index.ts",
     "build:server": "tsc --project tsconfig.server.json",
     "build:next": "next build",
     "build": "npm run build:next && npm run build:server",
     "start": "cross-env NODE_ENV=development node dist/index.js",
-    "start:prod":"corss-env PORT=80 NODE_ENV=production node dist/index.js"
+    "start:prod": "corss-env PORT=80 NODE_ENV=production node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -51,6 +51,7 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-typist": "^2.0.1",
     "@types/redux": "^3.6.0",
+    "nodemon": "^2.0.3",
     "ts-node": "^8.9.1",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.3"
