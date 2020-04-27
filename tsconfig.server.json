@@ -5,7 +5,10 @@
       "outDir": "dist",
       "noEmit": false,
       "isolatedModules": false,
-      "esModuleInterop":true
+      "esModuleInterop":true,
+      "typeRoots": [
+        "./typings"
+      ],
     },
-    "include": ["./server"]
+    "include": ["./server", "./typings"]
 }
