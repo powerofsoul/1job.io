@@ -1,9 +1,14 @@
-import { Col, Row, Menu, Dropdown, Button } from "antd";
+import { Col, Row, Menu, Dropdown, Button, Tag } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import Colors from "../style/Colors";
 import DeviceSize from "../style/DeviceSize";
 import Link from "./Link";
+import { User } from "../../models/UserModel";
+import { IAppState } from "../redux/configureStore";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import CurrentUserStore from "../redux/stores/CurrentUserStore";
 
 const Header = styled.div`
     width: 100%;
@@ -22,6 +27,7 @@ const Header = styled.div`
 const HeaderDetails = styled.div`
     display: flex;
     text-align: right;
+    align-items: center;
 
     .links {
         ${DeviceSize.xs} {
@@ -31,56 +37,15 @@ const HeaderDetails = styled.div`
         ${DeviceSize.md} {
             margin-left: auto;
         }
-
-        .primary-button {
-            margin-right: 10px;
-            border:none;
-            background-color: ${Colors.primary};
-            color: ${Colors.light};
-            text-align: center;
-            font-size: 16px;
-        }
-
-        .button {
-            margin-right: 10px;
-            border:none;
-            background-color: ${Colors.light};
-            color: ${Colors.dark};
-            text-align: center;
-            font-size: 16px;
-        }
     }
 `;
 
-const notificationsContent = (
-    <div>
-      <p>New user has joined the channel</p>
-    </div>
-  );
+interface Props {
+    currentUser?: User;
+    logOut: () => void;
+}
 
-const profileMenu = (
-    <Menu>
-        <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="/profile">
-                Profile
-        </a>
-        </Menu.Item>
-        <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="/help">
-                Help
-        </a>
-        </Menu.Item>
-        <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="/">
-                Sign out
-        </a>
-        </Menu.Item>
-    </Menu>
-)
-
-
-
-export default () => {
+const component = (props: Props) => {
     return <Header>
         <Row>
             <Col xs={24} md={12}>
@@ -91,14 +56,26 @@ export default () => {
             <Col xs={24} md={12}>
                 <HeaderDetails>
                     <div className="links">
-                        <Button className="primary-button" href="/post">Post a job</Button>
-                        <Button className="button" href="/notifications">Notifications</Button>
-                        <Dropdown overlay={profileMenu} placement="bottomRight">
-                            <Button className="button">Profile</Button>
-                        </Dropdown>
+                        {props.currentUser ?
+                            <div className="right">
+                                <Tag color="green">{props.currentUser.email}</Tag>
+                                <a onClick={props.logOut}>Log out</a>
+                            </div>
+                            :
+                            <Link href="/login">Log in</Link>
+                        }
                     </div>
                 </HeaderDetails>
             </Col>
         </Row>
     </Header>
 }
+
+const mapStateToProps = (store: IAppState): Partial<Props> => ({
+    currentUser: store.currentUserStore.user
+});
+
+export default connect(
+    mapStateToProps,
+    (dispatch) => bindActionCreators(CurrentUserStore.actionCreators, dispatch)
+)(component);

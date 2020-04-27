@@ -14,11 +14,11 @@ const initialState = {
 } as JobStoreType;
 
 const actionCreators = {
-    loadMoreJobs: () => async (dispatch, getState: () => IAppState) => {
+    loadMoreJobs: () => async (dispatch) => {
         const jobs = await get<Job[]>("/api/jobs");
         dispatch({type: RETRIVE, jobs})
     },
-    reloadAllJobs: () => (dispatch, getState: () => IAppState) => {
+    reloadAllJobs: () => (dispatch) => {
         dispatch({type: RELOAD})
     }
 }

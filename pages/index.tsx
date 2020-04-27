@@ -100,7 +100,7 @@ const index = (props: Props) => {
 }
 
 const mapStateToProps = (store: IAppState): Partial<Props> => ({
-    jobs: store.jobs.jobs
+    jobs: store.jobsStore.jobs
 });
 
 export default connect(

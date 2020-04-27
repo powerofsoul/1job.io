@@ -1,5 +1,13 @@
 import { Form, Input, Button, Checkbox } from 'antd';
 import styled from 'styled-components';
+import { useState } from 'react';
+import { post } from '../src/Utils';
+import CurrentUserStore from '../src/redux/stores/CurrentUserStore';
+import { IAppState } from '../src/redux/configureStore';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { User } from '../models/UserModel';
+import { toast } from 'react-toastify';
 
 const layout = {
     labelCol: { span: 8 },
@@ -13,34 +21,47 @@ const Login = styled.div`
     margin-top: 2rem;
 `;
 
-export default () => {
-    const onFinish = values => {
-        console.log('Success:', values);
-    };
+interface Props {
+    setCurrentUser: (user: User) => void;
+}
 
-    const onFinishFailed = errorInfo => {
-        console.log('Failed:', errorInfo);
-    };
+const Component = (props: Props) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const submit = () => {
+        post("/api/user/login", {
+            email, password
+        }).then((user: User) => {
+            props.setCurrentUser(user);
+            toast("Login succesfully.", {
+                type: "success"
+            });
+        }).catch((r) => {
+            toast("Invalid credentials.", {
+                type: "error"
+            })
+        });
+    }
 
     return <Login>
         <Form
             {...layout}
             name="basic"
             initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}>
+            onSubmitCapture={submit}>
             <Form.Item
                 label="Email"
                 name="email"
                 rules={[{ required: true, type:"email", message: 'Please input your email!' }]}>
-                <Input />
+                <Input onChange={(e) => setEmail(e.target.value)}/>
             </Form.Item>
 
             <Form.Item
                 label="Password"
                 name="password"
                 rules={[{ required: true, message: 'Please input your password!' }]}>
-                <Input.Password />
+                <Input.Password onChange={(e) => setPassword(e.target.value)} />
             </Form.Item>
 
             <Form.Item {...tailLayout} name="remember" valuePropName="checked">
@@ -55,3 +76,8 @@ export default () => {
         </Form>
     </Login>
 }
+
+export default connect(
+    () => ({}),
+    (dispatch) => bindActionCreators(CurrentUserStore.actionCreators, dispatch)
+)(Component);

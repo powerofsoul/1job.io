@@ -3,17 +3,21 @@ import { applyMiddleware, combineReducers, compose, createStore, Store } from "r
 import thunk from "redux-thunk";
 import storage from 'redux-persist/lib/storage'
 import { persistStore, persistReducer } from 'redux-persist'
+import CurrentUserStore, { CurrentUserStoreType } from "./stores/CurrentUserStore";
 
 export interface IAppState {
-    jobs: JobStoreType
+    jobsStore: JobStoreType, 
+    currentUserStore: CurrentUserStoreType
 }
 
 const initialState: IAppState = {
-    jobs: JobStore.initialState
+    jobsStore: JobStore.initialState, 
+    currentUserStore: CurrentUserStore.initialState
 }
 
 const reducers = {
-    jobs: JobStore.reducer
+    jobsStore: JobStore.reducer,
+    currentUserStore: CurrentUserStore.reducer
 }
 
 const rootReducer = combineReducers({ ...reducers });
