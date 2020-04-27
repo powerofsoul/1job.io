@@ -9,7 +9,7 @@ const colors =  {
     primary_accent: "#76a1c6",
     green: "#5caf75",
     red: "#f44336",
-    orange: "#f44336",
+    orange: "#f18818",
     light: "#f8f8f8",
     light_dark: "#ccc",
     light_light: "#ffffff",
