@@ -1,4 +1,4 @@
-import { Job } from "../../../models/Job";
+import { Job } from "../../../models/JobModel";
 import { IAppState } from "../configureStore";
 import { get } from "../../Utils";
  
@@ -25,7 +25,6 @@ const actionCreators = {
 
 const reducer = (state: JobStoreType, action) => {
     state = state || initialState;
-
 
     if(action.type == RETRIVE) {
         return {

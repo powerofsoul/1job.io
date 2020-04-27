@@ -20,13 +20,27 @@ export const defaultJob = () => ({
 
 
 export const JobSchema = new Schema({
-    loading: Boolean,
-    title: String,
-    company: String,
-    companyImage: String,
-    featured: Boolean,
+    title: {
+        type: String,
+        required: true
+    },
+    company: {
+        type: String,
+        required: true
+    },
+    companyImage: {
+        type: String,
+        required: true
+    },
+    featured: {
+        type: Boolean,
+        default: false
+    },
+    description: {
+        type: String,
+        required: true
+    },
     postedOn: Date,
-    description: String,
     tags: [{
         type: String
     }],

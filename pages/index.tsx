@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import JobCard from '../src/common/JobCard';
 import Link from '../src/common/Link';
-import { Job } from '../models/Job';
+import { Job } from '../models/JobModel';
 import { IAppState } from '../src/redux/configureStore';
 import JobStore from '../src/redux/stores/JobsStore';
 import colors from '../src/style/Colors';

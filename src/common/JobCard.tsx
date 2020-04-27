@@ -5,7 +5,7 @@ import CompanyImage from "./CompanyImage";
 import { useState } from "react";
 import React from "react";
 import { HeartOutlined, HeartFilled, HeartTwoTone } from "@ant-design/icons";
-import { Job } from "../../models/Job";
+import { Job } from "../../models/JobModel";
 import Link from "./Link";
 import moment from "moment";
 
@@ -14,7 +14,7 @@ const JobCard = styled.div`
     border-bottom: 1px solid ${colors.light_dark};
 
     padding: 1rem;
-    display:flex;
+    display: flex;
 
     margin-bottom: 1rem;
 

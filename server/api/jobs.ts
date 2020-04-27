@@ -1,17 +1,19 @@
 import { Router } from "express";
-import Job, { defaultJob } from "../../models/Job";
+import JobModel, { defaultJob, Job } from "../../models/JobModel";
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const jobs = await Job.find();
+    const jobs = await JobModel.find();
     res.json(jobs);
 });
 
 router.put('/', (req, res) => {
-    Job.insertMany(defaultJob());
-    res.json({
-        success: true
-    })
+    const job: Job = req.body.job;
+    job.postedOn = new Date();
+
+    JobModel.insertMany(job)
+        .then((r) => res.json(r))
+        .catch((err) => res.status(500).json(err));
 })
 
 export default router;

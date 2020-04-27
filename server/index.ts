@@ -2,6 +2,7 @@
 import express, { Request, Response } from "express";
 import next from "next";
 import router from "./createRoutes";
+const bodyParser = require('body-parser');
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -20,7 +21,8 @@ const mongoConnectionUrl = process.env.MONGO_URL || "mongodb://localhost:27017/j
         );
 
         const server = express();
-
+        server.use(bodyParser.json());
+        
         server.use('/api', router);
         server.all("*", (req: Request, res: Response) => {
             return handle(req, res);
