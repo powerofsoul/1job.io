@@ -5,7 +5,7 @@ import CompanyImage from "./CompanyImage";
 import { useState } from "react";
 import React from "react";
 import { HeartOutlined, HeartFilled, HeartTwoTone } from "@ant-design/icons";
-import { Job } from "../models/Job";
+import { Job } from "../../models/Job";
 import Link from "./Link";
 import moment from "moment";
 

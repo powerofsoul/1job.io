@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import JobCard from '../src/common/JobCard';
 import Link from '../src/common/Link';
-import { Job } from '../src/models/Job';
+import { Job } from '../models/Job';
 import { IAppState } from '../src/redux/configureStore';
 import JobStore from '../src/redux/stores/JobsStore';
 import colors from '../src/style/Colors';
@@ -90,8 +90,8 @@ const index = (props: Props) => {
             </div>
         </IndexTop>
         <IndexBody>
-            <Filter />
-            {props.jobs.map((j, i) => <JobCard key={i} {...j} />)}
+            <Filter onReload={props.reloadAllJobs} />
+            {props.jobs?.map((j, i) => <JobCard key={i} {...j} />)}
             <div className="load-more">
                 <Button onClick={props.loadMoreJobs}>Load More</Button>
             </div>

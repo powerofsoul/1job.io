@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { IAppState } from '../src/redux/configureStore';
-import { Job } from '../src/models/Job';
+import { Job } from '../models/Job';
 import { connect } from 'react-redux';
 
 interface Props {
