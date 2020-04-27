@@ -7,10 +7,18 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const port = process.env.PORT || 3000;
+import { connect } from "mongoose";
+
+const mongoConnectionUrl = process.env.MONGO_URL || "mongodb://localhost:27017/crm";
 
 (async () => {
     try {
         await app.prepare();
+        connect(
+            mongoConnectionUrl,
+            { useNewUrlParser: true }
+        );
+
         const server = express();
 
         server.use('/api', router);
