@@ -30,9 +30,13 @@ export const JobSchema = new Schema({
     tags: [{
         type: String
     }],
-    likes: Number,
+    likes: {
+        type: Number,
+        default: 0
+    },
     likedBy: [{
-        type: Number
+        type: Number,
+        default: []
     }],
     location: String
 })
