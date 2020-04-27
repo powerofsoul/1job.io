@@ -11,7 +11,7 @@ import moment from "moment";
 
 const JobCard = styled.div`
     min-height: 5rem;
-    border-bottom: 1px solid ${colors.green};
+    border-bottom: 1px solid ${colors.light_dark};
 
     padding: 1rem;
     display:flex;
