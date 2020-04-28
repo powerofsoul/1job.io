@@ -1,11 +1,11 @@
 import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Header from '../src/common/Header';
-import Footer from '../src/common/Footer';
+import Header from '../common/Header';
+import Footer from '../common/Footer';
 import styled from 'styled-components';
 import { Provider } from 'react-redux';
-import configureStore from '../src/redux/configureStore';
+import configureStore from '../redux/configureStore';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
 

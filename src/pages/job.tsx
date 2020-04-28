@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
-import { IAppState } from '../src/redux/configureStore';
-import { Job } from '../models/JobModel';
+import { IAppState } from '../redux/configureStore';
+import { Job } from '../../models/JobModel';
 import { connect } from 'react-redux';
 import { Tag, Row, Col } from "antd";
-import colors from '../src/style/Colors';
+import colors from '../style/Colors';
 import styled from 'styled-components';
 
 interface Props {

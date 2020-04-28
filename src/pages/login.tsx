@@ -1,12 +1,12 @@
 import { Form, Input, Button, Checkbox } from 'antd';
 import styled from 'styled-components';
 import { useState } from 'react';
-import { post } from '../src/Utils';
-import CurrentUserStore from '../src/redux/stores/CurrentUserStore';
-import { IAppState } from '../src/redux/configureStore';
+import { post } from '../Utils';
+import CurrentUserStore from '../redux/stores/CurrentUserStore';
+import { IAppState } from '../redux/configureStore';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { User } from '../models/UserModel';
+import { User } from '../../models/UserModel';
 import { toast } from 'react-toastify';
 
 const layout = {

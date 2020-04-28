@@ -4,16 +4,16 @@ import Typist from 'react-typist';
 import TypistLoop from "react-typist-loop";
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
-import JobCard from '../src/common/JobCard';
-import Link from '../src/common/Link';
-import { Job } from '../models/JobModel';
-import { IAppState } from '../src/redux/configureStore';
-import JobStore from '../src/redux/stores/JobsStore';
-import colors from '../src/style/Colors';
-import DeviceSize from '../src/style/DeviceSize';
+import JobCard from '../common/JobCard';
+import Link from '../common/Link';
+import { Job } from '../../models/JobModel';
+import { IAppState } from '../redux/configureStore';
+import JobStore from '../redux/stores/JobsStore';
+import colors from '../style/Colors';
+import DeviceSize from '../style/DeviceSize';
 import { connect } from "react-redux";
 import Search from "antd/lib/input/Search";
-import Filter from "../src/common/Filter";
+import Filter from "../common/Filter";
 
 const IndexTop = styled.div`
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
