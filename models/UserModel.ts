@@ -20,8 +20,6 @@ UserSchema.methods.comparePassword = function (candidatePassword) {
 };
 
 
-
-
 UserSchema.pre('save', function (next) {
     const user = this as User;
 

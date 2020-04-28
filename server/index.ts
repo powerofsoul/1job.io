@@ -47,10 +47,13 @@ const handle = app.getRequestHandler();
 
         const server = express();
         server.use(bodyParser.json());
+        server.use(bodyParser.urlencoded({ extended: true }));
+
         server.use(cookieSession({
             name: "jobs-remotely",
             keys: config.session_keys
         })); 
+        
         server.use(passport.initialize());
         server.use(passport.session());  
 

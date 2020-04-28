@@ -2,6 +2,7 @@ import { Router } from "express";
 import { authenticate } from "passport";
 import passport from "passport";
 import UserModel, { User } from "../../models/UserModel";
+import { isAuthenticated } from "../middleware/middleware";
 
 const router = Router();
 
@@ -23,7 +24,7 @@ router.post("/register", (req, res) => {
 });
 
 router.get('/me',
-    passport.authorize('local'),
+    isAuthenticated,
     (req, res) => res.json({ id: req.user.id, username: req.user.email })
 );
 
