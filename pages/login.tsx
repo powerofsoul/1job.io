@@ -37,6 +37,9 @@ const Component = (props: Props) => {
             toast("Login succesfully.", {
                 type: "success"
             });
+            setTimeout(() => {
+                window.location.href="/";
+            }, 1000);
         }).catch((r) => {
             toast("Invalid credentials.", {
                 type: "error"

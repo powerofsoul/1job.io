@@ -32,6 +32,7 @@ const reducer = (state: CurrentUserStoreType, action) => {
     }
 
     if(action.type == LOG_OUT_CURRENT_USER){
+        window.location.href = "/";
         return {}
     }
 
