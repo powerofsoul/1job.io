@@ -24,7 +24,7 @@ const Header = styled.div`
         padding: 20px;
     }
 `;
-const HeaderDetails = styled.div`
+const HeaderDetails = styled(Col)`
     display: flex;
     text-align: right;
     align-items: center;
@@ -38,11 +38,15 @@ const HeaderDetails = styled.div`
             margin-left: auto;
         }
     }
-
+        
     .header-buttons {
         * {
             margin-left: 10px;
         }
+    }
+
+    .profile-link {
+        cursor: pointer;
     }
 `;
 
@@ -59,22 +63,20 @@ const component = (props: Props) => {
                     <Link href="/">Jobs Remotely Online</Link>
                 </h1>
             </Col>
-            <Col xs={24} md={12}>
-                <HeaderDetails>
-                    <div className="links">
-                        {props.currentUser ?
-                            <div className="right">
-                                <Tag color="green">{props.currentUser.email}</Tag>
-                                <a onClick={props.logOut}>Log out</a>
-                            </div>
-                            :<div className="header-buttons">
-                                <Link href="/login">Log in</Link>
-                                <Link href="/register">Register</Link>
-                            </div>
-                        }
-                    </div>
-                </HeaderDetails>
-            </Col>
+            <HeaderDetails xs={24} md={12}>
+                <div className="links">
+                    {props.currentUser ?
+                        <div className="right">
+                            <Link href="/profile"><Tag className="profile-link" color="green">{props.currentUser.companyName}</Tag></Link>
+                            <a onClick={props.logOut}>Log out</a>
+                        </div>
+                        : <div className="header-buttons">
+                            <Link href="/login">Log in</Link>
+                            <Link href="/register">Register</Link>
+                        </div>
+                    }
+                </div>
+            </HeaderDetails>
         </Row>
     </Header>
 }
