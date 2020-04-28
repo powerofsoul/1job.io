@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import { User } from '../../models/UserModel';
 import { toast } from 'react-toastify';
 import Link from '../common/Link';
+import { useRouter } from 'next/router'
 
 const layout = {
     labelCol: { span: 8 },
@@ -29,6 +30,7 @@ interface Props {
 const Component = (props: Props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const router = useRouter();
 
     const submit = () => {
         post("/api/user/login", {
@@ -39,7 +41,7 @@ const Component = (props: Props) => {
                 type: "success"
             });
             setTimeout(() => {
-                window.location.href="/";
+                router.push("/");
             }, 1000);
         }).catch((r) => {
             toast("Invalid credentials.", {

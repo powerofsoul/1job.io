@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { User } from '../../models/UserModel';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router'
 
 const layout = {
     labelCol: { span: 8 },
@@ -29,6 +30,7 @@ const Component = (props: Props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [companyName, setCompanyName] = useState('');
+    const router = useRouter();
 
     const submit = () => {
        post("/api/user/register", {
@@ -42,7 +44,7 @@ const Component = (props: Props) => {
                 props.setCurrentUser(response.user);
 
                 setTimeout(() => {
-                    window.location.href = "/"
+                    router.push("/");
                 }, 1000);
             } else {
                 toast(response.message, {

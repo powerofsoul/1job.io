@@ -1,4 +1,4 @@
-import { useRouter, Router } from 'next/router'
+import { useRouter } from 'next/router'
 
 export default (props: { href: string, children: any, className?: string }) => {
     const router = useRouter();
