@@ -16,11 +16,15 @@ router.get('/logout', (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-    const user: User = req.body.user;
+    const user: User = req.body;
 
-    UserModel.create(user)
-        .then((r) => res.json(r))
-        .catch((err) => res.status(500).json(err));
+    UserModel.create( user)
+        .then(( async (u) => {
+            req.login(u, () => {
+                res.json({ success: u != undefined})
+            });
+        }))
+        .catch((err) => res.status(500).json({success: false, error: "Make sure everything is filled correctly!"}));
 });
 
 router.get('/me',

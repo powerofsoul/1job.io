@@ -38,6 +38,12 @@ const HeaderDetails = styled.div`
             margin-left: auto;
         }
     }
+
+    .header-buttons {
+        * {
+            margin-left: 10px;
+        }
+    }
 `;
 
 interface Props {
@@ -61,8 +67,10 @@ const component = (props: Props) => {
                                 <Tag color="green">{props.currentUser.email}</Tag>
                                 <a onClick={props.logOut}>Log out</a>
                             </div>
-                            :
-                            <Link href="/login">Log in</Link>
+                            :<div className="header-buttons">
+                                <Link href="/login">Log in</Link>
+                                <Link href="/register">Register</Link>
+                            </div>
                         }
                     </div>
                 </HeaderDetails>

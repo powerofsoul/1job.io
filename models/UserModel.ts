@@ -11,6 +11,10 @@ export const UserSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    companyName: {
+        type: String, 
+        required: true
     }
 })
 
