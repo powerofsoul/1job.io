@@ -10,17 +10,17 @@ import { User } from '../../models/UserModel';
 import { toast } from 'react-toastify';
 import Link from '../common/Link';
 import { useRouter } from 'next/router'
-
-const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 8 },
-};
-const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
-};
+import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 
 const Login = styled.div`
     margin-top: 2rem;
+    display: flex;
+
+    .form {
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 `;
 
 interface Props {
@@ -52,32 +52,41 @@ const Component = (props: Props) => {
 
     return <Login>
         <Form
-            {...layout}
-            name="basic"
+            name="normal_login"
+            className="form"
             initialValues={{ remember: true }}
-            onSubmitCapture={submit}>
+            onFinish={submit} >
             <Form.Item
-                label="Email"
                 name="email"
-                rules={[{ required: true, type:"email", message: 'Please input your email!' }]}>
-                <Input onChange={(e) => setEmail(e.target.value)}/>
+               
+                rules={[{ required: true,  type:"email", message: 'Please input your Email!' }]}>
+                <Input  value={email}
+                        onChange = {(e) => setEmail(e.target.value)} 
+                        prefix={<MailOutlined className="site-form-item-icon" />} 
+                        placeholder="Email" />
             </Form.Item>
-
             <Form.Item
-                label="Password"
                 name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}>
-                <Input.Password onChange={(e) => setPassword(e.target.value)} />
+                rules={[{ required: true, message: 'Please input your Password!' }]}>
+                <Input
+                    value={password}
+                    onChange = {(e) => setPassword(e.target.value)}
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    type="password"
+                    placeholder="Password"/>
+            </Form.Item>
+            <Form.Item>
+                <Link className="login-form-forgot" href="/forgotpass">
+                    Forgot password
+                </Link>
             </Form.Item>
 
-            <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                <Link href="/forgotpass">Forgot Password</Link>
-            </Form.Item>
-
-            <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">
-                    Submit
+            <Form.Item>
+                <Button type="primary" htmlType="submit" className="login-form-button">
+                    Log in
                 </Button>
+                <br/>
+                Or <Link href="/register">register now!</Link>
             </Form.Item>
         </Form>
     </Login>
