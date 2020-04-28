@@ -5,7 +5,7 @@
     "execMap": {
       "ts": "node --inspect --require ts-node/register"
     },
-    "watch": ["server/", "models/"],
+    "watch": ["server/", "models/", "./typings"],
     "env": {
       "NODE_ENV": "development"
     },
