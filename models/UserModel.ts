@@ -44,8 +44,9 @@ UserSchema.pre('save', function (next) {
 const UserModel = model<User>("User", UserSchema);
 
 export interface User extends Document {
-    email: String;
-    password: String;
+    email: string;
+    password: string;
+    companyName: string;
     comparePassword: (password: string) => Promise<boolean>
 }
 
