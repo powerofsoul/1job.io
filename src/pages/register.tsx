@@ -33,17 +33,19 @@ const Component = (props: Props) => {
     const submit = () => {
        post("/api/user/register", {
                 email, password, companyName
-       }).then((response: {success: boolean, error: string}) => {
+       }).then((response: {success: boolean, user: User, message: string}) => {
             if(response.success) {
                 toast("Welcome!", {
                     type: "success"
                 });
 
+                props.setCurrentUser(response.user);
+
                 setTimeout(() => {
                     window.location.href = "/"
                 }, 1000);
             } else {
-                toast("Make sure you filled all field.", {
+                toast(response.message, {
                     type: "error"
                 });
             }

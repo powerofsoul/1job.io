@@ -21,10 +21,18 @@ router.post("/register", (req, res) => {
     UserModel.create( user)
         .then(( async (u) => {
             req.login(u, () => {
-                res.json({ success: u != undefined})
+                res.json({ success: true, user: u})
             });
         }))
-        .catch((err) => res.status(500).json({success: false, error: "Make sure everything is filled correctly!"}));
+        .catch((err) => {
+            let message = "Something went wrong. Please contact the administrator!";
+
+            if(err.keyPattern?.email == 1 || Object.keys(err.errors).indexOf("email") >= 0) {
+                message = "Email already used or incorrect.";
+            }
+
+            res.json({success: false, message})
+        });
 });
 
 router.get('/me',
