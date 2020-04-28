@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }) {
 
   return <Provider store={appStore.store}>
     <PersistGate loading={null} persistor={appStore.persistor}>
-      <ToastContainer position="top-right"
+      <ToastContainer position="bottom-right"
                       autoClose={1500} />
       <AppBody>
         <Header />
