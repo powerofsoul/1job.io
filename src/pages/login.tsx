@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { User } from '../../models/UserModel';
 import { toast } from 'react-toastify';
+import Link from '../common/Link';
 
 const layout = {
     labelCol: { span: 8 },
@@ -68,7 +69,7 @@ const Component = (props: Props) => {
             </Form.Item>
 
             <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                <Checkbox>Remember me</Checkbox>
+                <Link href="/forgotpass">Forgot Password</Link>
             </Form.Item>
 
             <Form.Item {...tailLayout}>
