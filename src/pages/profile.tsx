@@ -8,22 +8,24 @@ import React from "react";
 
 interface Props {
     user: User;
+    loading: boolean;
 }
 
 const Profile = (props: Props) => {
     React.useEffect(() => {
-        if(!props.user) {
+        if(!props.loading && !props.user) {
             Router.push("/login");
         }
     }, [props.user]);
 
     return <div>
-        {props.user.email}
+        {props.user?.email}
     </div>
 }
 
 const mapStateToProps = (store: IAppState): Partial<Props> => ({
-    user: store.currentUserStore.user
+    user: store.currentUserStore.user,
+    loading: store.currentUserStore.loading
 })
  
 export default connect(

@@ -4,9 +4,11 @@ import { post, get } from "../../Utils";
 
 export type CurrentUserStoreType = {
    user?: User;
+   loading: boolean;
 }
 
 const initialState = {
+    loading: true
 } as CurrentUserStoreType;
 
 const SET_CURRENT_USER = "SET_CURRENT_USER";
@@ -27,6 +29,7 @@ const reducer = (state: CurrentUserStoreType, action) => {
     if(action.type == SET_CURRENT_USER) {
         return {
             ...state,
+            loading: false,
             user: action.user
         }
     }
