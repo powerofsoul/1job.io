@@ -3,6 +3,7 @@ import { authenticate } from "passport";
 import passport from "passport";
 import UserModel, { User } from "../../models/UserModel";
 import { isAuthenticated } from "../middleware/middleware";
+import fs from "fs";
 
 const router = Router();
 
@@ -37,8 +38,47 @@ router.post("/register", (req, res) => {
 
 router.get('/me',
     isAuthenticated,
-    (req, res) => res.json({ id: req.user.id, username: req.user.email })
+    (req, res) => res.json(req.user)
 );
+
+router.post("/update", async (req,res) => {
+    const user = req.body.user;
+    //make sure to now update password
+    delete user.password;
+
+    await UserModel.findOneAndUpdate(
+        {_id: req.user._id},
+        user,
+        { "new": true },
+        function (err, user) {
+            if (err) {
+                res.json({
+                    success: false
+                })
+            } else {
+                res.json({
+                    success: true,
+                    user
+                });
+            }
+        }
+    );
+})
+
+router.post("/uploadAvatar", isAuthenticated, async (req, res) => {
+    const diskPath = `uploads/${req.user._id}.jpg`;
+    const path = `${diskPath}?date=${new Date().getTime()}`;
+    fs.writeFileSync(diskPath, req.files.avatar.data);
+
+    await UserModel.update(req.user, {
+        companyImage: path
+    })
+    
+    res.json({
+        success: true,
+        url: path
+    })
+})
 
 
 export default router;

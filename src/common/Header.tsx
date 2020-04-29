@@ -1,4 +1,4 @@
-import { Col, Row, Menu, Dropdown, Button, Tag } from "antd";
+import { Col, Row, Menu, Dropdown, Button, Tag, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import Colors from "../style/Colors";
@@ -48,6 +48,10 @@ const HeaderDetails = styled(Col)`
     .profile-link {
         cursor: pointer;
     }
+
+    .avatar {
+        margin-right: 10px;
+    }
 `;
 
 interface Props {
@@ -67,7 +71,10 @@ const component = (props: Props) => {
                 <div className="links">
                     {props.currentUser ?
                         <div className="right">
-                            <Link href="/profile"><Tag className="profile-link" color="green">{props.currentUser.companyName}</Tag></Link>
+                            <Avatar className="avatar" style={{ backgroundColor: "red", verticalAlign: 'middle' }} src={props.currentUser?.companyImage} size="large">
+                                {props.currentUser?.companyName}
+                            </Avatar>
+                            <Link href="/profile"><Tag className="profile-link" color="green">{props.currentUser?.companyName}</Tag></Link>
                             <a onClick={props.logOut}>Log out</a>
                         </div>
                         : <div className="header-buttons">

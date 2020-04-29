@@ -9,6 +9,8 @@ import { connect } from "mongoose";
 import UserModel, { User } from "../models/UserModel";
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session')
+const fileUpload = require("express-fileupload");
+const path = require('path');
 
 passport.serializeUser(function(user: User, done) {
     done(null, user._id);
@@ -56,7 +58,13 @@ const handle = app.getRequestHandler();
         
         server.use(passport.initialize());
         server.use(passport.session());  
+        server.use(fileUpload({
+            limits: {
+                fileSize: 2 * 1024 * 1024
+            }
+        }))
 
+        server.use('/uploads', express.static(path.join(__dirname, "../uploads")))
         server.use('/api', router);
         server.all("*", (req: Request, res: Response) => {
             return handle(req, res);

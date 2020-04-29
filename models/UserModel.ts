@@ -1,6 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 import config from "../server/config";
+const xss = require("xss");
 
 export const UserSchema = new Schema({
     email: {
@@ -15,6 +16,20 @@ export const UserSchema = new Schema({
     companyName: {
         type: String, 
         required: true
+    },
+    companySize: {
+        type: Number,
+        min: 1,
+        default: 1
+    },
+    companyWebsite: {
+        type: String
+    },
+    companyImage: {
+        type: String
+    },
+    companyDescription: {
+        type: String
     }
 })
 
@@ -41,12 +56,30 @@ UserSchema.pre('save', function (next) {
     });
 })
 
+UserSchema.pre('save', function (next) {
+    const user = this as User;
+
+    if (!user.isModified('companyDescription')) return next();
+    
+    user.companyDescription = xss(user.companyDescription);
+    next();
+})
+
+UserSchema.methods.toJSON = function() {
+    const obj = this.toObject();
+    delete obj.password;
+    return obj;
+}
+
 const UserModel = model<User>("User", UserSchema);
 
 export interface User extends Document {
     email: string;
     password: string;
     companyName: string;
+    companySize: number;
+    companyImage: string;
+    companyDescription: string;
     comparePassword: (password: string) => Promise<boolean>
 }
 
