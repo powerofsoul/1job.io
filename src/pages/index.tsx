@@ -63,7 +63,7 @@ export default () => {
     const [loading, setLoading] = useState(true);
 
     const fetch = async () => {
-            const jobs: Job[] = await get("/api/jobs");
+            const jobs: Job[] = await get("/api/job/all");
             setLoading(false);
             setJobs(jobs);
     }

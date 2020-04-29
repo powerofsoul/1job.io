@@ -4,10 +4,16 @@ import { Job } from "../../models/Job";
 import { isAuthenticated } from "../middleware/middleware";
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
     const jobs = await JobModel.find().populate("company").sort({postedOn: "desc"});
     res.json(jobs);
 });
+
+router.get('/:id', async (req, res) => {
+    const job = await JobModel.findOne({_id: req.params.id}).populate("company").sort({postedOn: "desc"});
+    res.json(job);
+});
+
 
 router.post('/create', isAuthenticated, (req, res) => {
     JobModel.create({

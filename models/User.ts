@@ -5,6 +5,7 @@ export interface User {
     companyName: string;
     companySize: number;
     companyImage: string;
+    companyWebsite: string;
     companyDescription: string;
     comparePassword: (password: string) => Promise<boolean>
 }
