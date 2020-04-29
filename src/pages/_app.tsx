@@ -1,7 +1,6 @@
 import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.css';
-import 'draft-js/dist/Draft.css';
-import 'draft-js-static-toolbar-plugin/lib/plugin.css';
+import 'react-quill/dist/quill.snow.css';
 
 import Header from '../common/Header';
 import Footer from '../common/Footer';
