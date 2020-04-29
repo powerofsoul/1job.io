@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { IAppState } from '../redux/configureStore';
-import { Job } from '../../models/JobModel';
+import { Job } from '../../models/Job';
 import { connect } from 'react-redux';
 import { Tag, Row, Col } from "antd";
 import colors from '../style/Colors';

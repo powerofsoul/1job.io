@@ -6,11 +6,11 @@ import CurrentUserStore from '../redux/stores/CurrentUserStore';
 import { IAppState } from '../redux/configureStore';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { User } from '../../models/UserModel';
 import { toast } from 'react-toastify';
 import Link from '../common/Link';
 import { useRouter } from 'next/router'
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import { User } from '../../models/User';
 
 const Login = styled.div`
     margin-top: 2rem;

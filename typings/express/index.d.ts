@@ -2,7 +2,7 @@
 
 declare module Express {
    interface Request {
-      user: import("../../models/UserModel").User,
+      user: import("../../models/mongo/UserModel").User,
       files: {[key: string]: {
          data: Buffer,
          name: string,

@@ -6,9 +6,9 @@ import CurrentUserStore from '../redux/stores/CurrentUserStore';
 import { IAppState } from '../redux/configureStore';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { User } from '../../models/UserModel';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router'
+import { User } from '../../models/User';
 
 const layout = {
     labelCol: { span: 8 },

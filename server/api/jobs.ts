@@ -1,5 +1,6 @@
 import { Router } from "express";
-import JobModel, { defaultJob, Job } from "../../models/JobModel";
+import JobModel from "../../models/mongo/JobModel";
+import { Job } from "../../models/Job";
 const router = Router();
 
 router.get('/', async (req, res) => {

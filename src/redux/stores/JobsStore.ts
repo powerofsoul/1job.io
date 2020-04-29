@@ -1,4 +1,4 @@
-import { Job } from "../../../models/JobModel";
+import { Job } from "../../../models/Job";
 import { IAppState } from "../configureStore";
 import { get } from "../../Utils";
  

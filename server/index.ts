@@ -6,7 +6,8 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import config from "./config";
 import { connect } from "mongoose";
-import UserModel, { User } from "../models/UserModel";
+import UserModel from "../models/mongo/UserModel";
+import { User } from "../models/User";
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session')
 const fileUpload = require("express-fileupload");

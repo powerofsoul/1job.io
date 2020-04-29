@@ -1,4 +1,3 @@
-import { User } from "../../models/UserModel";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import CurrentUserStore from "../redux/stores/CurrentUserStore";
@@ -13,6 +12,7 @@ import AvatarUpload from "../common/AvatarUpload";
 import { post } from "../Utils";
 import { toast } from "react-toastify";
 import HtmlEditor from "../common/HtmlEditor";
+import { User } from "../../models/User";
 
 interface Props {
     user: User;

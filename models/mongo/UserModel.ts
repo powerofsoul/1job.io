@@ -1,6 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
-import config from "../server/config";
+import config from "../../server/config";
+import { User } from "../User";
 const xss = require("xss");
 
 export const UserSchema = new Schema({
@@ -33,6 +34,8 @@ export const UserSchema = new Schema({
     }
 })
 
+type UserDocument = User & Document;
+
 UserSchema.methods.comparePassword = function (candidatePassword) {
     const {password} = this;
     return bcrypt.compare(candidatePassword, password)
@@ -40,7 +43,7 @@ UserSchema.methods.comparePassword = function (candidatePassword) {
 
 
 UserSchema.pre('save', function (next) {
-    const user = this as User;
+    const user = this as UserDocument;
 
     if (!user.isModified('password')) return next();
 
@@ -57,7 +60,7 @@ UserSchema.pre('save', function (next) {
 })
 
 UserSchema.pre('save', function (next) {
-    const user = this as User;
+    const user = this as UserDocument;
 
     if (!user.isModified('companyDescription')) return next();
     
@@ -71,16 +74,5 @@ UserSchema.methods.toJSON = function() {
     return obj;
 }
 
-const UserModel = model<User>("User", UserSchema);
-
-export interface User extends Document {
-    email: string;
-    password: string;
-    companyName: string;
-    companySize: number;
-    companyImage: string;
-    companyDescription: string;
-    comparePassword: (password: string) => Promise<boolean>
-}
-
-export default UserModel;
+export default model<UserDocument>("User", UserSchema);
+ 

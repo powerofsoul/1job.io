@@ -4,11 +4,11 @@ import styled from "styled-components";
 import Colors from "../style/Colors";
 import DeviceSize from "../style/DeviceSize";
 import Link from "./Link";
-import { User } from "../../models/UserModel";
 import { IAppState } from "../redux/configureStore";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import CurrentUserStore from "../redux/stores/CurrentUserStore";
+import { User } from "../../models/User";
 
 const Header = styled.div`
     width: 100%;

@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { authenticate } from "passport";
 import passport from "passport";
-import UserModel, { User } from "../../models/UserModel";
 import { isAuthenticated } from "../middleware/middleware";
 import fs from "fs";
+import { User } from "../../models/User";
+import UserModel from "../../models/mongo/UserModel";
 
 const router = Router();
 
