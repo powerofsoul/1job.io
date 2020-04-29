@@ -43,17 +43,14 @@ const JobCard = styled.div`
 `;
 
 const Component = (props?: Partial<Job>) => {
-    const [showMoreDescription, setShowMoreDescription] = useState(false);
-    const hasBigDescription = props.description?.length > 255;
-
     return <JobCard>
         <Skeleton avatar active loading={props.loading}>
-            <CompanyImage src={props.companyImage} />
+            <CompanyImage src={props.company.companyImage} />
             <div className="job-card-data">
                 <div className="header">
-                    <h3>{props.company}</h3>
+                    <h3>{props.company.companyName}</h3>
                     <div className="likes">
-                        <Statistic value={props.likes} prefix={props.liked ? <HeartTwoTone twoToneColor={colors.red} /> : <HeartOutlined />} />
+                        <Statistic value={0} prefix={false ? <HeartTwoTone twoToneColor={colors.red} /> : <HeartOutlined />} />
                     </div>
                 </div>
                 <div>
@@ -64,23 +61,12 @@ const Component = (props?: Partial<Job>) => {
                         <h2>{props.title}</h2>
                     </Link>
                 </div>
-                <div>
-                    <h3>{showMoreDescription ? props.description : props.description?.substr(0, 255) + "..."}</h3>
-                </div>
-                {
-                    hasBigDescription && <Button type="default" onClick={() => setShowMoreDescription(!showMoreDescription)}>
-                        {!showMoreDescription ? "Show More" : "Show Less"}
-                    </Button>
-                }
-
                 <div className="footer">
                     <div className="tags">
-                        {props.tags?.map((t) => <Tag key={t} color="blue">{t}</Tag>)}
+                        {props.category?.map((t) => <Tag key={t} color="blue">{t}</Tag>)}
                     </div>
                     <div className="location">
-                        {props.location?.trim() != '' && <span>
-                            <Tag color="volcano">{props.location}</Tag>
-                        </span>}
+                        {props.experienceLevel?.map((t) => <Tag key={t} color="green">{t}</Tag>)}
                     </div>
                 </div>
             </div>

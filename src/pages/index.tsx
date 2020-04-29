@@ -1,19 +1,16 @@
-import { FormOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Input, Select, Row, Col } from 'antd';
+import { FormOutlined } from "@ant-design/icons";
+import { Button, Skeleton } from 'antd';
+import React, { useState } from "react";
 import Typist from 'react-typist';
 import TypistLoop from "react-typist-loop";
-import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
+import { Job } from "../../models/Job";
+import Filter from "../common/Filter";
 import JobCard from '../common/JobCard';
 import Link from '../common/Link';
-import { Job } from '../../models/Job';
-import { IAppState } from '../redux/configureStore';
-import JobStore from '../redux/stores/JobsStore';
 import colors from '../style/Colors';
 import DeviceSize from '../style/DeviceSize';
-import { connect } from "react-redux";
-import Search from "antd/lib/input/Search";
-import Filter from "../common/Filter";
+import { get } from "../Utils";
 
 const IndexTop = styled.div`
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -61,13 +58,22 @@ const IndexBody = styled.div`
     }
 `;
 
-interface Props {
-    jobs: Job[];
-    loadMoreJobs: () => void;
-    reloadAllJobs: () => void;
-}
+export default () => {
+    const [jobs, setJobs] = useState<Job[]>([]);
+    const [loading, setLoading] = useState(true);
 
-const index = (props: Props) => {
+    const fetch = async () => {
+            const jobs: Job[] = await get("/api/jobs");
+            setLoading(false);
+            setJobs(jobs);
+    }
+
+    React.useEffect(() => {
+        if(loading){
+            fetch();
+        }
+    }, [])
+
     return <div>
         <IndexTop>
             <div className="content">
@@ -90,20 +96,10 @@ const index = (props: Props) => {
             </div>
         </IndexTop>
         <IndexBody>
-            <Filter onReload={props.reloadAllJobs} />
-            {props.jobs?.map((j, i) => <JobCard key={i} {...j} />)}
-            <div className="load-more">
-                <Button onClick={props.loadMoreJobs}>Load More</Button>
-            </div>
+            <Filter onReload={fetch} />
+            <Skeleton avatar loading={loading} active>
+                {jobs?.map((j, i) => <JobCard key={i} {...j} />)}
+            </Skeleton>
         </IndexBody>
     </div>
 }
-
-const mapStateToProps = (store: IAppState): Partial<Props> => ({
-    jobs: store.jobsStore.jobs
-});
-
-export default connect(
-    mapStateToProps,
-    (dispatch) => bindActionCreators(JobStore.actionCreators, dispatch)
-)(index);

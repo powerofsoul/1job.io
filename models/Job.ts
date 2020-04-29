@@ -1,17 +1,14 @@
+import { User } from "./User";
 
 export interface Job {
     _id: string;
-    loading: boolean;
-    title: string;
-    company: string;
-    companyImage: string;
-    featured: boolean;
-    postedOn: Date;
-    description: string;
-    tags: string[];
-    likes: number;
-    liked: boolean;
-    location: string;
+    title: string,
+    loading: boolean,
+    company: User,
+    description: string,
+    experienceLevel: (typeof JobExeperienceLevels[number])[]
+    category: (typeof JobExeperienceLevels[number])[]
+    postedOn: Date
 }
 
 export const JobCategories = [
@@ -31,7 +28,7 @@ export const JobCategories = [
 
 export const JobExeperienceLevels = [
     "Entry",
-    "Mind",
+    "Mid",
     "Senior",
     "Lead"
 ] as const;

@@ -1,5 +1,6 @@
 import { Schema, model, Document } from "mongoose";
-import { Job } from "../Job";
+import { Job, JobExeperienceLevels, JobCategories } from "../Job";
+import { UserSchema } from "./UserModel";
 
 export const JobSchema = new Schema({
     title: {
@@ -7,34 +8,23 @@ export const JobSchema = new Schema({
         required: true
     },
     company: {
-        type: String,
+        type: Schema.Types.ObjectId, 
+        ref: 'User',
         required: true
-    },
-    companyImage: {
-        type: String,
-        required: true
-    },
-    featured: {
-        type: Boolean,
-        default: false
     },
     description: {
         type: String,
         required: true
     },
-    postedOn: Date,
-    tags: [{
-        type: String
-    }],
-    likes: {
-        type: Number,
-        default: 0
+    experienceLevel: {
+        type: JobExeperienceLevels,
+        required: true
     },
-    likedBy: [{
-        type: Number,
-        default: []
-    }],
-    location: String
+    category: {
+        type: JobCategories,
+        required: true
+    },
+    postedOn: Date,
 })
 
 type JobDocument = Job & Document;
