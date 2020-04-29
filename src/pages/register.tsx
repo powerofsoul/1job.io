@@ -27,15 +27,10 @@ interface Props {
 }
 
 const Component = (props: Props) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [companyName, setCompanyName] = useState('');
     const router = useRouter();
 
-    const submit = () => {
-       post("/api/user/register", {
-                email, password, companyName
-       }).then((response: {success: boolean, user: User, message: string}) => {
+    const submit = (values) => {
+       post("/api/user/register", values).then((response: {success: boolean, user: User, message: string}) => {
             if(response.success) {
                 toast("Welcome!", {
                     type: "success"
@@ -59,26 +54,26 @@ const Component = (props: Props) => {
             {...layout}
             name="basic"
             initialValues={{ remember: true }}
-            onSubmitCapture={submit}>
+            onFinish={submit}>
             <Form.Item
                 label="Email"
                 name="email"
                 rules={[{ required: true, type:"email", message: 'Please input your email!' }]}>
-                <Input onChange={(e) => setEmail(e.target.value)}/>
+                <Input />
             </Form.Item>
 
             <Form.Item
                 label="Company Name"
-                name="company-name"
+                name="companyName"
                 rules={[{ required: true, min:3, message: 'Please input your company name!' }]}>
-                <Input onChange={(e) => setCompanyName(e.target.value)}/>
+                <Input />
             </Form.Item>
 
             <Form.Item
                 label="Password"
                 name="password"
                 rules={[{ required: true, message: 'Please input your password!' }]}>
-                <Input.Password onChange={(e) => setPassword(e.target.value)} />
+                <Input.Password  />
             </Form.Item>
 
             <Form.Item {...tailLayout} name="remember" valuePropName="checked">
