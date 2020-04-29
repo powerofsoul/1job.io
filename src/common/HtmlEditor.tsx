@@ -33,4 +33,5 @@ export default (props) => <QuillNoSSRWrapper
     formats={formats}
     theme='snow'
     {...props}
+    value={props.value || "<p></p>"}
 />
