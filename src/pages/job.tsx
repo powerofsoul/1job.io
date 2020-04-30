@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import React from "react";
 import {useParams} from "react-router-dom";
+import { useHistory } from 'react-router';
 const JobDetails = styled.div`
     .JobDetailsHeader {
         align-items:center;
@@ -39,11 +40,15 @@ export default () => {
     const { id } = useParams();
     const [job, setJob] = useState<Job>()
     const [loading, setLoading] = useState(true)
-
-    const fetch = async () => {
-        const job: Job = await get(`/api/job/${id}`);
-        setJob(job);
-        setLoading(false);
+    const history = useHistory();
+    
+    const fetch =  () => {
+        get(`/api/job/${id}`).then((j: Job) => {
+            setJob(j);
+            setLoading(false);
+        }).catch(() => {
+            history.push("/"); 
+        });
     }
 
     useEffect(() => {

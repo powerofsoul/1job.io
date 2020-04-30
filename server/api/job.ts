@@ -9,9 +9,11 @@ router.get('/all', async (req, res) => {
     res.json(jobs);
 });
 
-router.get('/:id', async (req, res) => {
-    const job = await JobModel.findOne({_id: req.params.id}).populate("company").sort({postedOn: "desc"});
-    res.json(job);
+router.get('/:id', (req, res) => {
+    JobModel.findOne({_id: req.params.id})
+        .populate("company")
+        .then((job) =>res.json(job))
+        .catch(() => res.status(404).json({success: false}));
 });
 
 
