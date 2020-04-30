@@ -63,7 +63,7 @@ interface Props {
 }
 
 const component = (props: Props) => {
-    if(props.loading) props.refreshCurrentUser();
+    if (props.loading) props.refreshCurrentUser();
 
     return <Header>
         <Row>
@@ -76,10 +76,12 @@ const component = (props: Props) => {
                 <div className="links">
                     {props.currentUser ?
                         <div className="right">
-                            <Avatar className="avatar" style={{ backgroundColor: "red", verticalAlign: 'middle' }} src={props.currentUser?.companyImage} size="large">
-                                {props.currentUser?.companyName}
-                            </Avatar>
-                            <Link to="/profile"><Tag className="profile-link" color="green">{props.currentUser?.companyName}</Tag></Link>
+                            <Link to="/profile">
+                                <Avatar className="avatar" style={{ backgroundColor: "white", verticalAlign: 'middle' }} src={props.currentUser?.companyImage} size="large">
+                                    {props.currentUser?.companyName}
+                                </Avatar>
+                                <Tag className="profile-link" color="green">{props.currentUser?.companyName}</Tag>
+                            </Link>
                             <a onClick={props.logOut}>Log out</a>
                         </div>
                         : <div className="header-buttons">
