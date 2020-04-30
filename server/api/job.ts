@@ -14,8 +14,8 @@ router.post("/filter", async (req, res) => {
 
     const Query = { };
 
-    if(filterQ.titke) {
-        Query['titke'] = {
+    if(filterQ.title) {
+        Query['title'] = {
             $regex: `.*(${filterQ.title.replace(/\s+/g, '|')}).*`,
             $options: "i"
         }
