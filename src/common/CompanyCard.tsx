@@ -4,30 +4,31 @@ import { Avatar, Skeleton, Row, Col, Button } from "antd";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const CompanyCard = styled(Skeleton)`
-
+const CompanyCard = styled.div`
+    text-align: center;
+    .company-logo {
+        height: 150px;
+    }
 `;
 
 export default (props: { user?: User }) => {
     const { user } = props;
 
-    return <CompanyCard avatar active loading={user == undefined}>
-        <Link to={`/profile/${user?._id}`}>
-            <Row align="middle" gutter={[12, 12]}>
-                <Col>
-                    <Avatar size={64} className="companyLogo" src={user?.companyImage} />
-                </Col>
-                <Col>
+    return <CompanyCard>
+        <Skeleton avatar active loading={user == undefined}>
+            <div className="section">
+                <img className="company-logo" src={user?.companyImage} />
+            </div>
+            <div className="section">
+                <h3>
                     {user?.companyName}
-                </Col>
-            </Row>
-        </Link>
-        {user?.companyWebsite && <Row>
-            <Col>
+                </h3>
+            </div>
+            {user?.companyWebsite && <div className="section">
                 <a target="_blank" href={user.companyWebsite} className="ant-btn">
                     View Website
                 </a>
-            </Col>
-        </Row>}
+            </div>}
+        </Skeleton>
     </CompanyCard>
 }
