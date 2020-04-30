@@ -7,8 +7,10 @@ export interface Job {
     company: User,
     description: string,
     experienceLevel: (typeof JobExeperienceLevels[number])[]
-    category: (typeof JobExeperienceLevels[number])[]
-    postedOn: Date
+    category: typeof JobCategories[number],
+    regions: (typeof JobRegions[number])[]
+    postedOn: Date,
+    visa: boolean | undefined
 }
 
 export const JobCategories = [
@@ -21,10 +23,9 @@ export const JobCategories = [
     "Customer Support",
     "Finance and Legal",
     "Sales and Marketing",
-    "Full-Time",
-    "Contract",
     "Other"
 ] as const;
+export type JobCategoriesType = typeof JobCategories[number];
 
 export const JobExeperienceLevels = [
     "Entry",
@@ -32,3 +33,17 @@ export const JobExeperienceLevels = [
     "Senior",
     "Lead"
 ] as const;
+export type JobExeperienceLevelsType = typeof JobExeperienceLevels[number];
+
+export const JobRegions = [
+    "Full Remote",
+    "Usa",
+    "Europe",
+    "Americas",
+    "Canada",
+    "EMEA",
+    "Asia",
+    "Africa",
+    "Other"
+]
+export type JobRegionsType = typeof JobRegions[number];

@@ -10,7 +10,7 @@ import JobCard from '../common/JobCard';
 import { Link } from "react-router-dom";
 import colors from '../style/Colors';
 import DeviceSize from '../style/DeviceSize';
-import { get } from "../Utils";
+import { get, post } from "../Utils";
 
 const IndexTop = styled.div`
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -68,6 +68,12 @@ export default () => {
             setJobs(jobs);
     }
 
+    const filter = async (query) => {
+        const jobs: Job[] = await post("/api/job/filter", {query});
+        setLoading(false);
+        setJobs(jobs);
+    }
+
     React.useEffect(() => {
         if(loading){
             fetch();
@@ -96,7 +102,7 @@ export default () => {
             </div>
         </IndexTop>
         <IndexBody>
-            <Filter onReload={fetch} />
+            <Filter onReload={fetch} onSearch={filter}/>
             <Skeleton avatar loading={loading} active>
                 {jobs?.map((j, i) => <JobCard key={i} {...j} />)}
             </Skeleton>

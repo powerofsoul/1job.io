@@ -63,7 +63,7 @@ const Component = (props?: Partial<Job>) => {
                 </div>
                 <div className="footer">
                     <div className="tags">
-                        {props.category?.map((t) => <Tag key={t} color="blue">{t}</Tag>)}
+                        <Tag color="blue">{props.category}</Tag>
                     </div>
                     <div className="location">
                         {props.experienceLevel?.map((t) => <Tag key={t} color="green">{t}</Tag>)}

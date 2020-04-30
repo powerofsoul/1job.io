@@ -1,5 +1,5 @@
 import { Schema, model, Document } from "mongoose";
-import { Job, JobExeperienceLevels, JobCategories } from "../Job";
+import { Job, JobExeperienceLevels, JobCategories, JobRegions } from "../Job";
 import { UserSchema } from "./UserModel";
 
 export const JobSchema = new Schema({
@@ -17,12 +17,22 @@ export const JobSchema = new Schema({
         required: true
     },
     experienceLevel: {
-        type: JobExeperienceLevels,
+        type: [String],
+        enum: JobExeperienceLevels,
+        required: true
+    },
+    regions: {
+        type: [String],
+        enum: JobRegions,
         required: true
     },
     category: {
-        type: JobCategories,
+        type: String,
+        enum: JobCategories,
         required: true
+    },
+    visa: {
+        type: Boolean
     },
     postedOn: Date,
 })
