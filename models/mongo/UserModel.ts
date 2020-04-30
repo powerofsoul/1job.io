@@ -23,6 +23,9 @@ export const UserSchema = new Schema({
         min: 1,
         default: 1
     },
+    companySummary: {
+        type: String
+    },
     companyWebsite: {
         type: String
     },

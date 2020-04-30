@@ -96,6 +96,9 @@ const Profile = (props: Props) => {
                         <AvatarUpload avatarUrl={props.user?.companyImage} afterUpload={props.refreshCurrentUser} />
                     </Form.Item>
                 </Form.Item>
+                <Form.Item name={'companySummary'} label="Company Summary">
+                    <Input.TextArea />
+                </Form.Item>
                 <Form.Item name={'companyDescription'} label="Company Description">
                     <HtmlEditor value={companyDescription} onChange={setCompanyDescription} />
                 </Form.Item>
