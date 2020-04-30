@@ -57,7 +57,7 @@ export default () => {
 
     return <JobDetails>
         <Skeleton active loading={loading}>
-            <Row justify="center">
+            <Row gutter={[32,32]} justify="center">
                 <Col xs={12} md={9}>
                     <div>
                         Posted {moment(job?.postedOn).fromNow()}
