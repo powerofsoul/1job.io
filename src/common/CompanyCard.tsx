@@ -29,8 +29,5 @@ export default (props: { user?: User }) => {
                 </a>
             </Col>
         </Row>}
-        <Row>
-            {user?.companySummary}
-        </Row>
     </CompanyCard>
 }
