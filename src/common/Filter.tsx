@@ -30,12 +30,14 @@ const Filter = (props: Props) => {
         <Row gutter={[12, 12]}>
             <Col xs={12} lg={6}>
                 <Input
+                    allowClear
                     placeholder="Job Title"
                     onChange={(e) => setTitle(e.target.value)}
                 />
             </Col>
             <Col xs={12} lg={3}>
                 <Select
+                    allowClear
                     mode="tags"
                     size="middle"
                     options={JobCategories.map(e => ({ value: e }))}
@@ -46,6 +48,7 @@ const Filter = (props: Props) => {
             </Col>
             <Col xs={12} lg={3}>
                 <Select
+                    allowClear
                     mode="tags"
                     size="middle"
                     options={JobRegions.map(e => ({ value: e }))}
@@ -56,6 +59,7 @@ const Filter = (props: Props) => {
             </Col>
             <Col xs={12} lg={3}>
                 <Select
+                    allowClear
                     mode="tags"
                     size="middle"
                     options={JobExeperienceLevels.map(e => ({ value: e }))}
