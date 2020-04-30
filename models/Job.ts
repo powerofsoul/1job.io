@@ -36,14 +36,14 @@ export const JobExeperienceLevels = [
 export type JobExeperienceLevelsType = typeof JobExeperienceLevels[number];
 
 export const JobRegions = [
-    "Full Remote",
-    "Usa",
-    "Europe",
-    "Americas",
-    "Canada",
+    "ANYWHERE",
+    "USA",
+    "EUROPE",
+    "AMERICAS",
+    "CANADA",
     "EMEA",
-    "Asia",
-    "Africa",
-    "Other"
+    "ASIA",
+    "AFRICA",
+    "OTHER"
 ]
 export type JobRegionsType = typeof JobRegions[number];
