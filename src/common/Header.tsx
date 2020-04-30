@@ -15,14 +15,19 @@ const Header = styled.div`
     width: 100%;
     background-color: ${Colors.light};
     box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
+    position: sticky;
+    top:0;
+    z-index: 10;
 
     ${DeviceSize.xs} {
+        text-align: center;
         padding-top: 20px;
         padding-bottom: 20px;
         padding-left: 10px;
     }
 
     ${DeviceSize.md} {
+        text-align: unset;
         padding: 20px;
     }
 `;
@@ -33,11 +38,13 @@ const HeaderDetails = styled(Col)`
 
     .links {
         ${DeviceSize.xs} {
-            margin-left: unset;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         ${DeviceSize.md} {
             margin-left: auto;
+            margin-right: 0;
         }
     }
         
