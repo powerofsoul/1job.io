@@ -29,8 +29,7 @@ const AppBody = styled.div`
 const App = () => {
   const appStore = configureStore();
 
-  return <Provider store={appStore.store}>
-    <PersistGate loading={null} persistor={appStore.persistor}>
+  return <Provider store={appStore}>
       <ToastContainer position="bottom-right"
         autoClose={1500} />
       <AppBody>
@@ -45,7 +44,6 @@ const App = () => {
           <Footer />
         </BrowserRouter>
       </AppBody>
-    </PersistGate>
   </Provider>
 };
 

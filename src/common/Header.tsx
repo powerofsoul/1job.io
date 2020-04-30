@@ -56,11 +56,15 @@ const HeaderDetails = styled(Col)`
 `;
 
 interface Props {
+    loading: boolean;
     currentUser?: User;
     logOut: () => void;
+    refreshCurrentUser: () => void;
 }
 
 const component = (props: Props) => {
+    if(props.loading) props.refreshCurrentUser();
+
     return <Header>
         <Row>
             <Col xs={24} md={12}>
@@ -90,7 +94,8 @@ const component = (props: Props) => {
 }
 
 const mapStateToProps = (store: IAppState): Partial<Props> => ({
-    currentUser: store.currentUserStore.user
+    currentUser: store.currentUserStore.user,
+    loading: store.currentUserStore.loading
 });
 
 export default connect(
