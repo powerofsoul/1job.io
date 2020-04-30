@@ -14,6 +14,7 @@ import * as React from "react";
 const Header = styled.div`
     width: 100%;
     background-color: ${Colors.light};
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
 
     ${DeviceSize.xs} {
         padding-top: 20px;
