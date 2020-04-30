@@ -43,6 +43,7 @@ export default () => {
             </Form.Item>
             <Form.Item name={'category'} label="Category" rules={[{ required: true }]}>
                 <Select
+                    mode="tags"
                     placeholder="Select a category"
                     allowClear
                 >
@@ -51,7 +52,8 @@ export default () => {
             </Form.Item>
             <Form.Item name={'experienceLevel'} label="Experience Level" rules={[{ required: true }]}>
                 <Select
-                    placeholder="Select a category"
+                    mode="tags"
+                    placeholder="Select the required experience level"
                     allowClear>
                     {JobExeperienceLevels.map((c)=><Select.Option value={c} key={c}>{c}</Select.Option>)}
                 </Select>
