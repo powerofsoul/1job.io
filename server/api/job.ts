@@ -12,12 +12,14 @@ router.get('/all', async (req, res) => {
 router.post("/filter", async (req, res) => {
     const filterQ = req.body.query;
 
-    const Query = {
-        title: {
+    const Query = { };
+
+    if(filterQ.titke) {
+        Query['titke'] = {
             $regex: `.*(${filterQ.title.replace(/\s+/g, '|')}).*`,
             $options: "i"
-        },
-    };
+        }
+    }
 
     if (filterQ.category?.length > 0) {
         Query["category"] = {
