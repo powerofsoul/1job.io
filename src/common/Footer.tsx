@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import Colors from "../style/Colors";
 import { Row, Col, Layout } from "antd";
-import Link from "./Link";
+import { Link } from "react-router-dom";
 import DeviceSize from "../style/DeviceSize";
 import colors from "../style/Colors";
+import React from "react";
 
 const {Footer} = Layout;
 const StyledFooter = styled(Footer)`
@@ -40,10 +41,10 @@ export default () => {
             <Col xs={24} md={12}>
                  <FooterDetails>
                      <div className="links">
-                        <Link className="link" href="/">Home</Link>
-                        <Link className="link" href="/aboutus">About Us</Link>
-                        <Link className="link" href="/help">Help</Link>
-                        <Link className="link" href="/contact">Contact</Link>
+                        <Link className="link" to="/">Home</Link>
+                        <Link className="link" to="/aboutus">About Us</Link>
+                        <Link className="link" to="/help">Help</Link>
+                        <Link className="link" to="/contact">Contact</Link>
                     </div>
                  </FooterDetails>
             </Col>

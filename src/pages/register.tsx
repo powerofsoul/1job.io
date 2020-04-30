@@ -7,8 +7,8 @@ import { IAppState } from '../redux/configureStore';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/router'
 import { User } from '../../models/User';
+import React from "react";
 
 const layout = {
     labelCol: { span: 8 },
@@ -27,7 +27,7 @@ interface Props {
 }
 
 const Component = (props: Props) => {
-    const router = useRouter();
+    //const router = useRouter();
 
     const submit = (values) => {
        post("/api/user/register", values).then((response: {success: boolean, user: User, message: string}) => {
@@ -39,7 +39,7 @@ const Component = (props: Props) => {
                 props.setCurrentUser(response.user);
 
                 setTimeout(() => {
-                    router.push("/");
+                    //router.push("/");
                 }, 1000);
             } else {
                 toast(response.message, {

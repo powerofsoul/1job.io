@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { IAppState } from '../redux/configureStore';
 import { Job } from '../../models/Job';
 import { connect } from 'react-redux';
@@ -8,6 +7,7 @@ import styled from 'styled-components';
 import { get } from '../Utils';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
+import React from "react";
 
 const JobDetails = styled.div`
     .JobDetailsHeader {
@@ -36,8 +36,9 @@ const JobDetails = styled.div`
 `;
   
 export default () => {
-    const router = useRouter();
-    const { id } = router.query;
+    //const router = useRouter();
+    //const { id } = router.query;
+    const id = 1;
     const [job, setJob] = useState<Job>()
     const [loading, setLoading] = useState(true)
 

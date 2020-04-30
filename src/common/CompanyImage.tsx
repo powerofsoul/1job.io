@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import React from "react";
 
 const CompanyImage = styled.img`
     border-radius: 50%;

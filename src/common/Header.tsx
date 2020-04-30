@@ -3,12 +3,13 @@ import { UserOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import Colors from "../style/Colors";
 import DeviceSize from "../style/DeviceSize";
-import Link from "./Link";
 import { IAppState } from "../redux/configureStore";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import CurrentUserStore from "../redux/stores/CurrentUserStore";
 import { User } from "../../models/User";
+import { Link } from "react-router-dom";
+import * as React from "react";
 
 const Header = styled.div`
     width: 100%;
@@ -64,7 +65,7 @@ const component = (props: Props) => {
         <Row>
             <Col xs={24} md={12}>
                 <h1>
-                    <Link href="/">Jobs Remotely Online</Link>
+                    <Link to="/">Jobs Remotely Online</Link>
                 </h1>
             </Col>
             <HeaderDetails xs={24} md={12}>
@@ -74,12 +75,12 @@ const component = (props: Props) => {
                             <Avatar className="avatar" style={{ backgroundColor: "red", verticalAlign: 'middle' }} src={props.currentUser?.companyImage} size="large">
                                 {props.currentUser?.companyName}
                             </Avatar>
-                            <Link href="/profile"><Tag className="profile-link" color="green">{props.currentUser?.companyName}</Tag></Link>
+                            <Link to="/profile"><Tag className="profile-link" color="green">{props.currentUser?.companyName}</Tag></Link>
                             <a onClick={props.logOut}>Log out</a>
                         </div>
                         : <div className="header-buttons">
-                            <Link href="/login">Log in</Link>
-                            <Link href="/register">Register</Link>
+                            <Link to="/login">Log in</Link>
+                            <Link to="/register">Register</Link>
                         </div>
                     }
                 </div>

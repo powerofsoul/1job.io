@@ -7,10 +7,10 @@ import { IAppState } from '../redux/configureStore';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toast } from 'react-toastify';
-import Link from '../common/Link';
-import { useRouter } from 'next/router'
+import { Link } from "react-router-dom";
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import { User } from '../../models/User';
+import React from "react";
 
 const Login = styled.div`
     margin-top: 2rem;
@@ -30,7 +30,7 @@ interface Props {
 const Component = (props: Props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const router = useRouter();
+    //const router = useRouter();
 
     const submit = () => {
         post("/api/user/login", {
@@ -41,7 +41,7 @@ const Component = (props: Props) => {
                 type: "success"
             });
             setTimeout(() => {
-                router.push("/");
+                //router.push("/");
             }, 1000);
         }).catch((r) => {
             toast("Invalid credentials.", {
@@ -76,7 +76,7 @@ const Component = (props: Props) => {
                     placeholder="Password"/>
             </Form.Item>
             <Form.Item>
-                <Link className="login-form-forgot" href="/forgotpass">
+                <Link className="login-form-forgot" to="/forgotpass">
                     Forgot password
                 </Link>
             </Form.Item>
@@ -86,7 +86,7 @@ const Component = (props: Props) => {
                     Log in
                 </Button>
                 <br/>
-                Or <Link href="/register">register now!</Link>
+                Or <Link to="/register"><span>register now!</span></Link>
             </Form.Item>
         </Form>
     </Login>

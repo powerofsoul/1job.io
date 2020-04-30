@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { Job } from "../../models/Job";
 import Filter from "../common/Filter";
 import JobCard from '../common/JobCard';
-import Link from '../common/Link';
+import { Link } from "react-router-dom";
 import colors from '../style/Colors';
 import DeviceSize from '../style/DeviceSize';
 import { get } from "../Utils";
@@ -88,7 +88,7 @@ export default () => {
                         ].map(text => <Typist key={text} startDelay={1000}>{text}</Typist>)}
                     </TypistLoop>
                 </h2>
-                <Link href="/post">
+                <Link to="/post">
                     <Button type="primary" icon={<FormOutlined />} size='large'>
                         Post a job now!
                     </Button>

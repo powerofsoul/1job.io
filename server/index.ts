@@ -1,6 +1,5 @@
 
 import express, { Request, Response } from "express";
-import next from "next";
 import router from "./createRoutes";
 import passport from "passport";
 import { Strategy } from "passport-local";
@@ -13,18 +12,18 @@ const cookieSession = require('cookie-session')
 const fileUpload = require("express-fileupload");
 const path = require('path');
 
-passport.serializeUser(function(user: User, done) {
+passport.serializeUser(function (user: User, done) {
     done(null, user._id);
 });
 
-passport.deserializeUser(function(id, done) {
-    UserModel.findById(id, function(err, user) {
+passport.deserializeUser(function (id, done) {
+    UserModel.findById(id, function (err, user) {
         done(err, user);
     });
 });
 
 passport.use(new Strategy(
-    {usernameField: "email", passwordField: "password"},
+    { usernameField: "email", passwordField: "password" },
     function (email: string, password: string, done) {
         UserModel.findOne({ email }, async (err, user) => {
             if (err) { return done(err); }
@@ -36,13 +35,8 @@ passport.use(new Strategy(
     }
 ));
 
-const dev = config.env !== "production";
-const app = next({ dev });
-const handle = app.getRequestHandler();
-
 (async () => {
     try {
-        await app.prepare();
         connect(
             config.mongo_connection_url,
             { useNewUrlParser: true }
@@ -55,21 +49,26 @@ const handle = app.getRequestHandler();
         server.use(cookieSession({
             name: "jobs-remotely",
             keys: config.session_keys
-        })); 
-        
+        }));
+
         server.use(passport.initialize());
-        server.use(passport.session());  
+        server.use(passport.session());
         server.use(fileUpload({
             limits: {
                 fileSize: 2 * 1024 * 1024
             }
         }))
 
-        server.use('/uploads', express.static(path.join(__dirname, "../uploads")))
         server.use('/api', router);
-        server.all("*", (req: Request, res: Response) => {
-            return handle(req, res);
+        server.use('/uploads', express.static(path.join(__dirname, "../uploads")))
+        
+        server.get('/out/bundle.js', function (req, res) {
+            res.sendFile(path.resolve(__dirname, '../public/out/bundle.js'));
         });
+        server.get('*', function (req, res) {
+            res.sendFile(path.resolve(__dirname, '../public/index.html'));
+        });
+
 
         server.listen(config.port, (err?: any) => {
             if (err) throw err;

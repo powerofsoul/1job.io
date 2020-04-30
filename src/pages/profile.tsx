@@ -2,12 +2,9 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import CurrentUserStore from "../redux/stores/CurrentUserStore";
 import { IAppState } from "../redux/configureStore";
-import Router from 'next/router'
 import React, { useState } from "react";
 import { Input, Form, InputNumber, Button, Upload, Skeleton } from "antd";
 import styled from "styled-components";
-import { Editor, EditorState } from 'draft-js';
-import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
 import AvatarUpload from "../common/AvatarUpload";
 import { post } from "../Utils";
 import { toast } from "react-toastify";
@@ -73,7 +70,7 @@ const Profile = (props: Props) => {
 
     React.useEffect(() => {
         if (!props.loading && !props.user) {
-            Router.push("/login");
+            //Router.push("/login");
         }
     }, [props.user]);
 

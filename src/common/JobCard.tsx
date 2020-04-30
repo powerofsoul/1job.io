@@ -6,7 +6,7 @@ import { useState } from "react";
 import React from "react";
 import { HeartOutlined, HeartFilled, HeartTwoTone } from "@ant-design/icons";
 import { Job } from "../../models/Job";
-import Link from "./Link";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
 const JobCard = styled.div`
@@ -57,7 +57,7 @@ const Component = (props?: Partial<Job>) => {
                     {moment(props.postedOn).fromNow()}
                 </div>
                 <div>
-                    <Link href={`/job?id=${props._id}`}>
+                    <Link to={`/job?id=${props._id}`}>
                         <h2>{props.title}</h2>
                     </Link>
                 </div>

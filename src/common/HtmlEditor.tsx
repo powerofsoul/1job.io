@@ -1,12 +1,7 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css'
 import styled from 'styled-components'
-
-const QuillNoSSRWrapper = dynamic(
-    import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> }
-)
-
+import Editor from "react-quill";
 const modules = {
     toolbar: [
         [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
@@ -29,7 +24,7 @@ const formats = [
     'link', 'image', 'video'
 ]
 
-const HmlEditor = styled(QuillNoSSRWrapper)`
+const HmlEditor = styled(Editor)`
     .ql-editor{
         min-height:200px;
     }

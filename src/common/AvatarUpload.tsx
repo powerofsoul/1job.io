@@ -2,6 +2,7 @@ import { Upload } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import React from "react";
 
 export default (props: { avatarUrl?: string, afterUpload: (url: string) => void }) => {
     const [avatarUrl, setAvatarUrl] = useState(props.avatarUrl);

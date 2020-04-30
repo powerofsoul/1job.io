@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { JobCategories, JobExeperienceLevels } from "../../models/Job";
 import { post } from "../Utils";
 import { toast } from "react-toastify";
+import React from "react";
+
 const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 8 },
