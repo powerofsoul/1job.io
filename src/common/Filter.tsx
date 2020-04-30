@@ -64,15 +64,13 @@ const Filter = (props: Props) => {
                     style={{ width: '100%' }}
                 />
             </Col>
+            <Col xs={24} lg={1} style={{ textAlign: "center" }}>
+                <Button onClick={filter} type="primary">Search</Button>
+            </Col>
             <Col flex="auto" style={{ textAlign: "right" }}>
                 <h2>
                     <ReloadOutlined className="reload-icon" title="Reload" onClick={props.onReload} />
                 </h2>
-            </Col>
-        </Row>
-        <Row>
-            <Col xs={24} style={{ textAlign: "center" }}>
-                <Button onClick={filter} type="primary">Search</Button>
             </Col>
         </Row>
     </FilterArea>

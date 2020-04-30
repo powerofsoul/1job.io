@@ -1,22 +1,28 @@
 import styled from "styled-components";
 import colors from "../style/Colors";
-import { Button, Tag, Statistic, Skeleton } from "antd";
-import CompanyImage from "./CompanyImage";
+import { Button, Tag, Statistic, Skeleton, Avatar } from "antd";
 import { useState } from "react";
 import React from "react";
 import { HeartOutlined, HeartFilled, HeartTwoTone } from "@ant-design/icons";
 import { Job } from "../../models/Job";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { useHistory } from "react-router";
+import Space from "../style/Space";
 
 const JobCard = styled.div`
     min-height: 5rem;
-    border-bottom: 1px solid ${colors.light_dark};
-
     padding: 1rem;
     display: flex;
-
     margin-bottom: 1rem;
+    cursor: pointer;
+
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+
+    &:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
 
     .header, .footer {
         display: flex;
@@ -40,38 +46,44 @@ const JobCard = styled.div`
     .job-card-data {
         width: 100%;
     }
+
+    .avatar {
+        height: 100%;
+        width: 100px;
+        margin-right: ${Space.sm};
+    }
 `;
 
 const Component = (props?: Partial<Job>) => {
-    return <JobCard>
-        <Skeleton avatar active loading={props.loading}>
-            <CompanyImage src={props.company.companyImage} />
-            <div className="job-card-data">
-                <div className="header">
-                    <h3>{props.company.companyName}</h3>
-                    <div className="likes">
-                        <Statistic value={0} prefix={false ? <HeartTwoTone twoToneColor={colors.red} /> : <HeartOutlined />} />
+    const history = useHistory();
+    const goToJobPage = () => {
+        history.push(`/job/${props._id}`);
+    }
+
+    return <JobCard onClick={goToJobPage}>
+            <Skeleton avatar active loading={props.loading}>
+                <Avatar className="avatar" shape="square" src={props.company.companyImage} />
+                <div className="job-card-data">
+                    <div className="header">
+                        <div>
+                            {moment(props.postedOn).fromNow()}
+                        </div>
                     </div>
-                </div>
-                <div>
-                    {moment(props.postedOn).fromNow()}
-                </div>
-                <div>
-                    <Link to={`/job/${props._id}`}>
+                    <div>
                         <h2>{props.title}</h2>
-                    </Link>
-                </div>
-                <div className="footer">
-                    <div className="tags">
-                        <Tag color="blue">{props.category}</Tag>
+                        <h4>{props.company.companyName}</h4>
                     </div>
-                    <div className="location">
-                        {props.experienceLevel?.map((t) => <Tag key={t} color="green">{t}</Tag>)}
+                    <div className="footer">
+                        <div className="tags">
+                            <Tag color="blue">{props.category}</Tag>
+                        </div>
+                        <div className="location">
+                            {props.experienceLevel?.map((t) => <Tag key={t} color="green">{t}</Tag>)}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </Skeleton>
-    </JobCard>
+            </Skeleton>
+        </JobCard>
 }
 
 export default Component;
