@@ -41,6 +41,10 @@ const JobCard = styled.div`
 
     .footer {
         margin-top: 1rem;
+
+        .tags > div {
+            margin-bottom: 0.5rem;
+        }
     }
 
     .job-card-data {
@@ -75,7 +79,12 @@ const Component = (props?: Partial<Job>) => {
                     </div>
                     <div className="footer">
                         <div className="tags">
-                            <Tag color="blue">{props.category}</Tag>
+                            <div>
+                                <Tag color="blue">{props.category}</Tag>
+                            </div>
+                            <div>
+                                {props.regions?.map((r) => <Tag key={r} color="red">{r}</Tag>)}
+                            </div>
                         </div>
                         <div className="location">
                             {props.experienceLevel?.map((t) => <Tag key={t} color="green">{t}</Tag>)}
