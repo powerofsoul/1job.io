@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import { User } from '../../models/User';
 import React from "react";
+import { useHistory } from 'react-router';
 
 const Login = styled.div`
     margin-top: 2rem;
@@ -30,7 +31,7 @@ interface Props {
 const Component = (props: Props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    //const router = useRouter();
+    const history = useHistory();
 
     const submit = () => {
         post("/api/user/login", {
@@ -40,9 +41,8 @@ const Component = (props: Props) => {
             toast("Login succesfully.", {
                 type: "success"
             });
-            setTimeout(() => {
-                //router.push("/");
-            }, 1000);
+            history.push("/");
+            
         }).catch((r) => {
             toast("Invalid credentials.", {
                 type: "error"

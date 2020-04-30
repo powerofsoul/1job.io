@@ -10,6 +10,7 @@ import { post } from "../Utils";
 import { toast } from "react-toastify";
 import HtmlEditor from "../common/HtmlEditor";
 import { User } from "../../models/User";
+import { useHistory } from "react-router";
 
 interface Props {
     user: User;
@@ -47,7 +48,8 @@ const ProfileContainer = styled.div`
 
 const Profile = (props: Props) => {
     const [companyDescription, setCompanyDescription] = useState(props.user?.companyDescription);
-
+    const history = useHistory();
+    
     const onFinish = async (values) => {
         const response: { success: boolean, user: User } = await post("/api/user/update", {
             user: {...values,
@@ -70,7 +72,7 @@ const Profile = (props: Props) => {
 
     React.useEffect(() => {
         if (!props.loading && !props.user) {
-            //Router.push("/login");
+            history.push("/login");
         }
     }, [props.user]);
 

@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import { toast } from 'react-toastify';
 import { User } from '../../models/User';
 import React from "react";
+import { useHistory } from 'react-router';
 
 const layout = {
     labelCol: { span: 8 },
@@ -27,7 +28,7 @@ interface Props {
 }
 
 const Component = (props: Props) => {
-    //const router = useRouter();
+    const history = useHistory();
 
     const submit = (values) => {
        post("/api/user/register", values).then((response: {success: boolean, user: User, message: string}) => {
@@ -39,7 +40,7 @@ const Component = (props: Props) => {
                 props.setCurrentUser(response.user);
 
                 setTimeout(() => {
-                    //router.push("/");
+                    history.push("/");
                 }, 1000);
             } else {
                 toast(response.message, {
