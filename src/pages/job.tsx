@@ -8,7 +8,7 @@ import { get } from '../Utils';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
 import React from "react";
-
+import {useParams} from "react-router-dom";
 const JobDetails = styled.div`
     .JobDetailsHeader {
         align-items:center;
@@ -36,9 +36,7 @@ const JobDetails = styled.div`
 `;
   
 export default () => {
-    //const router = useRouter();
-    //const { id } = router.query;
-    const id = 1;
+    const { id } = useParams();
     const [job, setJob] = useState<Job>()
     const [loading, setLoading] = useState(true)
 

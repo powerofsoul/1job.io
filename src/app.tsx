@@ -37,7 +37,7 @@ const App = () => {
         <BrowserRouter>
           <Header />
             <Route path="/profile" component={Profile} /> 
-            <Route path="/job" component={Job} /> 
+            <Route path="/job/:id" component={Job} /> 
             <Route path="/post" component={Post} /> 
             <Route path="/login" component={Login} /> 
             <Route path="/register" component={Register} /> 

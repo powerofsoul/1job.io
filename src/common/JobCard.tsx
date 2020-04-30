@@ -57,7 +57,7 @@ const Component = (props?: Partial<Job>) => {
                     {moment(props.postedOn).fromNow()}
                 </div>
                 <div>
-                    <Link to={`/job?id=${props._id}`}>
+                    <Link to={`/job/${props._id}`}>
                         <h2>{props.title}</h2>
                     </Link>
                 </div>

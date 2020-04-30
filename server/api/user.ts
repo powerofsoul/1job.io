@@ -68,7 +68,7 @@ router.post("/update", async (req,res) => {
 
 router.post("/uploadAvatar", isAuthenticated, async (req, res) => {
     const diskPath = `uploads/${req.user._id}.jpg`;
-    const path = `${diskPath}?date=${new Date().getTime()}`;
+    const path = `/${diskPath}?date=${new Date().getTime()}`;
     fs.writeFileSync(diskPath, req.files.avatar.data);
 
     await UserModel.update(req.user, {
