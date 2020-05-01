@@ -17,12 +17,12 @@ const LOG_OUT_CURRENT_USER = "LOG_OUT_CURRENT_USER";
 const actionCreators = {
     setCurrentUser: (user: User) => ({ type: SET_CURRENT_USER, user }),
     logOut: () => async (dispatch) => {
-        await get("/api/user/logout");
+        await get("/user/logout");
 
         dispatch({ type: LOG_OUT_CURRENT_USER })
     },
     refreshCurrentUser: () => async (dispatch) => {
-        const user = await get("/api/user/me");
+        const user = await get("/user/me");
 
         dispatch({type: SET_CURRENT_USER, user})
     } 

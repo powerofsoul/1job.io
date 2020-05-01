@@ -41,7 +41,7 @@ export default () => {
     const history = useHistory();
 
     const fetch = () => {
-        get(`/api/job/${id}`).then((j: Job) => {
+        get(`/job/${id}`).then((j: Job) => {
             setJob(j);
             setLoading(false);
         }).catch(() => {

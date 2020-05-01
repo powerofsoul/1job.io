@@ -31,7 +31,7 @@ const Component = (props: Props) => {
     const history = useHistory();
 
     const submit = (values) => {
-       post("/api/user/register", values).then((response: {success: boolean, user: User, message: string}) => {
+       post("/user/register", values).then((response: {success: boolean, user: User, message: string}) => {
             if(response.success) {
                 toast("Welcome!", {
                     type: "success"

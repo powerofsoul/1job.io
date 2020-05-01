@@ -34,7 +34,7 @@ const Component = (props: Props) => {
     const history = useHistory();
 
     const submit = () => {
-        post("/api/user/login", {
+        post("/user/login", {
             email, password
         }).then((user: User) => {
             props.setCurrentUser(user);

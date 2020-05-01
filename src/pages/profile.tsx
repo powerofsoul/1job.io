@@ -51,7 +51,7 @@ const Profile = (props: Props) => {
     const history = useHistory();
     
     const onFinish = async (values) => {
-        const response: { success: boolean, user: User } = await post("/api/user/update", {
+        const response: { success: boolean, user: User } = await post("/user/update", {
             user: {...values,
                 companyDescription
             }

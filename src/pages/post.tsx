@@ -27,7 +27,7 @@ const Post = styled.div`
 
 export default () => {
     const onFinish = (values) => {
-        post("/api/job/create", {
+        post("/job/create", {
             job: values
         }).then(() => {
             toast("Job posted!");

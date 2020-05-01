@@ -64,13 +64,13 @@ export default () => {
     const [loading, setLoading] = useState(true);
 
     const fetch = async () => {
-            const jobs: Job[] = await get("/api/job/all");
+            const jobs: Job[] = await get("/job/all");
             setLoading(false);
             setJobs(jobs);
     }
 
     const filter = async (query) => {
-        const jobs: Job[] = await post("/api/job/filter", {query});
+        const jobs: Job[] = await post("/job/filter", {query});
         setLoading(false);
         setJobs(jobs);
     }

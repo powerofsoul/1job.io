@@ -59,7 +59,7 @@ server.use(fileUpload({
 }))
 
 server.get("/", (req, res) => res.send("Alive"));
-server.use('/api', router);
+server.use('/', router);
 server.listen(config.port, (err?: any) => {
     if (err) throw err;
     console.log(`> Ready on localhost:${config.port} - env ${config.env}`);
