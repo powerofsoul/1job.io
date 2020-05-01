@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "sourceMap": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
