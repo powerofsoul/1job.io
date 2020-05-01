@@ -19,6 +19,4 @@ echo "Deploying to the $S3_BUCKET bucket"
 
 aws s3 sync public/ "s3://$S3_BUCKET" --acl public-read --delete
 
-aws cloudfront create-invalidation \
-  --distribution-id $CLOUDFRONT_DIST_ID \
-  --paths /*
+aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DIST_ID --paths /*
