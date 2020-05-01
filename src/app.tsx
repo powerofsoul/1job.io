@@ -12,13 +12,13 @@ import { ToastContainer } from 'react-toastify';
 import ReactDOM from "react-dom";
 import * as React from "react";
 import { Link, BrowserRouter, Route } from 'react-router-dom'
-import Index from './pages/Index';
-import Profile from './pages/Profile';
-import Contact from './pages/Contact';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import Job from './pages/Job';
-import Post from './pages/Post';
+import Index from './pages';
+import Profile from './pages/profile';
+import Contact from './pages/contact';
+import Register from './pages/register';
+import Login from './pages/login';
+import Job from './pages/job';
+import Post from './pages/post';
 
 const AppBody = styled.div`
     display:flex;
