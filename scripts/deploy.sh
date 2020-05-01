@@ -26,7 +26,13 @@ aws cloudfront create-invalidation \
   --distribution-id $CLOUDFRONT_DIST_ID \
   --paths /\*
 
-EB_ENV="$NODE_ENV"
+mkdir -p ~/.aws
+echo '[profile eb-cli]' > ~/.aws/config
+echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/config
+echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> ~/.aws/config
+eb status
+
+EB_ENV="$EB_APP-$NODE_ENV"
 echo "Deploying to $EB_ENV"
 eb deploy $EB_ENV -v
 
