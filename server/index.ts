@@ -35,47 +35,32 @@ passport.use(new Strategy(
     }
 ));
 
-(async () => {
-    try {
-        connect(
-            config.mongo_connection_url,
-            { useNewUrlParser: true }
-        );
 
-        const server = express();
-        server.use(bodyParser.json());
-        server.use(bodyParser.urlencoded({ extended: true }));
+connect(
+    config.mongo_connection_url,
+    { useNewUrlParser: true }
+);
 
-        server.use(cookieSession({
-            name: "jobs-remotely",
-            keys: config.session_keys
-        }));
+const server = express();
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
 
-        server.use(passport.initialize());
-        server.use(passport.session());
-        server.use(fileUpload({
-            limits: {
-                fileSize: 2 * 1024 * 1024
-            }
-        }))
+server.use(cookieSession({
+    name: "jobs-remotely",
+    keys: config.session_keys
+}));
 
-        server.use('/api', router);
-        // server.use('/uploads', express.static(path.join(__dirname, "../uploads")))
-        
-        // server.get('/out/bundle.js', function (req, res) {
-        //     res.sendFile(path.resolve(__dirname, '../public/out/bundle.js'));
-        // });
-        // server.get('*', function (req, res) {
-        //     res.sendFile(path.resolve(__dirname, '../public/index.html'));
-        // });
-
-
-        server.listen(config.port, (err?: any) => {
-            if (err) throw err;
-            console.log(`> Ready on localhost:${config.port} - env ${config.env}`);
-        });
-    } catch (e) {
-        console.error(e);
-        process.exit(1);
+server.use(passport.initialize());
+server.use(passport.session());
+server.use(fileUpload({
+    limits: {
+        fileSize: 2 * 1024 * 1024
     }
-})();
+}))
+
+server.get("/", (req, res) => res.send("Alive"));
+server.use('/api', router);
+server.listen(config.port, (err?: any) => {
+    if (err) throw err;
+    console.log(`> Ready on localhost:${config.port} - env ${config.env}`);
+});
