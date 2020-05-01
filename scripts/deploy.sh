@@ -9,7 +9,6 @@ CLOUDFRONT_DIST_ID=''
 if [[ $CIRCLE_BRANCH == $PRODUCTION_BRANCH ]]; then
   NODE_ENV="production"
   CLOUDFRONT_DIST_ID=$CLOUDFRONT_DIST_ID_PRODUCTION
-  npm install && npm run build:prod
 else
   echo "Not deploying"
   exit
