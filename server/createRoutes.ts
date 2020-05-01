@@ -10,7 +10,7 @@ glob.sync(__dirname + '/api/**/*.@(ts|js)')
         
         return {
             path: `/${name.toLowerCase()}`,
-            router: require(`${filename.replace('.ts', '')}`)
+            router: require(`${filename.replace('.ts', '').replace('js', '')}`)
         }
     })
     .forEach(r => {
