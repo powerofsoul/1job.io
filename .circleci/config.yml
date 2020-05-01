@@ -17,11 +17,11 @@ jobs:
       name: aws-cli/default
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: chmod +x scripts/deploy.sh
-            - run: ./scripts/deploy.sh
+      - aws-cli/setup
+      - run: chmod +x scripts/deploy.sh
+      - run: ./scripts/deploy.sh
 workflows:
     build-and-deploy:
       jobs:
         - build
+        - deploy
