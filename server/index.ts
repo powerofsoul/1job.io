@@ -60,14 +60,14 @@ passport.use(new Strategy(
         }))
 
         server.use('/api', router);
-        server.use('/uploads', express.static(path.join(__dirname, "../uploads")))
+        // server.use('/uploads', express.static(path.join(__dirname, "../uploads")))
         
-        server.get('/out/bundle.js', function (req, res) {
-            res.sendFile(path.resolve(__dirname, '../public/out/bundle.js'));
-        });
-        server.get('*', function (req, res) {
-            res.sendFile(path.resolve(__dirname, '../public/index.html'));
-        });
+        // server.get('/out/bundle.js', function (req, res) {
+        //     res.sendFile(path.resolve(__dirname, '../public/out/bundle.js'));
+        // });
+        // server.get('*', function (req, res) {
+        //     res.sendFile(path.resolve(__dirname, '../public/index.html'));
+        // });
 
 
         server.listen(config.port, (err?: any) => {

@@ -5,6 +5,7 @@ PRODUCTION_BRANCH="master"
 
 NODE_ENV=''
 CLOUDFRONT_DIST_ID=''
+EB_APP="jobs-remotely-api"
 
 if [[ $CIRCLE_BRANCH == $PRODUCTION_BRANCH ]]; then
   NODE_ENV="production"
@@ -14,6 +15,8 @@ else
   exit
 fi
 
+npm i && npm run build:front
+
 S3_BUCKET="jobs-remotely-$NODE_ENV"
 echo "Deploying to the $S3_BUCKET bucket"
 
@@ -22,5 +25,9 @@ aws s3 sync public/ "s3://$S3_BUCKET" --acl public-read --delete
 aws cloudfront create-invalidation \
   --distribution-id $CLOUDFRONT_DIST_ID \
   --paths /\*
+
+EB_ENV="$NODE_ENV"
+echo "Deploying to $EB_ENV"
+eb deploy $EB_ENV -v
 
 exit 0

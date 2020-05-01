@@ -10,8 +10,6 @@ jobs:
       - checkout
       - node/install:
           node-version: latest
-      - run: npm i
-      - run: npm run build:prod
       - aws-cli/setup
       - run: chmod +x scripts/deploy.sh
       - run: ./scripts/deploy.sh

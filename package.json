@@ -4,10 +4,10 @@
   "description": "",
   "scripts": {
     "build:server": "tsc --project tsconfig.server.json",
-    "build:front": "webpack --config webpack.config.dev.js",
+    "build:front": "webpack --config webpack.config.js --display-error-detail",
     "watch:server": "cross-env TS_NODE_PROJECT=tsconfig.server.json nodemon ./server/index.ts",
     "watch:front": "webpack --config webpack.config.dev.js --watch --hot",
-    "build:prod": "cross-env NODE_ENV=development webpack --config webpack.config.js --display-error-details"
+    "build:prod": "cross-env NODE_ENV=production npm run build:front && npm run build:server"
   },
   "repository": {
     "type": "git",

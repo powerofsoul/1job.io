@@ -1,0 +1,7 @@
+branch-defaults:
+  master:
+    environment: production
+global:
+  application_name: jobs-remotely-api
+  profile: eb-cli
+  sc: git
