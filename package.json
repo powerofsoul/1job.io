@@ -3,13 +3,11 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "watch:server": "cross-env TS_NODE_PROJECT=tsconfig.server.json nodemon ./server/index.ts",
     "build:server": "tsc --project tsconfig.server.json",
-    "build:front": "webpack",
-    "watch:front": "webpack --watch --hot",
-    "build": "webpack && npm run build:server",
-    "start": "cross-env NODE_ENV=development node dist/server/index.js",
-    "start:prod": "corss-env PORT=80 NODE_ENV=production node dist/index.js"
+    "build:front": "webpack --config webpack.config.dev.js",
+    "watch:server": "cross-env TS_NODE_PROJECT=tsconfig.server.json nodemon ./server/index.ts",
+    "watch:front": "webpack --config webpack.config.dev.js --watch --hot",
+    "build:prod": "cross-env NODE_ENV=development webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",

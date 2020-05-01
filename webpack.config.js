@@ -1,7 +1,5 @@
 const path = require('path');
 
-const webpack = require('webpack');
-
 module.exports = {
   entry: "./src/app.tsx",
   resolve: {
@@ -25,14 +23,9 @@ module.exports = {
   output: {
     path: path.join(__dirname, "public", "out"),
     filename: "bundle.js",
-    publicPath: "/"
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
-  devServer: {
-    hot: true,
-    historyApiFallback: true
+  optimization: {
+    minimize: true
   },
-  mode: "development"
+  mode: "production"
 };
