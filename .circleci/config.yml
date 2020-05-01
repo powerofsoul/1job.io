@@ -12,16 +12,11 @@ jobs:
           node-version: latest
       - run: npm i
       - run: npm run build:prod
-  deploy:
-    executor:
-      name: aws-cli/default
-    steps:
-      - checkout
       - aws-cli/setup
       - run: chmod +x scripts/deploy.sh
       - run: ./scripts/deploy.sh
+      
 workflows:
     build-and-deploy:
       jobs:
         - build
-        - deploy
