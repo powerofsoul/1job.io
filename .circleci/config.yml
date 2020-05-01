@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@1.1.6
+  node: circleci/node@2.0.3
   aws-cli: circleci/aws-cli@1.0.0
 jobs:
   build:
@@ -8,10 +8,10 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm run build:prod
+      - node/install:
+          node-version: latest
+      - run: npm i
+      - run: npm run build:prod
   deploy:
     executor:
       name: aws-cli/default
@@ -25,5 +25,3 @@ workflows:
     build-and-deploy:
       jobs:
         - build
-        - deploy: 
-            context: aws
