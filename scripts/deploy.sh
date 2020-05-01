@@ -5,7 +5,7 @@ PRODUCTION_BRANCH="master"
 
 NODE_ENV=''
 CLOUDFRONT_DIST_ID=''
-EB_APP="jobs-remotely-api"
+EB_APP="jobs-remotely"
 
 if [[ $CIRCLE_BRANCH == $PRODUCTION_BRANCH ]]; then
   NODE_ENV="production"
@@ -32,7 +32,7 @@ echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/config
 echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> ~/.aws/config
 eb status
 
-EB_ENV="$EB_APP-$NODE_ENV"
+EB_ENV="$EB_APP"
 echo "Deploying to $EB_ENV"
 eb deploy $EB_ENV -v
 

@@ -1,0 +1,8 @@
+# Elastic Beanstalk Files
+
+.elasticbeanstalk/*
+package-lock.json
+
+.git
+
+.gitignore
