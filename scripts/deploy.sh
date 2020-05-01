@@ -18,8 +18,6 @@ fi
 S3_BUCKET="jobs-remotely-$NODE_ENV"
 echo "Deploying to the $S3_BUCKET bucket"
 
-pip install awscli --upgrade --user
-
 aws s3 sync public/ "s3://$S3_BUCKET" --acl public-read --delete
 
 aws cloudfront create-invalidation \
