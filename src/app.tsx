@@ -42,7 +42,7 @@ interface Route {
 const routes: Route[] = [
   { path: '/profile', component: Profile, logged: true },
   { path: '/job/:id', component: Job },
-  { path: '/post/:id', component: Post, logged: true },
+  { path: '/post/:id?', component: Post, logged: true },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/', component: Index }
