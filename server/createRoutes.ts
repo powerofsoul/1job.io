@@ -1,20 +1,15 @@
-const glob = require('glob');
 import { Router } from "express";
 const router = Router();
+import health from "./api/health";
+import job from "./api/job";
+import user from "./api/user";
 
-glob.sync(__dirname + '/api/**/*.@(ts|js)')
-    .map(filename => {
-        const splittedFileName = filename.split('/');
-        let name = splittedFileName.slice(splittedFileName.indexOf('api') + 1).join('/');
-        name = name.replace('.ts', '').replace('.js', '')
-        
-        return {
-            path: `/${name.toLowerCase()}`,
-            router: require(`${filename.replace('.ts', '').replace('js', '')}`)
-        }
-    })
-    .forEach(r => {
-        router.use(r.path, r.router.default)
-    });
+const routes = [
+    { path: "/health", module: health },
+    { path: "/job", module: job },
+    { path: "/user", module: user }
+]
+
+routes.forEach(r=> router.use(r.path, r.module));
 
 export default router;
