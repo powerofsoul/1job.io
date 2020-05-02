@@ -64,19 +64,19 @@ export default () => {
     const [loading, setLoading] = useState(true);
 
     const fetch = async () => {
-            const jobs: Job[] = await get("/job/all");
-            setLoading(false);
-            setJobs(jobs);
+        const jobs: Job[] = await get("/job/all");
+        setLoading(false);
+        setJobs(jobs);
     }
 
     const filter = async (query) => {
-        const jobs: Job[] = await post("/job/filter", {query});
+        const jobs: Job[] = await post("/job/filter", { query });
         setLoading(false);
         setJobs(jobs);
     }
 
     React.useEffect(() => {
-        if(loading){
+        if (loading) {
             fetch();
         }
     }, [])
@@ -103,9 +103,12 @@ export default () => {
             </div>
         </IndexTop>
         <IndexBody>
-            <Filter onReload={fetch} onSearch={filter}/>
+            <Filter onReload={fetch} onSearch={filter} />
             <Skeleton avatar loading={loading} active>
-                {jobs?.map((j, i) => <JobCard key={i} {...j} />)}
+                {jobs.length > 0 ?
+                    jobs?.map((j, i) => <JobCard key={i} {...j} />)
+                    : <span>No Jobs Found</span>
+                }
             </Skeleton>
         </IndexBody>
     </div>
