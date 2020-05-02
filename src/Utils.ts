@@ -16,6 +16,10 @@ export function post<Request, Response>(path: string, body: Request): Promise<Re
     return axios.post(apiUrl(path), body, { withCredentials: true }).then(r => r.data as Response);
 }
 
+export function put<Request, Response>(path: string, body: Request): Promise<Response> {
+    return axios.put(apiUrl(path), body, { withCredentials: true }).then(r => r.data as Response);
+}
+
 export function uploadFile<Response>(name: string, file: File, path: string): Promise<Response> {
     var formData = new FormData();
     formData.append(name, file);

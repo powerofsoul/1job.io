@@ -12,9 +12,9 @@ router.get('/all', async (req, res) => {
 router.post("/filter", async (req, res) => {
     const filterQ = req.body.query;
 
-    const Query = { };
+    const Query = {};
 
-    if(filterQ.title) {
+    if (filterQ.title) {
         Query['title'] = {
             $regex: `.*(${filterQ.title.replace(/\s+/g, '|')}).*`,
             $options: "i"
@@ -53,13 +53,35 @@ router.get('/:id', (req, res) => {
 });
 
 
-router.post('/create', isAuthenticated, (req, res) => {
-    JobModel.create({
+router.put('/', isAuthenticated, (req, res) => {
+    const job = {
         ...req.body.job,
         company: req.user._id,
-        postedOn: new Date()
-    }).then((r) => res.json(r))
-        .catch((err) => res.status(500).json(err));
+    }
+
+    if (job._id) {
+        JobModel.updateOne({ _id: job._id, company: req.user._id }, job)
+            .then((r) => {
+                if (r.n == 0) {
+                    res.status(401).send({
+                        success: false,
+                        message: "Unable to find requested job"
+                    });
+                } else {
+                    res.json({
+                        success: true
+                    })
+                } 
+            })
+            .catch((err) => res.status(500).json(err));
+    } else {
+        job.postedOn = new Date();
+
+        JobModel.create(job)
+            .then((r) => res.json(r))
+            .catch((err) => res.status(500).json(err));
+    }
+
 })
 
 export default router;

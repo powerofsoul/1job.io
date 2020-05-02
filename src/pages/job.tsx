@@ -8,9 +8,10 @@ import { get } from '../Utils';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useHistory } from 'react-router';
 import CompanyCard from '../common/CompanyCard';
+import { User } from '../../models/User';
 
 const JobDetails = styled.div`
     padding-top: 5rem;
@@ -33,8 +34,11 @@ const JobDetails = styled.div`
         padding: 0;
     }
 `;
+interface Props {
+    currentUser?: User;
+}
 
-export default () => {
+const JobPage = (props: Props) => {
     const { id } = useParams();
     const [job, setJob] = useState<Job>()
     const [loading, setLoading] = useState(true)
@@ -65,6 +69,11 @@ export default () => {
                     <h1>
                         {job?.title}
                     </h1>
+                    {job?.company._id == props.currentUser?._id && <div>
+                        <Link to={`/post/${job?._id}`} className="ant-btn ant-btn-primary">
+                            Edit
+                        </Link>
+                    </div>}
                     <div className="JobDetailsBody">
                         <div className="ql-editor no-padding" dangerouslySetInnerHTML={{ __html: job?.description }} />
                     </div>
@@ -81,3 +90,11 @@ export default () => {
         </Skeleton>
     </JobDetails>
 }
+
+const mapStateToProps = (store: IAppState): Partial<Props> => ({
+    currentUser: store.currentUserStore.user
+});
+
+export default connect(
+    mapStateToProps
+)(JobPage);

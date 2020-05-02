@@ -1,13 +1,19 @@
-import { User } from "models/User";
+import { User } from "../../models/User";
 import React from 'react';
 import { Avatar, Skeleton, Row, Col, Button } from "antd";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Space from "../style/Space";
 
 const CompanyCard = styled.div`
     text-align: center;
     .company-logo {
         height: 150px;
+    }
+
+    .section {
+        margin-top: ${Space.sm};
+        margin-bottom: ${Space.sm};
     }
 `;
 
