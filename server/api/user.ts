@@ -5,8 +5,8 @@ import { isAuthenticated } from "../middleware/middleware";
 import fs from "fs";
 import { User } from "../../models/User";
 import UserModel from "../../models/mongo/UserModel";
-import FileStore from "../utils/FileStore";
-import MailService from "../utils/MailService";
+import FileStore from "../services/FileService";
+import MailService from "../services/MailService";
 const path = require('path');
 
 const router = Router();
