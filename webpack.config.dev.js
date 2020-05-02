@@ -1,5 +1,6 @@
 const prodConfig = require("./webpack.config");
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
     ...prodConfig,
@@ -8,7 +9,9 @@ module.exports = {
     ],
     devServer: {
         hot: true,
-        historyApiFallback: true
+        historyApiFallback: {
+            index: 'public/index.html'
+        }
     },
     mode: "development",
     optimization: {

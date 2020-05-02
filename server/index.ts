@@ -10,7 +10,7 @@ import { User } from "../models/User";
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session')
 const fileUpload = require("express-fileupload");
-const path = require('path');
+var cors = require('cors');
 
 passport.serializeUser(function (user: User, done) {
     done(null, user._id);
@@ -42,8 +42,10 @@ connect(
 );
 
 const server = express();
+server.use(cors());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
+
 
 server.use(cookieSession({
     name: "jobs-remotely",

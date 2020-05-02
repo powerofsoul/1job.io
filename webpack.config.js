@@ -21,7 +21,7 @@ module.exports = {
     ]
   },
   output: {
-    path: path.join(__dirname, "public", "out"),
+    path: path.join(__dirname, "public"),
     filename: "bundle.js",
   },
   optimization: {
