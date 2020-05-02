@@ -82,7 +82,7 @@ const Filter = (props: Props) => {
                     />
                 </Form.Item>
             </Col>
-            <Col xs={24} lg={3} style={{ textAlign: "center" }}>
+            <Col style={{ textAlign: "center" }}>
                 <Button
                     type="primary"
                     htmlType="submit">
