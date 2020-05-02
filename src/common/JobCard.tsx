@@ -1,14 +1,14 @@
-import styled from "styled-components";
-import colors from "../style/Colors";
-import { Button, Tag, Statistic, Skeleton, Avatar } from "antd";
-import { useState } from "react";
-import React from "react";
-import { HeartOutlined, HeartFilled, HeartTwoTone } from "@ant-design/icons";
-import { Job } from "../../models/Job";
-import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Avatar, Skeleton, Tag } from "antd";
 import moment from "moment";
+import React from "react";
 import { useHistory } from "react-router";
+import styled from "styled-components";
+import { Job } from "../../models/Job";
 import Space from "../style/Space";
+
+import { faClock, faCompass, faBuilding, faUser, faFileCode } from '@fortawesome/free-regular-svg-icons'
+import { faTag, faLevelUpAlt } from '@fortawesome/free-solid-svg-icons'
 
 const JobCard = styled.div`
     min-height: 5rem;
@@ -25,23 +25,13 @@ const JobCard = styled.div`
     }
 
     .header, .footer {
-        display: flex;
         align-items:center;
         width: 100%;
-
-        .likes {
-            margin-left:auto;
-            cursor: pointer;
-        }
-
-        .location {
-            margin-left: auto;
-        }
     }
 
     .footer {
         margin-top: 1rem;
-
+        margin-top: auto;
         .tags > div {
             margin-bottom: 0.5rem;
         }
@@ -49,50 +39,75 @@ const JobCard = styled.div`
 
     .job-card-data {
         width: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
     .avatar {
         height: 100%;
         width: 100px;
         margin-right: ${Space.sm};
+
+        img {
+            object-fit: contain;
+        }
+    }
+
+    .icon {
+        min-width: 30px;
+        font-size: 15px;
     }
 `;
 
-const Component = (props?: Partial<Job>) => {
+interface Props {
+    job: Job,
+    className?: string;
+}
+
+const Component = (props: Props) => {
+    const { job, className } = props;
     const history = useHistory();
     const goToJobPage = () => {
-        history.push(`/job/${props._id}`);
+        history.push(`/job/${job._id}`);
     }
 
-    return <JobCard onClick={goToJobPage}>
-            <Skeleton avatar active loading={props.loading}>
-                <Avatar className="avatar" shape="square" src={props.company.companyImage} />
-                <div className="job-card-data">
-                    <div className="header">
-                        <div>
-                            {moment(props.postedOn).fromNow()}
-                        </div>
-                    </div>
+    return <JobCard className={className} onClick={goToJobPage}>
+        <Skeleton avatar active loading={job.loading}>
+            <div>
+                <Avatar className="avatar" shape="square" src={job.company.companyImage} />
+            </div>
+            <div className="job-card-data">
+                <div className="header">
                     <div>
-                        <h2>{props.title}</h2>
-                        <h4>{props.company.companyName}</h4>
+                        <FontAwesomeIcon className="icon" icon={faClock} /> {moment(job.postedOn).fromNow()}
                     </div>
-                    <div className="footer">
-                        <div className="tags">
-                            <div>
-                                <Tag color="blue">{props.category}</Tag>
-                            </div>
-                            <div>
-                                {props.regions?.map((r) => <Tag key={r} color="red">{r}</Tag>)}
-                            </div>
+                </div>
+                <div>
+                    <h3>
+                        <FontAwesomeIcon className="icon" icon={faUser} />
+                        {job.title}
+                    </h3>
+                    <h4> 
+                        <FontAwesomeIcon className="icon" icon={faBuilding} /> 
+                        {job.company.companyName}
+                    </h4>
+                </div>
+                <div className="footer">
+                    <div className="tags">
+                        <div>
+                            <FontAwesomeIcon className="icon" icon={faTag} /> <Tag color="blue">{job.category}</Tag>
                         </div>
-                        <div className="location">
-                            {props.experienceLevel?.map((t) => <Tag key={t} color="green">{t}</Tag>)}
+                        <div>
+                            <FontAwesomeIcon className="icon" icon={faCompass} /> {job.regions?.map((r) => <Tag key={r} color="red">{r}</Tag>)}
+                        </div>
+                        <div>
+                            <FontAwesomeIcon className="icon" icon={faLevelUpAlt} /> {job.experienceLevel?.map((t) => <Tag key={t} color="green">{t}</Tag>)}
                         </div>
                     </div>
                 </div>
-            </Skeleton>
-        </JobCard>
+            </div>
+        </Skeleton>
+    </JobCard>
 }
 
 export default Component;

@@ -23,6 +23,9 @@ const validateMessages = {
     },
     number: {
         range: '${label} must be between ${min} and ${max}',
+    },
+    string : {
+        max: '${label} cannot be longer than ${max} characters'
     }
 }
 
@@ -74,7 +77,7 @@ const PostPage = (props: CurrentUserStoreType) => {
     }
 
     const component = <Form initialValues={initialValues} {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-        <Form.Item name={'title'} label="Title" rules={[{ required: true }]}>
+        <Form.Item name={'title'} label="Title" rules={[{ required: true, max: 100 }]}>
             <Input />
         </Form.Item>
         <Form.Item name={'category'} label="Category" rules={[{ required: true }]}>

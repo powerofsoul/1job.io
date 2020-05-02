@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import colors from '../style/Colors';
 import DeviceSize from '../style/DeviceSize';
 import { get, post } from "../Utils";
+import Space from "../style/Space";
 
 const IndexTop = styled.div`
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -56,6 +57,37 @@ const IndexBody = styled.div`
 
     .load-more {
        text-align:center;
+    }
+
+    .jobs-container {
+        display: grid;
+        grid-gap: ${Space.sm}
+    }
+
+    .job-card {
+        width: 100%;
+        grid-area: "job"
+    }
+
+    ${DeviceSize.xs} {
+        .jobs-container {
+            grid-template-areas: "job";
+            grid-template-columns: 1fr;
+        }
+    }
+
+    ${DeviceSize.md} {
+        .jobs-container {
+            grid-template-areas: "job job";
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    ${DeviceSize.lg} {
+        .jobs-container {
+            grid-template-areas: "job job job";
+            grid-template-columns: 1fr 1fr 1fr;
+        }
     }
 `;
 
@@ -105,10 +137,12 @@ export default () => {
         <IndexBody>
             <Filter onReload={fetch} onSearch={filter} />
             <Skeleton avatar loading={loading} active>
-                {jobs.length > 0 ?
-                    jobs?.map((j, i) => <JobCard key={i} {...j} />)
-                    : <span>No Jobs Found</span>
-                }
+                <div className="jobs-container">
+                    {jobs.length > 0 ?
+                        jobs?.map((j, i) => <JobCard key={i} job={j} className="job-card" />)
+                        : <span>No Jobs Found</span>
+                    }
+                </div>
             </Skeleton>
         </IndexBody>
     </div>
