@@ -5,6 +5,8 @@ import { isAuthenticated } from "../middleware/middleware";
 import fs from "fs";
 import { User } from "../../models/User";
 import UserModel from "../../models/mongo/UserModel";
+import FileStore from "../utils/FileStore";
+const path = require('path');
 
 const router = Router();
 
@@ -20,20 +22,20 @@ router.get('/logout', (req, res) => {
 router.post("/register", (req, res) => {
     const user: User = req.body;
 
-    UserModel.create( user)
-        .then(( async (u) => {
+    UserModel.create(user)
+        .then((async (u) => {
             req.login(u, () => {
-                res.json({ success: true, user: u})
+                res.json({ success: true, user: u })
             });
         }))
         .catch((err) => {
             let message = "Something went wrong. Please contact the administrator!";
 
-            if(err.keyPattern?.email == 1 || Object.keys(err.errors).indexOf("email") >= 0) {
+            if (err.keyPattern?.email == 1 || Object.keys(err.errors).indexOf("email") >= 0) {
                 message = "Email already used or incorrect.";
             }
 
-            res.json({success: false, message})
+            res.json({ success: false, message })
         });
 });
 
@@ -42,13 +44,13 @@ router.get('/me',
     (req, res) => res.json(req.user)
 );
 
-router.post("/update", async (req,res) => {
+router.post("/update", async (req, res) => {
     const user = req.body.user;
     //make sure to now update password
     delete user.password;
 
     await UserModel.findOneAndUpdate(
-        {_id: req.user._id},
+        { _id: req.user._id },
         user,
         { "new": true },
         function (err, user) {
@@ -66,19 +68,20 @@ router.post("/update", async (req,res) => {
     );
 })
 
-router.post("/uploadAvatar", isAuthenticated, async (req, res) => {
-    const diskPath = `uploads/${req.user._id}.jpg`;
-    const path = `/${diskPath}?date=${new Date().getTime()}`;
-    fs.writeFileSync(diskPath, req.files.avatar.data);
+router.post("/uploadAvatar", isAuthenticated, (req, res) => {
+    const avatarName = `avatar/${req.user._id}${path.extname(req.files.avatar.name)}`;
+    FileStore.upload(req.files.avatar.data, avatarName).then(async (url) => {
+        const urlWithtime = `${url}?date=${new Date().getTime()}`;
 
-    await UserModel.update(req.user, {
-        companyImage: path
-    })
-    
-    res.json({
-        success: true,
-        url: path
-    })
+        await UserModel.update(req.user, {
+            companyImage: urlWithtime
+        })
+
+        res.json({
+            success: true,
+            url: urlWithtime
+        })
+    }).catch((err) => res.status(500));
 })
 
 

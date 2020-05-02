@@ -7,11 +7,14 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin()
     ],
+    devtool: "source-map",
     devServer: {
         hot: true,
+        contentBase: path.join(__dirname, 'public'),
         historyApiFallback: {
-            index: 'public/index.html'
-        }
+            index: 'index.html'
+        },
+        index: 'index.html'
     },
     mode: "development",
     optimization: {
