@@ -7,6 +7,7 @@ import { User } from "../../models/User";
 import UserModel from "../../models/mongo/UserModel";
 import FileStore from "../services/FileService";
 import MailService from "../services/MailService";
+import { WelcomeTemplate } from "../mail/Template";
 const path = require('path');
 
 const router = Router();
@@ -29,7 +30,8 @@ router.post("/register", (req, res) => {
                 res.json({ success: true, user: u })
             });
 
-            MailService.notify(u.email, "Welcome!", "Thanks for joining jobs remotely!");
+            const template = WelcomeTemplate({companyName: user.companyName});
+            MailService.notify(user.email, "Welcome!", template);
         }))
         .catch((err) => {
             let message = "Something went wrong. Please contact the administrator!";
