@@ -26,7 +26,9 @@ const AppBody = styled.div`
     display:flex;
     flex-direction: column;
     min-height: 100vh;
-    font-family: 'Muli', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
 
     font-size: 15px;
 `;
