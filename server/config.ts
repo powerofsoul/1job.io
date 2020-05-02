@@ -4,6 +4,6 @@ export default {
     mongo_connection_url: process.env.MONGO_URL || "mongodb://localhost:27017/jobsremotely",
     session_keys: process.env.KEEYS || ["local", "local2"],
     salt_rounds: 10,
-    cors: process.env.CORS || "http://localhost",
+    cors: process.env.CORS || "http://localhost:8080",
     url: "localhost:3000" || process.env.url
 }

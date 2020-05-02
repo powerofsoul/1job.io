@@ -42,11 +42,13 @@ connect(
 );
 
 const server = express();
-server.use(cors());
+server.use(cors({
+    origin: config.cors,
+    credentials: true
+}));
+
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
-
-
 server.use(cookieSession({
     name: "jobs-remotely",
     keys: config.session_keys
