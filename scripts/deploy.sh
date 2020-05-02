@@ -27,7 +27,7 @@ npm i && npm run build:front
 S3_BUCKET="jobs-remotely-$NODE_ENV"
 echo "Deploying to the $S3_BUCKET bucket"
 
-aws s3 sync public/ "s3://$S3_BUCKET" --acl public-read --delete
+aws s3 sync public/ "s3://$S3_BUCKET" --acl public-read --delete --exclude "uploads/*"
 
 aws cloudfront create-invalidation \
   --distribution-id $CLOUDFRONT_DIST_ID \
