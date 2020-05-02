@@ -57,6 +57,10 @@ const JobCard = styled.div`
         min-width: 30px;
         font-size: 15px;
     }
+
+    .ant-tag {
+        line-height: 15px;
+    }
 `;
 
 interface Props {
