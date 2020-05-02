@@ -1,5 +1,5 @@
 export interface User {
-    _id: string;
+    _id?: string;
     email: string;
     password: string;
     companyName: string;
@@ -8,5 +8,5 @@ export interface User {
     companyWebsite: string;
     companySummary: string;
     companyDescription: string;
-    comparePassword: (password: string) => Promise<boolean>
+    comparePassword?: (password: string) => Promise<boolean>
 }

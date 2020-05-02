@@ -40,6 +40,18 @@ router.post("/filter", async (req, res) => {
         }
     }
 
+    if (filterQ.experienceLevel?.length > 0) {
+        Query["experienceLevel"] = {
+            $in: filterQ.experienceLevel
+        }
+    }
+
+    if (filterQ.type?.length > 0) {
+        Query["type"] = {
+            $in: filterQ.type
+        }
+    }
+
     const jobs = await JobModel.find(Query).populate("company").sort({ postedOn: "desc" });
 
     res.json(jobs);

@@ -1,11 +1,11 @@
 import { User } from "./User";
 
 export interface Job {
-    _id: string;
+    _id?: string;
     title: string,
-    loading: boolean,
     company: User,
     description: string,
+    type: typeof JobTypes[number]
     experienceLevel: (typeof JobExeperienceLevels[number])[]
     category: typeof JobCategories[number],
     regions: (typeof JobRegions[number])[]
@@ -46,4 +46,9 @@ export const JobRegions = [
     "AFRICA",
     "OTHER"
 ]
+
+export const JobTypes = [
+    "Full Time", "Part Time", "Contract"
+] as const;
+
 export type JobRegionsType = typeof JobRegions[number];

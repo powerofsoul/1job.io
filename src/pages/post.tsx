@@ -1,7 +1,7 @@
 import { Form, Input, InputNumber, Button, Select, Radio, Spin } from "antd";
 import HtmlEditor from "../common/HtmlEditor";
 import styled from "styled-components";
-import { JobCategories, JobExeperienceLevels, JobRegions, Job } from "../../models/Job";
+import { JobCategories, JobExeperienceLevels, JobRegions, Job, JobTypes } from "../../models/Job";
 import { put, get } from "../Utils";
 import { toast } from "react-toastify";
 import React, { useState } from "react";
@@ -79,6 +79,14 @@ const PostPage = (props: CurrentUserStoreType) => {
     const component = <Form initialValues={initialValues} {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
         <Form.Item name={'title'} label="Title" rules={[{ required: true, max: 100 }]}>
             <Input />
+        </Form.Item>
+        <Form.Item name={'type'} label="Type" rules={[{ required: true }]}>
+            <Select
+                placeholder="Select the job type"
+                allowClear
+            >
+                {JobTypes.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
+            </Select>
         </Form.Item>
         <Form.Item name={'category'} label="Category" rules={[{ required: true }]}>
             <Select

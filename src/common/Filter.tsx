@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ReloadOutlined } from "@ant-design/icons/lib/icons";
 import Search from "antd/lib/input/Search";
 import React, { useState } from "react";
-import { JobExeperienceLevels, JobCategories, JobRegions, Job, JobCategoriesType, JobExeperienceLevelsType, JobRegionsType } from "../../models/Job";
+import { JobExeperienceLevels, JobCategories, JobRegions, Job, JobCategoriesType, JobExeperienceLevelsType, JobRegionsType, JobTypes } from "../../models/Job";
 
 const FilterArea = styled(Form)`
     width: 100%;
@@ -42,6 +42,18 @@ const Filter = (props: Props) => {
                         size="middle"
                         options={JobCategories.map(e => ({ value: e }))}
                         placeholder="Select Category"
+                        style={{ width: '100%' }}
+                    />
+                </Form.Item>
+            </Col>
+            <Col xs={12} lg={4}>
+                <Form.Item name="type">
+                    <Select
+                        allowClear
+                        mode="tags"
+                        size="middle"
+                        options={JobTypes.map(e => ({ value: e }))}
+                        placeholder="Job Type"
                         style={{ width: '100%' }}
                     />
                 </Form.Item>
