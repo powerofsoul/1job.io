@@ -3,7 +3,7 @@ import axios from "axios";
 const baseUrl = window.location.host == "localhost" 
              || window.location.host == "localhost:8080" 
              || window.location.host == "127.0.0.1" 
-    ? "http://localhost:3000" : `api.${window.location.host}`;
+    ? "http://localhost:3000" : `https://api.${window.location.host}`;
 
 const apiUrl = (path) => `${baseUrl}${path}`; 
 
