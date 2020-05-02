@@ -82,14 +82,14 @@ const Filter = (props: Props) => {
                     />
                 </Form.Item>
             </Col>
-            <Col style={{ textAlign: "center" }}>
+            <Col style={{ marginLeft: "auto" }}>
                 <Button
                     type="primary"
                     htmlType="submit">
                     Search
                 </Button>
             </Col>
-            <Col style={{ textAlign: "center" }}>
+            <Col>
                 <Button
                     onClick={props.onReload}>
                     Reload
