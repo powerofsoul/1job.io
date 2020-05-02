@@ -8,7 +8,7 @@ const ses = new SES(({
 }));
 
 const notify = (to: string, subject: string, content: string) => {
-    if(config.env == "development") {
+    if( true /* config.env == "development" */) { // TO-DO remove this when you get out of sandbox
         to = config.test_mail
     }
 
