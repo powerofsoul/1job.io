@@ -35,6 +35,15 @@ const JobCard = styled.div`
         .tags > div {
             margin-bottom: 0.5rem;
         }
+
+        .category-and-type {
+            display: flex;
+            align-items: center;
+
+            .type {
+                margin-left: auto
+            }
+        }
     }
 
     .job-card-data {
@@ -76,7 +85,7 @@ const Component = (props: Props) => {
     }
 
     return <JobCard className={className} onClick={goToJobPage}>
-        <Skeleton avatar active loading={job.loading}>
+        <Skeleton avatar active loading={!job}>
             <div>
                 <Avatar className="avatar" shape="square" src={job.company.companyImage} />
             </div>
@@ -94,15 +103,20 @@ const Component = (props: Props) => {
                         <FontAwesomeIcon className="icon" icon={faUser} />
                         {job.title}
                     </h3>
-                    <h4> 
-                        <FontAwesomeIcon className="icon" icon={faBuilding} /> 
+                    <h4>
+                        <FontAwesomeIcon className="icon" icon={faBuilding} />
                         {job.company.companyName}
                     </h4>
                 </div>
                 <div className="footer">
                     <div className="tags">
-                        <div>
-                            <FontAwesomeIcon className="icon" icon={faTag} /> <Tag color="blue">{job.category}</Tag>
+                        <div className="category-and-type">
+                            <div>
+                                <FontAwesomeIcon className="icon" icon={faTag} /> <Tag color="blue">{job.category}</Tag>
+                            </div>
+                            <div className="type">
+                                <Tag>{job?.type}</Tag>
+                            </div>
                         </div>
                         <div>
                             <FontAwesomeIcon className="icon" icon={faCompass} /> {job.regions?.map((r) => <Tag key={r} color="red">{r}</Tag>)}
