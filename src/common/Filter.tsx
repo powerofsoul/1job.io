@@ -89,11 +89,13 @@ const Filter = (props: Props) => {
                     Search
                 </Button>
             </Col>
-            <Col flex="auto" style={{ textAlign: "right" }}>
-                <h2>
-                    <ReloadOutlined className="reload-icon" title="Reload" onClick={props.onReload} />
-                </h2>
+            <Col style={{ textAlign: "center" }}>
+                <Button
+                    onClick={props.onReload}>
+                    Reload
+                </Button>
             </Col>
+
 
         </Row>
     </FilterArea>
