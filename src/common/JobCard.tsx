@@ -79,7 +79,10 @@ const Component = (props: Props) => {
             <div className="job-card-data">
                 <div className="header">
                     <div>
-                        <FontAwesomeIcon className="icon" icon={faClock} /> {moment(job.postedOn).fromNow()}
+                        <FontAwesomeIcon className="icon" icon={faClock} />
+                        <span>
+                            {moment(job.postedOn).fromNow()}
+                        </span>
                     </div>
                 </div>
                 <div>
