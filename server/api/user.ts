@@ -6,6 +6,7 @@ import fs from "fs";
 import { User } from "../../models/User";
 import UserModel from "../../models/mongo/UserModel";
 import FileStore from "../utils/FileStore";
+import MailService from "../utils/MailService";
 const path = require('path');
 
 const router = Router();
@@ -27,6 +28,8 @@ router.post("/register", (req, res) => {
             req.login(u, () => {
                 res.json({ success: true, user: u })
             });
+
+            MailService.notify(u.email, "Welcome!", "Thanks for joining jobs remotely!");
         }))
         .catch((err) => {
             let message = "Something went wrong. Please contact the administrator!";

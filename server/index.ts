@@ -11,7 +11,6 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session')
 const fileUpload = require("express-fileupload");
 var cors = require('cors');
-require('dotenv').config();
 
 passport.serializeUser(function (user: User, done) {
     done(null, user._id);

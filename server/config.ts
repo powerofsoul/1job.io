@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 export default {
     port: process.env.PORT || 3000,
     env: process.env.NODE_ENV || "development",
@@ -7,5 +9,6 @@ export default {
     aws_access_secret: process.env.AWS_SECRET_ACCESS_KEY,
     salt_rounds: 10,
     cors: process.env.CORS || "http://localhost:8080",
-    url: "localhost:3000" || process.env.url
+    url: "localhost:3000" || process.env.url,
+    test_mail: process.env.TEST_MAIL
 }
