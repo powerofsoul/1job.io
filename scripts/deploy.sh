@@ -33,8 +33,6 @@ aws cloudfront create-invalidation \
   --distribution-id $CLOUDFRONT_DIST_ID \
   --paths /\*
 
-check_last_error $? "Something went wrong deploying to cloudfront"
-
 mkdir -p ~/.aws
 echo '[profile eb-cli]' > ~/.aws/config
 echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/config
