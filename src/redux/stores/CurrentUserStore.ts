@@ -22,10 +22,10 @@ const actionCreators = {
         dispatch({ type: LOG_OUT_CURRENT_USER })
     },
     refreshCurrentUser: () => async (dispatch) => {
-        const user = await get("/user/me");
-
-        dispatch({type: SET_CURRENT_USER, user})
-    } 
+        await get("/user/me").then(user => {
+            dispatch({ type: SET_CURRENT_USER, user })
+        }).catch(() => dispatch({ type: SET_CURRENT_USER, user: undefined }));
+    }
 }
 
 const reducer = (state: CurrentUserStoreType, action) => {

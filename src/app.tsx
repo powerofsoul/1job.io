@@ -5,13 +5,12 @@ import 'react-quill/dist/quill.snow.css';
 import Header from './common/Header';
 import Footer from './common/Footer';
 import styled from 'styled-components';
-import { Provider } from 'react-redux';
-import configureStore from './redux/configureStore';
-import { PersistGate } from 'redux-persist/integration/react';
+import { Provider, connect } from 'react-redux';
+import configureStore, { IAppState } from './redux/configureStore';
 import { ToastContainer } from 'react-toastify';
 import ReactDOM from "react-dom";
 import * as React from "react";
-import { Link, BrowserRouter, Route } from 'react-router-dom'
+import { Link, BrowserRouter, Route, Switch } from 'react-router-dom'
 import Index from './pages';
 import Profile from './pages/profile';
 import Contact from './pages/contact';
@@ -19,6 +18,9 @@ import Register from './pages/register';
 import Login from './pages/login';
 import Job from './pages/job';
 import Post from './pages/post';
+import CurrentUserStore from './redux/stores/CurrentUserStore';
+import { bindActionCreators } from 'redux';
+import { User } from '../models/User';
 
 const AppBody = styled.div`
     display:flex;
@@ -29,28 +31,70 @@ const AppBody = styled.div`
     font-size: 15px;
 `;
 
-const App = () => {
+interface Route {
+  path: string,
+  component: React.ComponentType,
+  logged?: boolean,
+}
+
+const routes: Route[] = [
+  { path: '/profile', component: Profile, logged: true },
+  { path: '/job/:id', component: Job },
+  { path: '/post', component: Post, logged: true },
+  { path: '/login', component: Login },
+  { path: '/register', component: Register },
+  { path: '/', component: Index }
+]
+
+
+interface Props {
+  user: User;
+  loading: boolean;
+  refreshCurrentUser: () => void;
+}
+
+const App = (props: Props) => {
+  const isLogged = props.loading || props.user;
+  if (props.loading) props.refreshCurrentUser();
+
+  return <BrowserRouter>
+    <Header />
+    <Switch>
+      {routes.map(r => {
+        const canAccess = isLogged || !r.logged;
+        const component = canAccess ? r.component : Login;
+
+        return <Route key={r.path} path={r.path} component={component} />
+      })}
+    </Switch>
+    <Footer />
+  </BrowserRouter>
+}
+
+const mapStateToProps = (store: IAppState): Partial<Props> => ({
+  user: store.currentUserStore.user,
+  loading: store.currentUserStore.loading
+})
+
+const ConnectedApp = connect(
+  mapStateToProps,
+  (dispatch) => bindActionCreators(CurrentUserStore.actionCreators, dispatch)
+)(App);
+
+const AppWrapper = () => {
   const appStore = configureStore();
 
   return <Provider store={appStore}>
-      <ToastContainer position="bottom-right"
-        autoClose={1500} />
-      <AppBody>
-        <BrowserRouter>
-          <Header />
-            <Route path="/profile" component={Profile} /> 
-            <Route path="/job/:id" component={Job} /> 
-            <Route path="/post" component={Post} /> 
-            <Route path="/login" component={Login} /> 
-            <Route path="/register" component={Register} /> 
-            <Route path="/" exact component={Index} /> 
-          <Footer />
-        </BrowserRouter>
-      </AppBody>
+    <ToastContainer position="bottom-right"
+      autoClose={1500} />
+    <AppBody>
+      <ConnectedApp />
+    </AppBody>
   </Provider>
 };
 
+
 ReactDOM.render(
-  <App />,
+  <AppWrapper />,
   document.getElementById('app')
 );

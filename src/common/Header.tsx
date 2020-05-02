@@ -71,8 +71,6 @@ interface Props {
 }
 
 const component = (props: Props) => {
-    if (props.loading) props.refreshCurrentUser();
-
     return <Header>
         <Row>
             <Col xs={24} md={12}>

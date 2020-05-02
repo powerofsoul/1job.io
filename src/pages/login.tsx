@@ -40,9 +40,7 @@ const Component = (props: Props) => {
             props.setCurrentUser(user);
             toast("Login succesfully.", {
                 type: "success"
-            });
-            history.push("/");
-            
+            });            
         }).catch((r) => {
             toast("Invalid credentials.", {
                 type: "error"
