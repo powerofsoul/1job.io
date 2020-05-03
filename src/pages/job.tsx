@@ -12,7 +12,7 @@ import { useParams, Link } from "react-router-dom";
 import { useHistory } from 'react-router';
 import CompanyCard from '../common/CompanyCard';
 import { User } from '../../models/User';
-import Space from '../style/Space';
+import { HoverableCard } from "../style/CommonStyles";
 
 const JobDetails = styled.div`
     padding-top: 5rem;
@@ -33,14 +33,7 @@ const JobDetails = styled.div`
     }
 
     .JobDetailsBody {
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        transition: 0.3s;
-        padding: ${Space.md};
-
-        &:hover {
-            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-        }
-
+        ${HoverableCard}
         .html-content {
             align-items:center;
             margin-top: 2rem;
@@ -73,16 +66,19 @@ const JobPage = (props: Props) => {
     })
 
     return <JobDetails>
-        <Skeleton active loading={loading}>
-            <Row gutter={[24, 24]} justify="center">
-                <Col xs={24} lg={5}>
+        <Row gutter={[24, 24]} justify="center">
+
+            <Col xs={24} lg={5}>
+                <Skeleton avatar active loading={loading}>
                     <div className="JobDetailsHeader">
                         <div className="CompanyDetails">
                             <CompanyCard user={job?.company} />
                         </div>
                     </div>
-                </Col>
-                <Col xs={24} lg={12}>
+                </Skeleton>
+            </Col>
+            <Col xs={24} lg={12}>
+                <Skeleton paragraph={true} active loading={loading}>
                     <div className="JobDetailsBody">
                         <div>
                             Posted {moment(job?.postedOn).fromNow()}
@@ -99,9 +95,9 @@ const JobPage = (props: Props) => {
                             <div className="ql-editor no-padding" dangerouslySetInnerHTML={{ __html: job?.description }} />
                         </div>
                     </div>
-                </Col>
-            </Row>
-        </Skeleton>
+                </Skeleton>
+            </Col>
+        </Row>
     </JobDetails>
 }
 

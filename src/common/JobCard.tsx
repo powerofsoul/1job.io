@@ -75,6 +75,7 @@ const JobCard = styled.div`
 interface Props {
     job: Job,
     className?: string;
+    hideLogo?: boolean;
 }
 
 const Component = (props: Props) => {
@@ -86,9 +87,9 @@ const Component = (props: Props) => {
 
     return <JobCard className={className} onClick={goToJobPage}>
         <Skeleton avatar active loading={!job}>
-            <div>
+            {!props.hideLogo && <div>
                 <Avatar className="avatar" shape="square" src={job.company.companyImage} />
-            </div>
+            </div>}
             <div className="job-card-data">
                 <div className="header">
                     <div>
@@ -130,5 +131,9 @@ const Component = (props: Props) => {
         </Skeleton>
     </JobCard>
 }
+
+Component.defaultProps = {
+    hideLogo: false
+} as Partial<Props>
 
 export default Component;

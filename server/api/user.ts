@@ -44,6 +44,18 @@ router.post("/register", (req, res) => {
         });
 });
 
+router.get('/:id', (req, res) => {
+    const id = req.params.id;
+
+    UserModel.findOne({_id: id}).then((user) => {
+        res.json({
+            user
+        })
+    }).catch(()=> {
+        res.status(500).send();
+    })
+})
+
 router.get('/me',
     isAuthenticated,
     (req, res) => res.json(req.user)

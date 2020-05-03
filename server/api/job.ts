@@ -2,6 +2,8 @@ import { Router } from "express";
 import JobModel from "../../models/mongo/JobModel";
 import { Job } from "../../models/Job";
 import { isAuthenticated } from "../middleware/middleware";
+import { Types } from "mongoose";
+import UserModel from "../../models/mongo/UserModel";
 const router = Router();
 
 router.get('/all', async (req, res) => {
@@ -64,6 +66,15 @@ router.get('/:id', (req, res) => {
         .catch(() => res.status(404).json({ success: false }));
 });
 
+router.get('/user/:companyId', async (req, res) => {
+    const company = await UserModel.findOne({_id:  req.params.companyId})
+
+    JobModel.find({company: company})
+        .populate("company")
+        .then((jobs) => res.json({jobs}))
+        .catch(() => res.status(404).json({ success: false }));
+})
+
 
 router.put('/', isAuthenticated, (req, res) => {
     const job = {
@@ -83,7 +94,7 @@ router.put('/', isAuthenticated, (req, res) => {
                     res.json({
                         success: true
                     })
-                } 
+                }
             })
             .catch((err) => res.status(500).json(err));
     } else {

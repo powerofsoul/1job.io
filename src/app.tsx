@@ -13,7 +13,6 @@ import * as React from "react";
 import { Link, BrowserRouter, Route, Switch } from 'react-router-dom'
 import Index from './pages';
 import Profile from './pages/profile';
-import Contact from './pages/contact';
 import Register from './pages/register';
 import Login from './pages/login';
 import Job from './pages/job';
@@ -21,6 +20,7 @@ import Post from './pages/post';
 import CurrentUserStore from './redux/stores/CurrentUserStore';
 import { bindActionCreators } from 'redux';
 import { User } from '../models/User';
+import Company from './pages/company';
 
 const AppBody = styled.div`
     display:flex;
@@ -45,6 +45,7 @@ const routes: Route[] = [
   { path: '/post/:id?', component: Post, logged: true },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
+  { path: '/company/:id', component: Company },
   { path: '/', component: Index }
 ]
 

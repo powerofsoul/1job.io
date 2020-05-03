@@ -32,7 +32,7 @@ export default (props: { user?: User }) => {
             </div>
             <div>
                 <Button type="primary">
-                    <Link to={`/profile/${user?._id}`}>View More</Link>
+                    <Link to={`/company/${user?._id}`}>View More</Link>
                 </Button>
             </div>
         </Skeleton>
