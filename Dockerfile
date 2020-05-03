@@ -1,4 +1,4 @@
-FROM node:latest
+FROM nikolaik/python-nodejs
 
 RUN mkdir -p /var/www/api
 COPY . /var/www/api/
