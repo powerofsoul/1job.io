@@ -1,6 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 import { Job, JobExeperienceLevels, JobCategories, JobRegions, JobTypes } from "../Job";
 import { UserSchema } from "./UserModel";
+const xss = require("xss");
 
 export const JobSchema = new Schema({
     title: {
@@ -44,5 +45,14 @@ export const JobSchema = new Schema({
 })
 
 type JobDocument = Job & Document;
+
+JobSchema.pre('save', function (next) {
+    const job = this as JobDocument;
+
+    if (!job.isModified('description')) return next();
+    
+    job.description = xss(job.description);
+    next();
+})
 
 export default model<JobDocument>("Job", JobSchema);
