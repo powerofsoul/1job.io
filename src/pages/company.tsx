@@ -54,9 +54,6 @@ export default () => {
                             {company?.companyName}
                         </h1>
                     </div>
-                    <div>
-                            {company?.companySummary}
-                    </div>
                     <div dangerouslySetInnerHTML={{__html: company?.companyDescription}} />
 
                     <div className="company-job-list">
