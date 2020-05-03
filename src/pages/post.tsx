@@ -24,7 +24,7 @@ const validateMessages = {
     number: {
         range: '${label} must be between ${min} and ${max}',
     },
-    string : {
+    string: {
         max: '${label} cannot be longer than ${max} characters'
     }
 }
@@ -38,14 +38,16 @@ const PostPage = (props: CurrentUserStoreType) => {
     const [editing, setEditing] = useState(false);
     const [initialValues, setInitialValues] = useState({});
     const [jobLoading, setJobLoading] = useState(true);
+    const [form] = Form.useForm();
 
     const history = useHistory();
 
     const getJob = async (id: string) => {
-        await get(`/job/${id}`).then((job:Job) => {
-            if(props.user._id == job.company._id){
+        await get(`/job/${id}`).then((job: Job) => {
+            if (props.user._id == job.company._id) {
                 setInitialValues(job);
                 setJobLoading(false);
+                form.resetFields();
             } else {
                 history.push('/');
             }
@@ -62,10 +64,11 @@ const PostPage = (props: CurrentUserStoreType) => {
             setJobLoading(false);
         }
     })
-    
+
     const onFinish = (values) => {
         put("/job", {
-            job: {...values,
+            job: {
+                ...values,
                 _id: id
             }
         }).then(() => {
@@ -76,61 +79,61 @@ const PostPage = (props: CurrentUserStoreType) => {
         })
     }
 
-    const component = <Form initialValues={initialValues} {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-        <Form.Item name={'title'} label="Title" rules={[{ required: true, max: 100 }]}>
-            <Input />
-        </Form.Item>
-        <Form.Item name={'type'} label="Type" rules={[{ required: true }]}>
-            <Select
-                placeholder="Select the job type"
-                allowClear
-            >
-                {JobTypes.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
-            </Select>
-        </Form.Item>
-        <Form.Item name={'category'} label="Category" rules={[{ required: true }]}>
-            <Select
-                placeholder="Select a category"
-                allowClear
-            >
-                {JobCategories.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
-            </Select>
-        </Form.Item>
-        <Form.Item name={'experienceLevel'} label="Experience Level" rules={[{ required: true }]}>
-            <Select
-                mode="tags"
-                placeholder="Select the required experience level"
-                allowClear>
-                {JobExeperienceLevels.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
-            </Select>
-        </Form.Item>
-        <Form.Item name={'regions'} label="Regions" rules={[{ required: true }]}>
-            <Select
-                mode="tags"
-                placeholder="Select the required regions"
-                allowClear>
-                {JobRegions.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
-            </Select>
-        </Form.Item>
-        <Form.Item name={'visa'} label="Visa Soponsorship">
-            <Radio.Group>
-                <Radio value={true}>Yes</Radio>
-                <Radio value={false}>No</Radio>
-                <Radio value={undefined}>Don't Specify</Radio>
-            </Radio.Group>
-        </Form.Item>
-        <Form.Item name={'description'} label="Job Description" rules={[{ required: true }]}>
-            <HtmlEditor />
-        </Form.Item>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
-                {editing ? "Update" : "Submit"}
-            </Button>
-        </Form.Item>
-    </Form>
-
     return <Post>
-        {(props.loading || jobLoading) ? <Spin spinning size="large" /> : component}
+        <Form form={form} initialValues={initialValues} {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+            <Spin spinning={jobLoading} tip="Loading...">
+                <Form.Item name={'title'} label="Title" rules={[{ required: true, max: 100 }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name={'type'} label="Type" rules={[{ required: true }]}>
+                    <Select
+                        placeholder="Select the job type"
+                        allowClear
+                    >
+                        {JobTypes.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
+                    </Select>
+                </Form.Item>
+                <Form.Item name={'category'} label="Category" rules={[{ required: true }]}>
+                    <Select
+                        placeholder="Select a category"
+                        allowClear
+                    >
+                        {JobCategories.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
+                    </Select>
+                </Form.Item>
+                <Form.Item name={'experienceLevel'} label="Experience Level" rules={[{ required: true }]}>
+                    <Select
+                        mode="tags"
+                        placeholder="Select the required experience level"
+                        allowClear>
+                        {JobExeperienceLevels.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
+                    </Select>
+                </Form.Item>
+                <Form.Item name={'regions'} label="Regions" rules={[{ required: true }]}>
+                    <Select
+                        mode="tags"
+                        placeholder="Select the required regions"
+                        allowClear>
+                        {JobRegions.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
+                    </Select>
+                </Form.Item>
+                <Form.Item name={'visa'} label="Visa Soponsorship">
+                    <Radio.Group>
+                        <Radio value={true}>Yes</Radio>
+                        <Radio value={false}>No</Radio>
+                        <Radio value={undefined}>Don't Specify</Radio>
+                    </Radio.Group>
+                </Form.Item>
+                <Form.Item name={'description'} label="Job Description" rules={[{ required: true }]}>
+                    <HtmlEditor />
+                </Form.Item>
+                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                    <Button type="primary" htmlType="submit">
+                        {editing ? "Update" : "Submit"}
+                    </Button>
+                </Form.Item>
+            </Spin>
+        </Form>
     </Post>
 }
 
