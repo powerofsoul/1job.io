@@ -30,11 +30,11 @@ export default (props: { user?: User }) => {
                     {user?.companyName}
                 </h3>
             </div>
-            {user?.companyWebsite && <div className="section">
-                <a target="_blank" href={user.companyWebsite} className="ant-btn">
-                    View Website
-                </a>
-            </div>}
+            <div>
+                <Button type="primary">
+                    <Link to={`/profile/${user?._id}`}>View More</Link>
+                </Button>
+            </div>
         </Skeleton>
     </CompanyCard>
 }

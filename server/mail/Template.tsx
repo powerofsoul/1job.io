@@ -18,6 +18,8 @@ export const WelcomeTemplate: TemplateType<WelcomeTemplate> = (variables) => {
           <Item align="left">
             <Span fontSize={20}>
                 Thanks a lot for your interest. 
+            </Span>
+            <Span>
                 Please make sure you set up your profile so your job will stand up over the others!
                 If you got any other questions please
             </Span>

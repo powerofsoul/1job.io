@@ -12,6 +12,7 @@ import { useParams, Link } from "react-router-dom";
 import { useHistory } from 'react-router';
 import CompanyCard from '../common/CompanyCard';
 import { User } from '../../models/User';
+import Space from '../style/Space';
 
 const JobDetails = styled.div`
     padding-top: 5rem;
@@ -25,13 +26,25 @@ const JobDetails = styled.div`
             align-items:center;
         }
     }
-    .JobDetailsBody {
-        align-items:center;
-        margin-top: 2rem;
-    }
+    
 
     .no-padding {
         padding: 0;
+    }
+
+    .JobDetailsBody {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        padding: ${Space.md};
+
+        &:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        .html-content {
+            align-items:center;
+            margin-top: 2rem;
+        }
     }
 `;
 interface Props {
@@ -61,28 +74,29 @@ const JobPage = (props: Props) => {
 
     return <JobDetails>
         <Skeleton active loading={loading}>
-            <Row justify="center">
-                <Col xs={12} md={9}>
-                    <div>
-                        Posted {moment(job?.postedOn).fromNow()}
-                    </div>
-                    <h1>
-                        {job?.title}
-                    </h1>
-                    {job?.company._id == props.currentUser?._id && <div>
-                        <Link to={`/post/${job?._id}`} className="ant-btn ant-btn-primary">
-                            Edit
-                        </Link>
-                    </div>}
-                    <div className="JobDetailsBody">
-                        <div className="ql-editor no-padding" dangerouslySetInnerHTML={{ __html: job?.description }} />
-                    </div>
-                </Col>
-                <Col xs={12} md={3}>
+            <Row gutter={[24, 24]} justify="center">
+                <Col xs={24} lg={5}>
                     <div className="JobDetailsHeader">
                         <div className="CompanyDetails">
                             <CompanyCard user={job?.company} />
-                            <div dangerouslySetInnerHTML={{ __html: job?.company.companyDescription }} />
+                        </div>
+                    </div>
+                </Col>
+                <Col xs={24} lg={12}>
+                    <div className="JobDetailsBody">
+                        <div>
+                            Posted {moment(job?.postedOn).fromNow()}
+                        </div>
+                        <h1>
+                            {job?.title}
+                        </h1>
+                        {job?.company._id == props.currentUser?._id && <div>
+                            <Link to={`/post/${job?._id}`} className="ant-btn ant-btn-primary">
+                                Edit
+                            </Link>
+                        </div>}
+                        <div className="html-content">
+                            <div className="ql-editor no-padding" dangerouslySetInnerHTML={{ __html: job?.description }} />
                         </div>
                     </div>
                 </Col>
