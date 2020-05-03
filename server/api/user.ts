@@ -107,6 +107,13 @@ router.post("/forgotpass", (req, res) => {
     })
 })
 
+router.get('/me',
+    isAuthenticated,
+    (req, res) => {
+        res.json(req.user)
+    }
+);
+
 router.get('/:id', (req, res) => {
     const id = req.params.id;
 
@@ -115,16 +122,11 @@ router.get('/:id', (req, res) => {
             user
         })
     }).catch(() => {
-        res.status(500).send();
+        res.json({
+            success: false
+        })
     })
 })
-
-router.get('/me',
-    isAuthenticated,
-    (req, res) => {
-        res.json(req.user)
-    }
-);
 
 router.post("/update", async (req, res) => {
     const user = req.body.user;
