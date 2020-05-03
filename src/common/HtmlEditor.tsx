@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Editor from "react-quill";
 const modules = {
     toolbar: [
-        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }, "link"],
         [{ size: [] }],
         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' },
