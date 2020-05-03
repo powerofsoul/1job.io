@@ -66,7 +66,7 @@ const JobPage = (props: Props) => {
     })
 
     return <JobDetails>
-        <Row gutter={[24, 24]} justify="center">
+        <Row gutter={[0, 12]} justify="center">
 
             <Col xs={24} lg={5}>
                 <Skeleton avatar active loading={loading}>
