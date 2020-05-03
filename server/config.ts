@@ -10,5 +10,6 @@ export default {
     salt_rounds: 10,
     cors: process.env.CORS || "http://localhost:8080",
     url: "localhost:3000" || process.env.url,
-    test_mail: process.env.TEST_MAIL
+    test_mail: process.env.TEST_MAIL,
+    hostname: process.env.HOST_NAME || "http://localhost:8080"
 }

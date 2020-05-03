@@ -1,12 +1,18 @@
 // typings/express.d.ts
 
+interface ResponseBody {
+   success: boolean; 
+   message?: string;
+   [key: string]: string;
+}
+
 declare module Express {
-   interface Request {
-      user: import("../../models/mongo/UserModel").User,
+   export interface Request {
+      user: import("../../models/User").User,
       files: {[key: string]: {
          data: Buffer,
          name: string,
          size: number
-      }}
+      }},
    }
 }

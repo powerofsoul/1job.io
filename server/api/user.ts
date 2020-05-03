@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { authenticate } from "passport";
-import passport from "passport";
 import { isAuthenticated } from "../middleware/middleware";
 import fs from "fs";
 import { User } from "../../models/User";
@@ -8,12 +7,24 @@ import UserModel from "../../models/mongo/UserModel";
 import FileStore from "../services/FileService";
 import MailService from "../services/MailService";
 import { WelcomeTemplate } from "../mail/Template";
+import config from "../config";
 const path = require('path');
 
 const router = Router();
 
 router.post("/login", authenticate('local'), (req, res) => {
-    res.json(req.user);
+    const isActivated = req.user.activated;
+    if (isActivated) {
+        res.json({
+            success: true,
+            user: req.user
+        })
+    } else {
+        res.json({
+            success: false,
+            message: "Please check your emai and click the activation link."
+        })
+    }
 })
 
 router.get('/logout', (req, res) => {
@@ -26,12 +37,15 @@ router.post("/register", (req, res) => {
 
     UserModel.create(user)
         .then((async (u) => {
-            req.login(u, () => {
-                res.json({ success: true, user: u })
+            const template = WelcomeTemplate({ companyName: user.companyName, 
+                    activationString: u.activationString,
+                    domain: config.hostname
             });
-
-            const template = WelcomeTemplate({companyName: user.companyName});
             MailService.notify(user.email, "Welcome!", template);
+
+            req.login(u, () => {
+                res.json({ success: true, message: "Please check your email for the activation link." })
+            });
         }))
         .catch((err) => {
             let message = "Something went wrong. Please contact the administrator!";
@@ -44,14 +58,35 @@ router.post("/register", (req, res) => {
         });
 });
 
+router.post("/activate", (req, res) => {
+    UserModel.findOne({ activationString: req.body.activationString }).then((user) => {
+        if (user.activated) {
+            res.json({
+                success: false,
+                message: "Account already activated."
+            })
+        } else {
+            user.activated = true;
+            user.save().then(() => {
+                res.json({
+                    success: true,
+                    message: "Your account has been activated."
+                })
+            }).catch(() => res.status(500).send());
+        }
+    }).catch(() => {
+        res.status(500).send();
+    })
+})
+
 router.get('/:id', (req, res) => {
     const id = req.params.id;
 
-    UserModel.findOne({_id: id}).then((user) => {
+    UserModel.findOne({ _id: id }).then((user) => {
         res.json({
             user
         })
-    }).catch(()=> {
+    }).catch(() => {
         res.status(500).send();
     })
 })

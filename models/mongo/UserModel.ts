@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import config from "../../server/config";
 import { User } from "../User";
 const xss = require("xss");
+const md5 = require("md5");
 
 export const UserSchema = new Schema({
     email: {
@@ -31,6 +32,13 @@ export const UserSchema = new Schema({
     },
     companyDescription: {
         type: String
+    },
+    activated: {
+        type: Boolean,
+        default: false
+    },
+    activationString: {
+        type: String, 
     }
 })
 
@@ -68,9 +76,19 @@ UserSchema.pre('save', function (next) {
     next();
 })
 
+UserSchema.pre('save', function (next) {
+    const user = this as UserDocument;
+
+    if (user.activationString) return next();
+    
+    user.activationString = md5(user.companyName);
+    next();
+})
+
 UserSchema.methods.toJSON = function() {
-    const obj = this.toObject();
+    const obj: UserDocument = this.toObject();
     delete obj.password;
+    delete obj.activationString;
     return obj;
 }
 

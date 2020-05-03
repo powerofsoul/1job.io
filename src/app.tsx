@@ -21,6 +21,7 @@ import CurrentUserStore from './redux/stores/CurrentUserStore';
 import { bindActionCreators } from 'redux';
 import { User } from '../models/User';
 import Company from './pages/company';
+import Activation from './pages/activation';
 
 const AppBody = styled.div`
     display:flex;
@@ -45,6 +46,7 @@ const routes: Route[] = [
   { path: '/post/:id?', component: Post, logged: true },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
+  { path: '/activation/:activationString', component: Activation},
   { path: '/company/:id', component: Company },
   { path: '/', component: Index }
 ]
@@ -88,8 +90,8 @@ const AppWrapper = () => {
   const appStore = configureStore();
 
   return <Provider store={appStore}>
-    <ToastContainer position="bottom-right"
-      autoClose={1500} />
+    <ToastContainer position="top-right"
+      autoClose={3000} />
     <AppBody>
       <ConnectedApp />
     </AppBody>

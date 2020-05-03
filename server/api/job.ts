@@ -83,10 +83,10 @@ router.put('/', isAuthenticated, (req, res) => {
     }
 
     if (job._id) {
-        JobModel.updateOne({ _id: job._id, company: req.user._id }, job)
+        JobModel.updateOne({ _id: job._id, company: req.user }, job)
             .then((r) => {
                 if (r.n == 0) {
-                    res.status(401).send({
+                    res.status(401).json({
                         success: false,
                         message: "Unable to find requested job"
                     });

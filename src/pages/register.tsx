@@ -31,17 +31,12 @@ const Component = (props: Props) => {
     const history = useHistory();
 
     const submit = (values) => {
-       post("/user/register", values).then((response: {success: boolean, user: User, message: string}) => {
+       post("/user/register", values).then((response: {success: boolean, message: string}) => {
             if(response.success) {
-                toast("Welcome!", {
+                toast(response.message, {
                     type: "success"
                 });
-
-                props.setCurrentUser(response.user);
-
-                setTimeout(() => {
-                    history.push("/");
-                }, 1000);
+                history.push("/");
             } else {
                 toast(response.message, {
                     type: "error"

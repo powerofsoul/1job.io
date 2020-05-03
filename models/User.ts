@@ -7,5 +7,7 @@ export interface User {
     companyImage: string;
     companyWebsite: string;
     companyDescription: string;
+    activated: boolean;
+    activationString?: string;
     comparePassword?: (password: string) => Promise<boolean>
 }

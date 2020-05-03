@@ -33,19 +33,34 @@ const Component = (props: Props) => {
     const [password, setPassword] = useState('');
     const history = useHistory();
     const location = useLocation();
- 
+
+    type LoginResponse = {
+        success: boolean;
+        message?: string;
+        user?: User;
+    }
+
+    const onLogin = (user: User) => {
+        props.setCurrentUser(user);
+        toast("Login succesfully.", {
+            type: "success"
+        });
+
+        if (location.pathname == '/login') {
+            history.push('/');
+        }
+    }
 
     const submit = () => {
         post("/user/login", {
             email, password
-        }).then((user: User) => {
-            props.setCurrentUser(user);
-            toast("Login succesfully.", {
-                type: "success"
-            });            
-
-            if(location.pathname == '/login'){
-                history.push('/');
+        }).then((response: LoginResponse) => {
+            if (response.success) {
+                onLogin(response.user);
+            } else {
+                toast(response.message, {
+                    type: "error"
+                })
             }
         }).catch((r) => {
             toast("Invalid credentials.", {
@@ -62,22 +77,22 @@ const Component = (props: Props) => {
             onFinish={submit} >
             <Form.Item
                 name="email"
-               
-                rules={[{ required: true,  type:"email", message: 'Please input your Email!' }]}>
-                <Input  value={email}
-                        onChange = {(e) => setEmail(e.target.value)} 
-                        prefix={<MailOutlined className="site-form-item-icon" />} 
-                        placeholder="Email" />
+
+                rules={[{ required: true, type: "email", message: 'Please input your Email!' }]}>
+                <Input value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    prefix={<MailOutlined className="site-form-item-icon" />}
+                    placeholder="Email" />
             </Form.Item>
             <Form.Item
                 name="password"
                 rules={[{ required: true, message: 'Please input your Password!' }]}>
                 <Input
                     value={password}
-                    onChange = {(e) => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     prefix={<LockOutlined className="site-form-item-icon" />}
                     type="password"
-                    placeholder="Password"/>
+                    placeholder="Password" />
             </Form.Item>
             <Form.Item>
                 <Link className="login-form-forgot" to="/forgotpass">
@@ -89,7 +104,7 @@ const Component = (props: Props) => {
                 <Button type="primary" htmlType="submit" className="login-form-button">
                     Log in
                 </Button>
-                <br/>
+                <br />
                 Or <Link to="/register"><span>register now!</span></Link>
             </Form.Item>
         </Form>
