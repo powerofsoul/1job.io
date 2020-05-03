@@ -32,3 +32,29 @@ export const WelcomeTemplate: TemplateType<WelcomeTemplate> = (variables) => {
       )
 }
 
+type ForgotPassTemplate = {
+    companyName: string;
+    hash: string,
+    domain: string;
+}
+
+export const ForgotPassTemplate: TemplateType<ForgotPassTemplate> = (variables) => {
+  return renderEmail(
+      <Email title="Your Password">
+        <Item align="left">
+          <Span>
+              Hi {variables.companyName},
+          </Span>
+        </Item>
+        <Item align="left">
+          <Span>
+              Please go <A href={`${variables.domain}/forgotpass/${variables.hash}`}>here</A> in order to reset your password.
+          </Span>
+        </Item>
+        <Item>
+            Thanks,
+            Jobs Remotely Online
+        </Item>
+      </Email>
+    )
+}

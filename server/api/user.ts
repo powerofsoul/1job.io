@@ -6,7 +6,7 @@ import { User } from "../../models/User";
 import UserModel from "../../models/mongo/UserModel";
 import FileStore from "../services/FileService";
 import MailService from "../services/MailService";
-import { WelcomeTemplate } from "../mail/Template";
+import { WelcomeTemplate, ForgotPassTemplate } from "../mail/Template";
 import config from "../config";
 const path = require('path');
 
@@ -79,6 +79,34 @@ router.post("/activate", (req, res) => {
     })
 })
 
+router.post("/forgotpass", (req, res) => {
+    const {email} = req.body;
+
+    UserModel.findOne({
+        email
+    }).then((user)=> {
+        user.generateForgotPass();
+
+        const forgotPassTemplate = ForgotPassTemplate({
+            companyName: user.companyName,
+            hash: user.forgotPasswordString,
+            domain: config.hostname
+        })
+
+        MailService.notify(user.email, "Password recovery link", forgotPassTemplate);
+
+        res.json({
+            success: true,
+            message: "Please check your inbox!"
+        });
+    }).catch(() => {
+        res.json({
+            success: true,
+            message: "Please check your inbox 2!"
+        });
+    })
+})
+
 router.get('/:id', (req, res) => {
     const id = req.params.id;
 
@@ -93,7 +121,9 @@ router.get('/:id', (req, res) => {
 
 router.get('/me',
     isAuthenticated,
-    (req, res) => res.json(req.user)
+    (req, res) => {
+        res.json(req.user)
+    }
 );
 
 router.post("/update", async (req, res) => {

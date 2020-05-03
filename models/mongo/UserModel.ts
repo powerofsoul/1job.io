@@ -39,6 +39,9 @@ export const UserSchema = new Schema({
     },
     activationString: {
         type: String, 
+    },
+    forgotPasswordString: {
+        type: String
     }
 })
 
@@ -47,6 +50,13 @@ type UserDocument = User & Document;
 UserSchema.methods.comparePassword = function (candidatePassword) {
     const {password} = this;
     return bcrypt.compare(candidatePassword, password)
+};
+
+UserSchema.methods.generateForgotPass = function () {
+    const hashDate = md5(this.companyName+new Date().getTime());
+
+    this.forgotPasswordString = hashDate;
+    this.save();
 };
 
 
@@ -89,6 +99,7 @@ UserSchema.methods.toJSON = function() {
     const obj: UserDocument = this.toObject();
     delete obj.password;
     delete obj.activationString;
+    delete obj.forgotPasswordString;
     return obj;
 }
 
