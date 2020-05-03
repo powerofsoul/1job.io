@@ -13,7 +13,7 @@ import * as React from "react";
 
 const Header = styled.div`
     width: 100%;
-    background-color: ${Colors.light};
+    background-color: ${Colors.white};
     box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
     position: sticky;
     top:0;

@@ -9,7 +9,7 @@ import React from "react";
 const {Footer} = Layout;
 const StyledFooter = styled(Footer)`
     margin-top: auto;
-    background-color: ${colors.light_light};
+    background-color: ${Colors.white};
     box-shadow: 0px 0 10px rgba(0, 0, 0, 0.1);
 `;
 

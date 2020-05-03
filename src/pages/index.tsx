@@ -37,7 +37,7 @@ const IndexTop = styled.div`
     align-items: center;
 
     h1, h2 {
-        color: ${colors.light};
+        color: ${colors.white};
     }
 
     .content {
