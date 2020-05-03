@@ -31,8 +31,8 @@ const Component = (props: Props) => {
     const history = useHistory();
 
     const submit = (values) => {
-       post("/user/register", values).then((response: {success: boolean, message: string}) => {
-            if(response.success) {
+        post("/user/register", values).then((response: { success: boolean, message: string }) => {
+            if (response.success) {
                 toast(response.message, {
                     type: "success"
                 });
@@ -42,7 +42,7 @@ const Component = (props: Props) => {
                     type: "error"
                 });
             }
-       })
+        })
     }
 
     return <Login>
@@ -54,14 +54,14 @@ const Component = (props: Props) => {
             <Form.Item
                 label="Email"
                 name="email"
-                rules={[{ required: true, type:"email", message: 'Please input your email!' }]}>
+                rules={[{ required: true, type: "email", message: 'Please input your email!' }]}>
                 <Input />
             </Form.Item>
 
             <Form.Item
                 label="Company Name"
                 name="companyName"
-                rules={[{ required: true, min:3, message: 'Please input your company name!' }]}>
+                rules={[{ required: true, min: 3, message: 'Please input your company name!' }]}>
                 <Input />
             </Form.Item>
 
@@ -69,9 +69,30 @@ const Component = (props: Props) => {
                 label="Password"
                 name="password"
                 rules={[{ required: true, message: 'Please input your password!' }]}>
-                <Input.Password  />
+                <Input.Password />
             </Form.Item>
-            
+            <Form.Item
+                name="confirm"
+                label="Confirm Password"
+                dependencies={['password']}
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please confirm your password!',
+                    },
+                    ({ getFieldValue }) => ({
+                        validator(rule, value) {
+                            if (!value || getFieldValue('password') === value) {
+                                return Promise.resolve();
+                            }
+                            return Promise.reject('The two passwords that you entered do not match!');
+                        },
+                    }),
+                ]}
+            >
+                <Input.Password />
+            </Form.Item>
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
                     Submit
