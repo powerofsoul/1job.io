@@ -22,6 +22,7 @@ import { bindActionCreators } from 'redux';
 import { User } from '../models/User';
 import Company from './pages/company';
 import Activation from './pages/activation';
+import ForgotPass from './pages/forgotpass';
 
 const AppBody = styled.div`
     display:flex;
@@ -47,6 +48,7 @@ const routes: Route[] = [
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/activation/:activationString', component: Activation},
+  { path: '/forgotpass', component: ForgotPass},
   { path: '/company/:id', component: Company },
   { path: '/', component: Index }
 ]

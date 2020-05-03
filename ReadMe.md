@@ -2,11 +2,12 @@
 
 ### Soon on https://jobsremotely.online
 
-Needed env variable for prod are:
+Needed env variable for prod are: (check config.ts for the full list)
 - CORS = 
 - MONGO_URL = 
 - AWS_ACCESS_KEY_ID =
 - AWS_SECRET_ACCESS_KEY =
+- HOST =
 
 Needed env var for local are:
 - TEST_MAIL =
