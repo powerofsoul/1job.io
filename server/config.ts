@@ -11,5 +11,5 @@ export default {
     cors: process.env.CORS || "http://localhost:8080",
     url: "localhost:3000" || process.env.url,
     test_mail: process.env.TEST_MAIL,
-    hostname: process.env.HOST_NAME || "http://localhost:8080"
+    hostname: process.env.HOST || "http://localhost:8080"
 }
