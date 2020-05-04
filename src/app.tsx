@@ -63,7 +63,13 @@ interface Props {
 const App = (props: Props) => {
   const isLogged = props.loading || props.user;
   if (props.loading) props.refreshCurrentUser();
-
+  const history = useHistory();
+  history.listen((location) => {  
+    if (window.ga) {
+      window.ga('send', 'pageview', location.pathname);
+    }
+  });
+  
   return <BrowserRouter>
     <Header />
     <Switch>
