@@ -23,6 +23,7 @@ import { User } from '../models/User';
 import Company from './pages/company';
 import Activation from './pages/token-pages/activation';
 import ForgotPass from './pages/forgotpass';
+import { useHistory } from 'react-router';
 
 const AppBody = styled.div`
     display:flex;
@@ -60,25 +61,43 @@ interface Props {
   refreshCurrentUser: () => void;
 }
 
-const App = (props: Props) => {
-  const isLogged = props.loading || props.user;
-  if (props.loading) props.refreshCurrentUser();
-  const history = useHistory();
+let historyEventsAreDefined = false;
+const defineHistoryEvents = (history) => {
+  if(!historyEventsAreDefined){
+    history.listen((location) => {  
   history.listen((location) => {  
-    if (window.ga) {
-      window.ga('send', 'pageview', location.pathname);
-    }
-  });
-  
+    history.listen((location) => {  
+      if (window.ga) {
+        window.ga('send', 'pageview', location.pathname);
+      }
+    });
+
+    historyEventsAreDefined = true;
+  }
+}
+
+const Routes = (props: Props) => {
+  const isLogged = props.loading || props.user;
+  const history = useHistory();
+  defineHistoryEvents(history);
+
+  return <>
+    {routes.map(r => {
+      const canAccess = isLogged || !r.logged;
+      const component = canAccess ? r.component : Login;
+
+      return <Route key={r.path} path={r.path} component={component} />
+    })}
+  </>
+}
+
+const App = (props: Props) => {
+  if (props.loading) props.refreshCurrentUser();
+
   return <BrowserRouter>
     <Header />
     <Switch>
-      {routes.map(r => {
-        const canAccess = isLogged || !r.logged;
-        const component = canAccess ? r.component : Login;
-
-        return <Route key={r.path} path={r.path} component={component} />
-      })}
+      <Routes {...props} />
     </Switch>
     <Footer />
   </BrowserRouter>
