@@ -81,14 +81,14 @@ const Routes = (props: Props) => {
   const history = useHistory();
   defineHistoryEvents(history);
 
-  return <>
+  return <Switch>
     {routes.map(r => {
       const canAccess = isLogged || !r.logged;
       const component = canAccess ? r.component : Login;
 
       return <Route key={r.path} path={r.path} component={component} />
     })}
-  </>
+  </Switch>
 }
 
 const App = (props: Props) => {
@@ -96,9 +96,7 @@ const App = (props: Props) => {
 
   return <BrowserRouter>
     <Header />
-    <Switch>
-      <Routes {...props} />
-    </Switch>
+    <Routes {...props} />
     <Footer />
   </BrowserRouter>
 }
