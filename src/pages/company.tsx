@@ -46,14 +46,7 @@ export default () => {
         <Row justify="center">
             <Col className="main-col" md={12}>
                 <Skeleton loading={loading}>
-                    <div className="section">
-                        <Avatar size={100} shape="square" className="company-logo" src={company?.companyImage} />
-                    </div>
-                    <div className="section">
-                        <h1>
-                            {company?.companyName}
-                        </h1>
-                    </div>
+                    <CompanyCard hideViewMore user={company} />
                     <div dangerouslySetInnerHTML={{__html: company?.companyDescription}} />
 
                     <div className="company-job-list">

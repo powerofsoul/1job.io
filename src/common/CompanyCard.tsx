@@ -17,8 +17,13 @@ const CompanyCard = styled.div`
     }
 `;
 
-export default (props: { user?: User }) => {
-    const { user } = props;
+interface Props {
+    user?: User;
+    hideViewMore?: boolean;
+}
+
+export default (props: Props) => {
+    const { user, hideViewMore } = props;
 
     return <CompanyCard>
         <Skeleton avatar active loading={user == undefined}>
@@ -27,14 +32,14 @@ export default (props: { user?: User }) => {
             </div>
             <div className="section">
                 <h3>
-                    {user?.companyName}
+                    <a href={user?.companyWebsite} target="_blank">{user?.companyName}</a>
                 </h3>
             </div>
-            <div>
+            {!hideViewMore && <div>
                 <Button type="primary">
                     <Link to={`/company/${user?._id}`}>View More</Link>
                 </Button>
-            </div>
+            </div>}
         </Skeleton>
     </CompanyCard>
 }
