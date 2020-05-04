@@ -37,7 +37,7 @@ const AppBody = styled.div`
 
 interface Route {
   path: string,
-  component: React.ComponentType,
+  component: React.ComponentType<any>,
   logged?: boolean,
 }
 
