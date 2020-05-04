@@ -13,6 +13,7 @@ import { useHistory } from 'react-router';
 import CompanyCard from '../common/CompanyCard';
 import { User } from '../../models/User';
 import { HoverableCard } from "../style/CommonStyles";
+import Space from '../style/Space';
 
 const JobDetails = styled.div`
     padding-top: 5rem;
@@ -37,6 +38,12 @@ const JobDetails = styled.div`
         .html-content {
             align-items:center;
             margin-top: 2rem;
+        }
+    }
+
+    .action-buttons {
+        .ant-btn {
+            margin-right: ${Space.md};
         }
     }
 `;
@@ -86,11 +93,14 @@ const JobPage = (props: Props) => {
                         <h1>
                             {job?.title}
                         </h1>
-                        {job?.company._id == props.currentUser?._id && <div>
-                            <Link to={`/post/${job?._id}`} className="ant-btn ant-btn-primary">
-                                Edit
+                        <div className="action-buttons">
+                            {job?.company._id == props.currentUser?._id &&
+                                <Link to={`/post/${job?._id}`} className="ant-btn ant-btn-primary">
+                                    Edit
                             </Link>
-                        </div>}
+                            }
+                            {job?.applyOn && <a className="ant-btn ant-btn-primary" href={job?.applyOn}>Apply now</a>}
+                        </div>
                         <div className="html-content">
                             <div className="ql-editor no-padding" dangerouslySetInnerHTML={{ __html: job?.description }} />
                         </div>

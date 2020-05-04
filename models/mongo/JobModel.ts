@@ -41,6 +41,9 @@ export const JobSchema = new Schema({
     visa: {
         type: Boolean
     },
+    applyOn: {
+        type: String
+    },
     postedOn: Date,
 })
 

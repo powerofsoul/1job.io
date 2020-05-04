@@ -9,6 +9,7 @@ export interface Job {
     experienceLevel: (typeof JobExeperienceLevels[number])[]
     category: typeof JobCategories[number],
     regions: (typeof JobRegions[number])[]
+    applyOn?: string,
     postedOn: Date,
     visa: boolean | undefined
 }

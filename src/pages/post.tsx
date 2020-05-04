@@ -127,6 +127,9 @@ const PostPage = (props: CurrentUserStoreType) => {
                 <Form.Item name={'description'} label="Job Description" rules={[{ required: true }]}>
                     <HtmlEditor />
                 </Form.Item>
+                <Form.Item name={'applyOn'} label="Apply On" rules={[{ type: "url" }]}>
+                    <Input placeholder="https://"/>
+                </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
                     <Button type="primary" htmlType="submit">
                         {editing ? "Update" : "Submit"}
