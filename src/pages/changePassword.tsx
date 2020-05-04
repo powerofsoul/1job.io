@@ -16,7 +16,7 @@ interface Props {
 
 const layout = {
     labelCol: { span: 8 },
-    wrapperCol: { span: 17 },
+    wrapperCol: { span: 8 },
 };
 
 const ChangePassword = (props: User) => {
@@ -53,7 +53,7 @@ const ChangePassword = (props: User) => {
     }
 
     return <Row style={{ marginTop: Space.md }} justify="center">
-        <Col md={5}>
+        <Col md={12}>
             <Spin spinning={loading} tip="Loading...">
                 <Form onFinish={changePass} {...layout}>
                     {!token && <Form.Item
