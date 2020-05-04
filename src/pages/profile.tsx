@@ -1,16 +1,17 @@
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import CurrentUserStore from "../redux/stores/CurrentUserStore";
-import { IAppState } from "../redux/configureStore";
+import { Button, Form, Input, InputNumber, Skeleton } from "antd";
 import React, { useState } from "react";
-import { Input, Form, InputNumber, Button, Upload, Skeleton } from "antd";
-import styled from "styled-components";
-import AvatarUpload from "../common/AvatarUpload";
-import { post } from "../Utils";
-import { toast } from "react-toastify";
-import HtmlEditor from "../common/HtmlEditor";
-import { User } from "../../models/User";
+import { connect } from "react-redux";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { bindActionCreators } from "redux";
+import styled from "styled-components";
+import { User } from "../../models/User";
+import AvatarUpload from "../common/AvatarUpload";
+import HtmlEditor from "../common/HtmlEditor";
+import { IAppState } from "../redux/configureStore";
+import CurrentUserStore from "../redux/stores/CurrentUserStore";
+import { post } from "../Utils";
 
 interface Props {
     user: User;
@@ -81,6 +82,9 @@ const Profile = (props: Props) => {
             <Form initialValues={props.user} {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
                 <Form.Item name={'email'} label="Email" rules={[{ type: 'email', required: true }]}>
                     <Input />
+                </Form.Item>
+                <Form.Item label="Password">
+                    <Link to="/change-password">Change</Link>
                 </Form.Item>
                 <Form.Item name={'companyName'} label="Company Name" rules={[{ required: true }]}>
                     <Input />

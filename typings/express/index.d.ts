@@ -8,7 +8,7 @@ interface ResponseBody {
 
 declare module Express {
    export interface Request {
-      user: import("../../models/User").User,
+      user: import("../../models/mongo/UserModel").UserDocument,
       files: {[key: string]: {
          data: Buffer,
          name: string,

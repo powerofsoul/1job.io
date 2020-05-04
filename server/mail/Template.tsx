@@ -48,7 +48,7 @@ export const ForgotPassTemplate: TemplateType<ForgotPassTemplate> = (variables) 
         </Item>
         <Item align="left">
           <Span>
-              Please go <A href={`${variables.domain}/forgotpass/${variables.hash}`}>here</A> in order to reset your password.
+              Please go <A href={`${variables.domain}/change-password/${variables.hash}`}>here</A> in order to reset your password.
           </Span>
         </Item>
         <Item>

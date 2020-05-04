@@ -79,6 +79,60 @@ router.post("/activate", (req, res) => {
     })
 })
 
+router.post("/changepass", async (req, res)=>{
+    if(req.isAuthenticated()) {
+        const {currentPassword, newPassword} = req.body;
+
+        const validCurrentPassword = await req.user.comparePassword(currentPassword);
+        if(!validCurrentPassword){
+            res.json({
+                success: false,
+                message: "Invalid current password."
+            });
+        } else {
+            req.user.password = newPassword;
+            req.user.save().then(()=>{
+                res.json({
+                    success: true
+                })
+            }).catch(()=>{
+                res.json({
+                    success: false
+                })
+            });
+        }
+    } else {
+        const {token, newPassword} = req.body;
+        if(!token || token == ""){
+            res.json({
+                success: false,
+                message: "Invalid token."
+            })
+        } else {
+            UserModel.findOne({forgotPasswordString: token}).then((user) => {
+                user.password = newPassword;
+                user.forgotPasswordString = "";
+
+                user.save().then(()=>{
+                    res.json({
+                        success: true
+                    })
+                }).catch(()=>{
+                    res.json({
+                        success: false,
+                        message: "Something went wrong."
+                    })
+                });
+            }).catch(()=> {
+                res.json({
+                    success: false,
+                    message: "Invalid token."
+                })
+            })
+        }
+    }
+})
+
 router.post("/forgotpass", (req, res) => {
     const {email} = req.body;
 

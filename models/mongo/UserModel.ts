@@ -45,7 +45,7 @@ export const UserSchema = new Schema({
     }
 })
 
-type UserDocument = User & Document;
+export type UserDocument = User & Document;
 
 UserSchema.methods.comparePassword = function (candidatePassword) {
     const {password} = this;
