@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router";
 import { Spin } from "antd";
-import { post } from "../Utils";
+import { post } from "../../Utils";
 import { toast } from "react-toastify";
 
 export default () => {

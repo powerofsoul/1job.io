@@ -21,7 +21,7 @@ import CurrentUserStore from './redux/stores/CurrentUserStore';
 import { bindActionCreators } from 'redux';
 import { User } from '../models/User';
 import Company from './pages/company';
-import Activation from './pages/activation';
+import Activation from './pages/token-pages/activation';
 import ForgotPass from './pages/forgotpass';
 
 const AppBody = styled.div`
