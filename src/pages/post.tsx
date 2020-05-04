@@ -66,6 +66,7 @@ const PostPage = (props: CurrentUserStoreType) => {
     })
 
     const onFinish = (values) => {
+        setJobLoading(true);
         put("/job", {
             job: {
                 ...values,
@@ -76,6 +77,8 @@ const PostPage = (props: CurrentUserStoreType) => {
             history.push(`/job/${id}`);
         }).catch(() => {
             toast("Something went wrong!");
+        }).finally(()=>{
+            setJobLoading(false);
         })
     }
 
