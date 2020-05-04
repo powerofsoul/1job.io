@@ -23,6 +23,7 @@ import { User } from '../models/User';
 import Company from './pages/company';
 import Activation from './pages/token-pages/activation';
 import ForgotPass from './pages/forgotpass';
+import ChangePassword from './pages/changePassword';
 import { useHistory } from 'react-router';
 
 const AppBody = styled.div`
@@ -48,9 +49,10 @@ const routes: Route[] = [
   { path: '/post/:id?', component: Post, logged: true },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
-  { path: '/activation/:activationString', component: Activation},
-  { path: '/forgotpass', component: ForgotPass},
+  { path: '/activation/:activationString', component: Activation },
+  { path: '/forgotpass', component: ForgotPass },
   { path: '/company/:id', component: Company },
+  { path: '/change-password/:token?', component: ChangePassword },
   { path: '/', component: Index }
 ]
 
@@ -63,10 +65,8 @@ interface Props {
 
 let historyEventsAreDefined = false;
 const defineHistoryEvents = (history) => {
-  if(!historyEventsAreDefined){
-    history.listen((location) => {  
-  history.listen((location) => {  
-    history.listen((location) => {  
+  if (!historyEventsAreDefined) {
+    history.listen((location) => {
       if (window.ga) {
         window.ga('send', 'pageview', location.pathname);
       }
