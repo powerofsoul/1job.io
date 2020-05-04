@@ -68,7 +68,8 @@ const defineHistoryEvents = (history) => {
   if (!historyEventsAreDefined) {
     history.listen((location) => {
       if (window.ga) {
-        window.ga('send', 'pageview', location.pathname);
+        window.ga.getAll()[0].set('page', location.pathname);
+        window.ga.getAll()[0].send('pageview')
       }
     });
 
