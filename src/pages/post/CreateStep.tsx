@@ -3,6 +3,7 @@ import { Form, Spin, Select, Input, Radio, Button } from "antd"
 import { JobTypes, JobExeperienceLevels, JobCategories, JobRegions } from "../../../models/Job"
 import { FormInstance } from "antd/lib/form";
 import HtmlEditor from "../../common/HtmlEditor";
+import { useForm } from "antd/lib/form/Form";
 
 const layout = {
     labelCol: { span: 4 },
@@ -27,64 +28,65 @@ interface Props {
     onFinish: (values) => void;
     jobLoading?: boolean;
     initialValues?: any,
+    nextButtonText?: string
 }
 
 export default (props: Props) => {
     return <Form form={props.form} initialValues={props.initialValues} {...layout} name="nest-messages" onFinish={props.onFinish} validateMessages={validateMessages}>
-                <Spin spinning={props.jobLoading || false} tip="Loading...">
-                    <Form.Item name={'title'} label="Title" rules={[{ required: true, max: 100 }]}>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name={'type'} label="Type" rules={[{ required: true }]}>
-                        <Select
-                            placeholder="Select the job type"
-                            allowClear
-                        >
-                            {JobTypes.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
-                        </Select>
-                    </Form.Item>
-                    <Form.Item name={'category'} label="Category" rules={[{ required: true }]}>
-                        <Select
-                            placeholder="Select a category"
-                            allowClear
-                        >
-                            {JobCategories.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
-                        </Select>
-                    </Form.Item>
-                    <Form.Item name={'experienceLevel'} label="Experience Level" rules={[{ required: true }]}>
-                        <Select
-                            mode="tags"
-                            placeholder="Select the required experience level"
-                            allowClear>
-                            {JobExeperienceLevels.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
-                        </Select>
-                    </Form.Item>
-                    <Form.Item name={'regions'} label="Regions" rules={[{ required: true }]}>
-                        <Select
-                            mode="tags"
-                            placeholder="Select the required regions"
-                            allowClear>
-                            {JobRegions.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
-                        </Select>
-                    </Form.Item>
-                    <Form.Item name={'visa'} label="Visa Soponsorship">
-                        <Radio.Group>
-                            <Radio value={true}>Yes</Radio>
-                            <Radio value={false}>No</Radio>
-                            <Radio value={undefined}>Don't Specify</Radio>
-                        </Radio.Group>
-                    </Form.Item>
-                    <Form.Item name={'description'} label="Job Description" rules={[{ required: true }]}>
-                        <HtmlEditor />
-                    </Form.Item>
-                    <Form.Item name={'applyOn'} label="Apply On" rules={[{ type: "url" }]}>
-                        <Input placeholder="https://" />
-                    </Form.Item>
-                    <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                        <Button type="primary" htmlType="submit">
-                            Next
-                        </Button>
-                    </Form.Item>
-                </Spin>
-            </Form>
+        <Spin spinning={props.jobLoading || false} tip="Loading...">
+            <Form.Item name={'title'} label="Title" rules={[{ required: true, max: 100 }]}>
+                <Input />
+            </Form.Item>
+            <Form.Item name={'type'} label="Type" rules={[{ required: true }]}>
+                <Select
+                    placeholder="Select the job type"
+                    allowClear
+                >
+                    {JobTypes.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
+                </Select>
+            </Form.Item>
+            <Form.Item name={'category'} label="Category" rules={[{ required: true }]}>
+                <Select
+                    placeholder="Select a category"
+                    allowClear
+                >
+                    {JobCategories.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
+                </Select>
+            </Form.Item>
+            <Form.Item name={'experienceLevel'} label="Experience Level" rules={[{ required: true }]}>
+                <Select
+                    mode="tags"
+                    placeholder="Select the required experience level"
+                    allowClear>
+                    {JobExeperienceLevels.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
+                </Select>
+            </Form.Item>
+            <Form.Item name={'regions'} label="Regions" rules={[{ required: true }]}>
+                <Select
+                    mode="tags"
+                    placeholder="Select the required regions"
+                    allowClear>
+                    {JobRegions.map((c) => <Select.Option value={c} key={c}>{c}</Select.Option>)}
+                </Select>
+            </Form.Item>
+            <Form.Item name={'visa'} label="Visa Soponsorship">
+                <Radio.Group>
+                    <Radio value={true}>Yes</Radio>
+                    <Radio value={false}>No</Radio>
+                    <Radio value={undefined}>Don't Specify</Radio>
+                </Radio.Group>
+            </Form.Item>
+            <Form.Item name={'description'} label="Job Description" rules={[{ required: true }]}>
+                <HtmlEditor />
+            </Form.Item>
+            <Form.Item name={'applyOn'} label="Apply On" rules={[{ type: "url" }]}>
+                <Input placeholder="https://" />
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                <Button type="primary" htmlType="submit">
+                    {props.nextButtonText ?? "Next"}
+                </Button>
+            </Form.Item>
+        </Spin>
+    </Form>
 }

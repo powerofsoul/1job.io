@@ -95,7 +95,7 @@ const JobPage = (props: Props) => {
                         </h1>
                         <div className="action-buttons">
                             {job?.company._id == props.currentUser?._id &&
-                                <Link to={`/post/${job?._id}`} className="ant-btn ant-btn-primary">
+                                <Link to={`/job/${job?._id}/edit`} className="ant-btn ant-btn-primary">
                                     Edit
                             </Link>
                             }

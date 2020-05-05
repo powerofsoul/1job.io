@@ -29,6 +29,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import {
   Elements
 } from '@stripe/react-stripe-js';
+import EditJob from './pages/post/editJob';
 
 const AppBody = styled.div`
     display:flex;
@@ -49,6 +50,7 @@ interface Route {
 
 const routes: Route[] = [
   { path: '/profile', component: Profile, logged: true },
+  { path: '/job/:id/edit', component: EditJob },
   { path: '/job/:id', component: Job },
   { path: '/post/:id?', component: Post, logged: true },
   { path: '/login', component: Login },
