@@ -44,6 +44,9 @@ export const JobSchema = new Schema({
     applyOn: {
         type: String
     },
+    paymentIntent: {
+        type: String
+    },
     postedOn: Date,
 })
 
@@ -57,5 +60,11 @@ JobSchema.pre('save', function (next) {
     job.description = xss(job.description);
     next();
 })
+
+UserSchema.methods.toJSON = function() {
+    const obj: JobDocument = this.toObject();
+    delete obj.paymentIntent;
+    return obj;
+}
 
 export default model<JobDocument>("Job", JobSchema);

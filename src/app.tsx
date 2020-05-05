@@ -16,7 +16,7 @@ import Profile from './pages/profile';
 import Register from './pages/register';
 import Login from './pages/login';
 import Job from './pages/job';
-import Post from './pages/post';
+import Post from './pages/post/post';
 import CurrentUserStore from './redux/stores/CurrentUserStore';
 import { bindActionCreators } from 'redux';
 import { User } from '../models/User';
@@ -25,6 +25,10 @@ import Activation from './pages/token-pages/activation';
 import ForgotPass from './pages/forgotpass';
 import ChangePassword from './pages/changePassword';
 import { useHistory } from 'react-router';
+import { loadStripe } from '@stripe/stripe-js';
+import {
+  Elements
+} from '@stripe/react-stripe-js';
 
 const AppBody = styled.div`
     display:flex;
@@ -76,6 +80,7 @@ const defineHistoryEvents = (history) => {
     historyEventsAreDefined = true;
   }
 }
+const stripePromise = loadStripe('pk_test_rW1t6jhkIp6Yrf5Ytu0AMbiY');
 
 const Routes = (props: Props) => {
   const isLogged = props.loading || props.user;
@@ -96,9 +101,11 @@ const App = (props: Props) => {
   if (props.loading) props.refreshCurrentUser();
 
   return <BrowserRouter>
-    <Header />
-    <Routes {...props} />
-    <Footer />
+    <Elements stripe={stripePromise}>
+      <Header />
+      <Routes {...props} />
+      <Footer />
+    </Elements>
   </BrowserRouter>
 }
 

@@ -4,6 +4,7 @@ import { Job } from "../../models/Job";
 import { isAuthenticated } from "../middleware/middleware";
 import { Types } from "mongoose";
 import UserModel from "../../models/mongo/UserModel";
+import { payForJob as getJobIntent } from "../services/StripeService";
 const router = Router();
 
 router.get('/all', async (req, res) => {
@@ -67,11 +68,11 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/user/:companyId', async (req, res) => {
-    const company = await UserModel.findOne({_id:  req.params.companyId})
+    const company = await UserModel.findOne({ _id: req.params.companyId })
 
-    JobModel.find({company: company})
+    JobModel.find({ company: company })
         .populate("company")
-        .then((jobs) => res.json({jobs}))
+        .then((jobs) => res.json({ jobs }))
         .catch(() => res.status(404).json({ success: false }));
 })
 
@@ -100,9 +101,45 @@ router.put('/', isAuthenticated, (req, res) => {
     } else {
         job.postedOn = new Date();
 
-        JobModel.create(job)
-            .then((r) => res.json(r))
-            .catch((err) => res.status(500).json(err));
+        const jobModel = new JobModel(job);
+        if(req.body.token == undefined){
+            res.json({
+                success: false,
+                message: "Invalid token from payment"
+            })
+            return;
+        }
+        jobModel.validate((err) => {
+            if (err) {
+                res.json({
+                    success: false,
+                    message: "Invalid job content. Please make sure you filled every required field."
+                });
+            } else {
+                getJobIntent(req.body.token).then(async (payment) => {
+                    if (payment.status == "succeeded") {
+                        jobModel.paymentIntent = req.body.token;
+                        const job = await jobModel.save();
+
+                        res.json({
+                            success: true,
+                            message: "Job created",
+                            job
+                        });
+                    } else {
+                        res.json({
+                            success: false,
+                            message: payment.last_payment_error
+                        })
+                    }
+                }).catch((err) => {
+                    res.json({
+                        success: false,
+                        message: "Something went wrong"
+                    });
+                });
+            }
+        })
     }
 
 })

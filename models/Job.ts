@@ -11,6 +11,7 @@ export interface Job {
     regions: (typeof JobRegions[number])[]
     applyOn?: string,
     postedOn: Date,
+    paymentIntent: string,
     visa: boolean | undefined
 }
 
