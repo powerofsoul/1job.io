@@ -75,7 +75,9 @@ const component = (props: Props) => {
         <Row>
             <Col xs={24} md={12}>
                 <h1>
-                    <Link to="/">Jobs Remotely Online</Link>
+                    <Link to="/">
+                        <img src="/img/logo.png" />
+                    </Link>
                 </h1>
             </Col>
             <HeaderDetails xs={24} md={12}>
