@@ -42,9 +42,9 @@ export default () => {
                  <FooterDetails>
                      <div className="links">
                         <Link className="link" to="/">Home</Link>
-                        <Link className="link" to="/aboutus">About Us</Link>
+                        {/* <Link className="link" to="/aboutus">About Us</Link>
                         <Link className="link" to="/help">Help</Link>
-                        <Link className="link" to="/contact">Contact</Link>
+                        <Link className="link" to="/contact">Contact</Link> */}
                     </div>
                  </FooterDetails>
             </Col>
