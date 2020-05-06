@@ -18,6 +18,7 @@ const Edit = styled.div`
 
 interface Props {
     user: User;
+    userLoading: boolean;
 }
 
 const EditJobPage = (props: Props) => {
@@ -43,12 +44,14 @@ const EditJobPage = (props: Props) => {
     }
 
     React.useEffect(() => {
+        if(props.userLoading) {
+            return;
+        }
+
         if (id && !jobLoading) {
             setJobLoading(true);
             setLoading(true);
             getJob(id);
-        } else {
-            setLoading(false);
         }
     })
 
@@ -70,7 +73,7 @@ const EditJobPage = (props: Props) => {
 
     return <Edit>
         <Row justify="center">
-            <Col md={12}>
+            <Col lg={16}>
                 <CreateStep nextButtonText="Update" form={form} jobLoading={loading} onFinish={onFinish} initialValues={initialValues} />
             </Col>
         </Row>
@@ -78,5 +81,6 @@ const EditJobPage = (props: Props) => {
 }
 
 export default connect((store: IAppState): Partial<Props> => ({
-    user: store.currentUserStore.user
+    user: store.currentUserStore.user,
+    userLoading: store.currentUserStore.loading
 }))(EditJobPage);
