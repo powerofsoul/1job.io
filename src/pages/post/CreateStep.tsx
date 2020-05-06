@@ -82,7 +82,7 @@ export default (props: Props) => {
             <Form.Item name={'applyOn'} label="Apply On" rules={[{ type: "url" }]}>
                 <Input placeholder="https://" />
             </Form.Item>
-            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }} style={{textAlign: "center"}}>
                 <Button type="primary" htmlType="submit">
                     {props.nextButtonText ?? "Next"}
                 </Button>
