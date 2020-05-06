@@ -10,6 +10,7 @@ import CurrentUserStore from "../redux/stores/CurrentUserStore";
 import { User } from "../../models/User";
 import { Link } from "react-router-dom";
 import * as React from "react";
+import { SimpleContainer } from "../style/CommonStyles";
 
 const Header = styled.div`
     width: 100%;
@@ -30,6 +31,8 @@ const Header = styled.div`
         text-align: unset;
         padding: 20px;
     }
+
+    ${SimpleContainer}
 `;
 const HeaderDetails = styled(Col)`
     display: flex;
