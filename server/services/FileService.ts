@@ -25,7 +25,7 @@ if (config.env == "development") {
         });
 
         const params = {
-            Bucket: "jobs-remotely-production",
+            Bucket: config.uplods_bucket,
             Key: path.join("uploads", name),
             Body: file
         };
