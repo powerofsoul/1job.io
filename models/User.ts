@@ -1,15 +1,15 @@
+import { EmployerDocument } from "./mongo/EmployerModel";
+
 export interface User {
     _id?: string;
     email: string;
+    avatar: string;
     password: string;
-    companyName: string;
-    companySize: number;
-    companyImage: string;
-    companyWebsite: string;
-    companyDescription: string;
     activated: boolean;
     activationString?: string;
     forgotPasswordString?: string;
     comparePassword?: (password: string) => Promise<boolean>
     generateForgotPass?: () => void;
+    
+    _employer: EmployerDocument;
 }

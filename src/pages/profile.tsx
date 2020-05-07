@@ -48,15 +48,17 @@ const ProfileContainer = styled.div`
 `;
 
 const Profile = (props: Props) => {
-    const [companyDescription, setCompanyDescription] = useState(props.user?.companyDescription);
+    const [companyDescription, setCompanyDescription] = useState(props.user?._employer.companyDescription);
     const history = useHistory();
     
     const onFinish = async (values) => {
         const response: { success: boolean, user: User } = await post("/user/update", {
-            user: {...values,
+            ...values,
+            _employer: { 
+                ...values._employer,
                 companyDescription
             }
-        });
+        } as User);
 
         if (response.success) {
             toast("Profile saved!", {
@@ -79,28 +81,28 @@ const Profile = (props: Props) => {
 
     return <Skeleton loading={props.loading}>
         <ProfileContainer>
-            <Form initialValues={props.user} {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-                <Form.Item name={'email'} label="Email" rules={[{ type: 'email', required: true }]}>
+            <Form initialValues={props} {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+                <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email', required: true }]}>
                     <Input />
                 </Form.Item>
                 <Form.Item label="Password">
                     <Link to="/change-password">Change</Link>
                 </Form.Item>
-                <Form.Item name={'companyName'} label="Company Name" rules={[{ required: true }]}>
+                <Form.Item name={['user', '_employer', 'companyName']} label="Company Name" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name={'companySize'} label="Company Size" rules={[{ type: 'number', min: 1, max: 9999 }]}>
+                <Form.Item name={['user', '_employer', 'companySize']} label="Company Size" rules={[{ type: 'number', min: 1, max: 9999 }]}>
                     <InputNumber />
                 </Form.Item>
-                <Form.Item name={'companyWebsite'} label="Website" rules={[{ type: "url" }]}>
+                <Form.Item name={['user', '_employer', 'companyWebsite']} label="Website" rules={[{ type: "url" }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name={'companyImage'} label="Logo">
+                <Form.Item name={['user', 'avatar']} label="Logo">
                     <Form.Item name="dragger" valuePropName="fileList" noStyle>
-                        <AvatarUpload avatarUrl={props.user?.companyImage} afterUpload={props.refreshCurrentUser} />
+                        <AvatarUpload avatarUrl={props.user?.avatar} afterUpload={props.refreshCurrentUser} />
                     </Form.Item>
                 </Form.Item>
-                <Form.Item name={'companyDescription'} label="Company Description">
+                <Form.Item name={['user', '_employer', 'companyDescription']} label="Company Description">
                     <HtmlEditor value={companyDescription} onChange={setCompanyDescription} />
                 </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

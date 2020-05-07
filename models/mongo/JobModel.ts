@@ -50,6 +50,7 @@ export const JobSchema = new Schema({
     postedOn: Date,
 })
 
+
 type JobDocument = Job & Document;
 
 JobSchema.pre('save', function (next) {

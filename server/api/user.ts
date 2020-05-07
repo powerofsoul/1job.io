@@ -8,6 +8,7 @@ import FileStore from "../services/FileService";
 import MailService from "../services/MailService";
 import { WelcomeTemplate, ForgotPassTemplate } from "../mail/Template";
 import config from "../config";
+import EmployerModel from "../../models/mongo/EmployerModel";
 const path = require('path');
 
 const router = Router();
@@ -32,30 +33,33 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-router.post("/register", (req, res) => {
-    const user: User = req.body;
+router.post("/register", async (req, res) => {
+    const user: User = req.body.user;
 
-    UserModel.create(user)
-        .then((async (u) => {
-            const template = WelcomeTemplate({ companyName: user.companyName, 
-                    activationString: u.activationString,
-                    domain: config.hostname
-            });
-            MailService.notify(user.email, "Welcome!", template);
-
-            req.login(u, () => {
-                res.json({ success: true, message: "Please check your email for the activation link." })
-            });
-        }))
-        .catch((err) => {
-            let message = "Something went wrong. Please contact the administrator!";
-
-            if (err.keyPattern?.email == 1 || Object.keys(err.errors).indexOf("email") >= 0) {
-                message = "Email already used or incorrect.";
-            }
-
-            res.json({ success: false, message })
+    UserModel.create({
+        ...user,
+        _employer: await EmployerModel.create(user._employer)
+    }).then((u) => {
+        const template = WelcomeTemplate({
+            companyName: u?._employer.companyName,
+            activationString: u.activationString,
+            domain: config.hostname
         });
+        MailService.notify(user.email, "Welcome!", template);
+
+        req.login(u, () => {
+            res.json({ success: true, message: "Please check your email for the activation link." })
+        });
+    }).catch((err) => {
+        let message = "Something went wrong. Please contact the administrator!";
+
+        if (err.keyPattern?.email == 1 || Object.keys(err.errors).indexOf("email") >= 0) {
+            message = "Email already used or incorrect.";
+        }
+
+        res.json({ success: false, message })
+    });
+
 });
 
 router.post("/activate", (req, res) => {
@@ -79,51 +83,51 @@ router.post("/activate", (req, res) => {
     })
 })
 
-router.post("/changepass", async (req, res)=>{
-    if(req.isAuthenticated()) {
-        const {currentPassword, newPassword} = req.body;
+router.post("/changepass", async (req, res) => {
+    if (req.isAuthenticated()) {
+        const { currentPassword, newPassword } = req.body;
 
         const validCurrentPassword = await req.user.comparePassword(currentPassword);
-        if(!validCurrentPassword){
+        if (!validCurrentPassword) {
             res.json({
                 success: false,
                 message: "Invalid current password."
             });
         } else {
             req.user.password = newPassword;
-            req.user.save().then(()=>{
+            req.user.save().then(() => {
                 res.json({
                     success: true
                 })
-            }).catch(()=>{
+            }).catch(() => {
                 res.json({
                     success: false
                 })
             });
         }
     } else {
-        const {token, newPassword} = req.body;
-        if(!token || token == ""){
+        const { token, newPassword } = req.body;
+        if (!token || token == "") {
             res.json({
                 success: false,
                 message: "Invalid token."
             })
         } else {
-            UserModel.findOne({forgotPasswordString: token}).then((user) => {
+            UserModel.findOne({ forgotPasswordString: token }).then((user) => {
                 user.password = newPassword;
                 user.forgotPasswordString = "";
 
-                user.save().then(()=>{
+                user.save().then(() => {
                     res.json({
                         success: true
                     })
-                }).catch(()=>{
+                }).catch(() => {
                     res.json({
                         success: false,
                         message: "Something went wrong."
                     })
                 });
-            }).catch(()=> {
+            }).catch(() => {
                 res.json({
                     success: false,
                     message: "Invalid token."
@@ -134,15 +138,15 @@ router.post("/changepass", async (req, res)=>{
 })
 
 router.post("/forgotpass", (req, res) => {
-    const {email} = req.body;
+    const { email } = req.body;
 
     UserModel.findOne({
         email
-    }).then((user)=> {
+    }).then((user) => {
         user.generateForgotPass();
 
         const forgotPassTemplate = ForgotPassTemplate({
-            companyName: user.companyName,
+            companyName: user.email,
             hash: user.forgotPasswordString,
             domain: config.hostname
         })
@@ -164,7 +168,11 @@ router.post("/forgotpass", (req, res) => {
 router.get('/me',
     isAuthenticated,
     (req, res) => {
-        res.json(req.user)
+        UserModel.findOne({
+            _id: req.user._id
+        }).populate("_employer").then((u) => {
+            res.json(u);
+        })
     }
 );
 
@@ -183,27 +191,24 @@ router.get('/:id', (req, res) => {
 })
 
 router.post("/update", async (req, res) => {
-    const user = req.body.user;
-    //make sure to now update password
-    delete user.password;
+    const user = await UserModel.findById(req.user._id).populate("_employer");
 
-    await UserModel.findOneAndUpdate(
-        { _id: req.user._id },
-        user,
-        { "new": true },
-        function (err, user) {
-            if (err) {
-                res.json({
-                    success: false
-                })
-            } else {
-                res.json({
-                    success: true,
-                    user
-                });
-            }
-        }
-    );
+    const employer = {
+        ...user._employer.toObject(),
+        ...req.body.user._employer
+    };
+
+    EmployerModel.updateOne({_id: user._employer._id}, employer).then(() => {
+        res.json({
+            success: true,
+            user: user
+        })
+    }).catch(()=> {
+        res.json({
+            success: false,
+            message: "Something went wrong"
+        });
+    })
 })
 
 router.post("/uploadAvatar", isAuthenticated, (req, res) => {
@@ -212,7 +217,7 @@ router.post("/uploadAvatar", isAuthenticated, (req, res) => {
         const urlWithtime = `${url}?date=${new Date().getTime()}`;
 
         await UserModel.update(req.user, {
-            companyImage: urlWithtime
+            avatar: urlWithtime
         })
 
         res.json({

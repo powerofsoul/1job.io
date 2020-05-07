@@ -31,7 +31,7 @@ passport.use(new Strategy(
             const isValidPassword = await user.comparePassword(password);
             if (!isValidPassword) { return done(null, false); }
             return done(null, user);
-        });
+        }).populate("_employer");
     }
 ));
 

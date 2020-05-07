@@ -53,21 +53,21 @@ const Component = (props: Props) => {
             onFinish={submit}>
             <Form.Item
                 label="Email"
-                name="email"
+                name={["user", "email"]}
                 rules={[{ required: true, type: "email", message: 'Please input your email!' }]}>
                 <Input />
             </Form.Item>
 
             <Form.Item
                 label="Company Name"
-                name="companyName"
+                name={["user", "_employer", "companyName"]}
                 rules={[{ required: true, min: 3, message: 'Please input your company name!' }]}>
                 <Input />
             </Form.Item>
 
             <Form.Item
                 label="Password"
-                name="password"
+                name={["user", "password"]}
                 rules={[{ required: true, message: 'Please input your password!' }]}>
                 <Input.Password />
             </Form.Item>
@@ -83,7 +83,7 @@ const Component = (props: Props) => {
                     },
                     ({ getFieldValue }) => ({
                         validator(rule, value) {
-                            if (!value || getFieldValue('password') === value) {
+                            if (!value || getFieldValue(['user', 'password']) === value) {
                                 return Promise.resolve();
                             }
                             return Promise.reject('The two passwords that you entered do not match!');

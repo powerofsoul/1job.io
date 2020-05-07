@@ -2,7 +2,7 @@ import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 import config from "../../server/config";
 import { User } from "../User";
-const xss = require("xss");
+import { EmployerDocument } from "./EmployerModel";
 const md5 = require("md5");
 
 export const UserSchema = new Schema({
@@ -15,24 +15,7 @@ export const UserSchema = new Schema({
         type: String,
         required: true
     },
-    companyName: {
-        type: String, 
-        required: true
-    },
-    companySize: {
-        type: Number,
-        min: 1,
-        default: 1
-    },
-    companyWebsite: {
-        type: String
-    },
-    companyImage: {
-        type: String
-    },
-    companyDescription: {
-        type: String
-    },
+    avatar: String,
     activated: {
         type: Boolean,
         default: false
@@ -42,7 +25,8 @@ export const UserSchema = new Schema({
     },
     forgotPasswordString: {
         type: String
-    }
+    },
+    _employer: {type:Schema.Types.ObjectId, ref:'Employer'},
 })
 
 export type UserDocument = User & Document;
@@ -77,21 +61,13 @@ UserSchema.pre('save', function (next) {
     });
 })
 
-UserSchema.pre('save', function (next) {
-    const user = this as UserDocument;
-
-    if (!user.isModified('companyDescription')) return next();
-    
-    user.companyDescription = xss(user.companyDescription);
-    next();
-})
 
 UserSchema.pre('save', function (next) {
     const user = this as UserDocument;
 
     if (user.activationString) return next();
     
-    user.activationString = md5(user.companyName);
+    user.activationString = md5(user.email + new Date().getTime());
     next();
 })
 
