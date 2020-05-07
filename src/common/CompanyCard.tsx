@@ -4,6 +4,7 @@ import { Avatar, Skeleton, Row, Col, Button } from "antd";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Space from "../style/Space";
+import { Employer } from "../../models/Employer";
 
 const CompanyCard = styled.div`
     text-align: center;
@@ -18,7 +19,7 @@ const CompanyCard = styled.div`
 `;
 
 interface Props {
-    user?: User;
+    user?: Employer;
     hideViewMore?: boolean;
 }
 
@@ -28,7 +29,7 @@ export default (props: Props) => {
     return <CompanyCard>
         <Skeleton avatar active loading={user == undefined}>
             <div className="section">
-                <img className="company-logo" src={user?.companyImage} />
+                <img className="company-logo" src={user?.avatar} />
             </div>
             <div className="section">
                 <h3>

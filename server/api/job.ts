@@ -5,6 +5,7 @@ import { isAuthenticated } from "../middleware/middleware";
 import { Types } from "mongoose";
 import UserModel from "../../models/mongo/UserModel";
 import { payForJob as getJobIntent } from "../services/StripeService";
+import EmployerModel from "../../models/mongo/EmployerModel";
 const router = Router();
 
 router.get('/all', async (req, res) => {
@@ -68,7 +69,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/user/:companyId', async (req, res) => {
-    const company = await UserModel.findOne({ _id: req.params.companyId })
+    const company = await EmployerModel.findOne({ _id: req.params.companyId })
 
     JobModel.find({ company: company })
         .populate("company")

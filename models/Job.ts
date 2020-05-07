@@ -1,9 +1,9 @@
-import { User } from "./User";
+import { Employer } from "./Employer";
 
 export interface Job {
     _id?: string;
     title: string,
-    company: User,
+    company: Employer,
     description: string,
     type: typeof JobTypes[number]
     experienceLevel: (typeof JobExeperienceLevels[number])[]

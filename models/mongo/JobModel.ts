@@ -51,7 +51,7 @@ export const JobSchema = new Schema({
 })
 
 
-type JobDocument = Job & Document;
+export type JobDocument = Job & Document;
 
 JobSchema.pre('save', function (next) {
     const job = this as JobDocument;

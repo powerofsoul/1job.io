@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { HoverableCard } from "../style/CommonStyles";
 import Space from "../style/Space";
 import CompanyJobsList from "../common/CompanyJobList";
+import { Employer } from "../../models/Employer";
 
 const CompanyPage = styled.div`
     margin-top: ${Space.md};
@@ -27,12 +28,12 @@ export default () => {
     const { id } = useParams();
     const history = useHistory();
     const [loading, setLoading] = useState(true);
-    const [company, setComany] = useState<User>()
+    const [company, setComany] = useState<Employer>()
 
     React.useEffect(() => {
         if (loading) {
             get(`/user/${id}`).then((response: {
-                user: User
+                user: Employer
             }) => {
                 setComany(response.user);
                 setLoading(false);
