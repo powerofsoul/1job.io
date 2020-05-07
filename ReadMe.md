@@ -1,6 +1,6 @@
 # Platform for connecting Employers with Employees
 
-### Soon on https://jobsremotely.online
+### Soon on https://1job.io
 
 Needed env variable for prod are: (check config.ts for the full list)
 - CORS = 
