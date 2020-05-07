@@ -26,7 +26,7 @@ const notify = (to: string, subject: string, content: string) => {
                 Data: subject,
             }
         },
-        Source: "notifications@jobsremotely.online"
+        Source: "notifications@1job.io"
     };
 
     return new Promise((resolve, reject) => {
