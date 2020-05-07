@@ -33,6 +33,7 @@ const Header = styled.div`
     }
 
     ${SimpleContainer}
+    margin:0;
 `;
 const HeaderDetails = styled(Col)`
     display: flex;
