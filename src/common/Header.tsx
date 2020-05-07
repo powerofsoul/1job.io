@@ -90,9 +90,13 @@ const component = (props: Props) => {
                         <div className="right">
                             <Link to="/profile">
                                 <Avatar className="avatar" style={{ backgroundColor: "white", verticalAlign: 'middle' }} src={props.currentUser?.avatar} size="large">
-                                    {props.currentUser?._employer?.companyName}
+                                    {/* 
+                                    //@ts-ignore */}
+                                    {props.currentUser.companyName}
                                 </Avatar>
-                                <Tag className="profile-link" color="green">{props.currentUser?._employer?.companyName}</Tag>
+                                    {/* 
+                                    //@ts-ignore */}
+                                <Tag className="profile-link" color="green">{props.currentUser.companyName}</Tag>
                             </Link>
                             <a onClick={props.logOut}>Log out</a>
                         </div>

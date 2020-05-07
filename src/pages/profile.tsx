@@ -48,16 +48,14 @@ const ProfileContainer = styled.div`
 `;
 
 const Profile = (props: Props) => {
-    const [companyDescription, setCompanyDescription] = useState(props.user?._employer.companyDescription);
+    //@ts-ignore
+    const [companyDescription, setCompanyDescription] = useState(props.user.companyDescription);
     const history = useHistory();
     
     const onFinish = async (values) => {
         const response: { success: boolean, user: User } = await post("/user/update", {
             ...values,
-            _employer: { 
-                ...values._employer,
-                companyDescription
-            }
+            companyDescription
         } as User);
 
         if (response.success) {
@@ -88,13 +86,13 @@ const Profile = (props: Props) => {
                 <Form.Item label="Password">
                     <Link to="/change-password">Change</Link>
                 </Form.Item>
-                <Form.Item name={['user', '_employer', 'companyName']} label="Company Name" rules={[{ required: true }]}>
+                <Form.Item name={['user', 'companyName']} label="Company Name" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name={['user', '_employer', 'companySize']} label="Company Size" rules={[{ type: 'number', min: 1, max: 9999 }]}>
+                <Form.Item name={['user', 'companySize']} label="Company Size" rules={[{ type: 'number', min: 1, max: 9999 }]}>
                     <InputNumber />
                 </Form.Item>
-                <Form.Item name={['user', '_employer', 'companyWebsite']} label="Website" rules={[{ type: "url" }]}>
+                <Form.Item name={['user', 'companyWebsite']} label="Website" rules={[{ type: "url" }]}>
                     <Input />
                 </Form.Item>
                 <Form.Item name={['user', 'avatar']} label="Logo">

@@ -1,6 +1,7 @@
 import { IAppState } from "../configureStore";
 import { post, get } from "../../Utils";
 import { User } from "../../../models/User";
+import { Employer } from "../../../models/Employer";
 
 export type CurrentUserStoreType = {
     user?: User;

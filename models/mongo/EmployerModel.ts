@@ -1,5 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 import { Employer } from "../Employer";
+import UserModel from "./UserModel";
+import { User } from "../User";
 const xss = require("xss");
 
 export const EmployerSchema  = new Schema({
@@ -20,7 +22,7 @@ export const EmployerSchema  = new Schema({
     }
 })
 
-export type EmployerDocument = Employer & Document;
+export type EmployerDocument = User & Employer & Document;
 
 EmployerSchema.pre('save', function (next) {
     const user: EmployerDocument = this as EmployerDocument;
@@ -31,4 +33,4 @@ EmployerSchema.pre('save', function (next) {
     next();
 })
 
-export default model<EmployerDocument>("Employer", EmployerSchema);
+export default UserModel.discriminator<EmployerDocument>("Employer", EmployerSchema);

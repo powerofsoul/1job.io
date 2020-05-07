@@ -9,6 +9,7 @@ import MailService from "../services/MailService";
 import { WelcomeTemplate, ForgotPassTemplate } from "../mail/Template";
 import config from "../config";
 import EmployerModel from "../../models/mongo/EmployerModel";
+import { UserService } from "../services/UserService";
 const path = require('path');
 
 const router = Router();
@@ -36,30 +37,8 @@ router.get('/logout', (req, res) => {
 router.post("/register", async (req, res) => {
     const user: User = req.body.user;
 
-    UserModel.create({
-        ...user,
-        _employer: await EmployerModel.create(user._employer)
-    }).then((u) => {
-        const template = WelcomeTemplate({
-            companyName: u?._employer.companyName,
-            activationString: u.activationString,
-            domain: config.hostname
-        });
-        MailService.notify(user.email, "Welcome!", template);
-
-        req.login(u, () => {
-            res.json({ success: true, message: "Please check your email for the activation link." })
-        });
-    }).catch((err) => {
-        let message = "Something went wrong. Please contact the administrator!";
-
-        if (err.keyPattern?.email == 1 || Object.keys(err.errors).indexOf("email") >= 0) {
-            message = "Email already used or incorrect.";
-        }
-
-        res.json({ success: false, message })
-    });
-
+    const response = await UserService.createUser(user);
+    res.json(response);
 });
 
 router.post("/activate", (req, res) => {
@@ -191,14 +170,10 @@ router.get('/:id', (req, res) => {
 })
 
 router.post("/update", async (req, res) => {
-    const user = await UserModel.findById(req.user._id).populate("_employer");
+    const user = req.body.user;
+    delete user.password;
 
-    const employer = {
-        ...user._employer.toObject(),
-        ...req.body.user._employer
-    };
-
-    EmployerModel.updateOne({_id: user._employer._id}, employer).then(() => {
+    EmployerModel.updateOne({_id: req.user._id}, user).then(() => {
         res.json({
             success: true,
             user: user

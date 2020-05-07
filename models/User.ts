@@ -10,6 +10,4 @@ export interface User {
     forgotPasswordString?: string;
     comparePassword?: (password: string) => Promise<boolean>
     generateForgotPass?: () => void;
-    
-    _employer: EmployerDocument;
 }

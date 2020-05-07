@@ -60,7 +60,7 @@ const Component = (props: Props) => {
 
             <Form.Item
                 label="Company Name"
-                name={["user", "_employer", "companyName"]}
+                name={["user", "companyName"]}
                 rules={[{ required: true, min: 3, message: 'Please input your company name!' }]}>
                 <Input />
             </Form.Item>

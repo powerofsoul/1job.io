@@ -25,8 +25,7 @@ export const UserSchema = new Schema({
     },
     forgotPasswordString: {
         type: String
-    },
-    _employer: {type:Schema.Types.ObjectId, ref:'Employer'},
+    }
 })
 
 export type UserDocument = User & Document;
