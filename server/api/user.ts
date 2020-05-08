@@ -169,20 +169,42 @@ router.get('/:id', (req, res) => {
     })
 })
 
-router.post("/update", async (req, res) => {
+router.post("/update", isAuthenticated, async (req, res) => {
     const user = req.body.user;
-    delete user.password;
+    const response = await UserService.updateCurrentUser(user, req.user);
 
-    EmployerModel.updateOne({_id: req.user._id}, user).then(() => {
-        res.json({
-            success: true,
-            user: user
-        })
-    }).catch(()=> {
-        res.json({
-            success: false,
-            message: "Something went wrong"
-        });
+    res.json(response);
+})
+
+router.post("/cancelMailChange", isAuthenticated, async (req, res) => {
+    const response = await UserService.updateCurrentUser({
+        newEmail: "",
+        newEmailString: ""
+    }, req.user);
+
+    res.json(response);
+})
+
+router.post("/changeEmail", isAuthenticated, (req, res) => {
+    const hash = req.body.hash;
+    UserModel.findOne({
+        newEmailString: hash
+    }, async (err, user) => {
+        if (err || !user) {
+            res.json({
+                success: false,
+                message: "Invalid token"
+            });
+        } else {
+            const updatedResponse = await UserService.updateUser(user._id,
+                {
+                    newEmailString: "",
+                    newEmail: "",
+                    email: user.newEmail
+                })
+
+            res.json(updatedResponse);
+        }
     })
 })
 

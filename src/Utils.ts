@@ -12,11 +12,11 @@ export function get<Response>(path: string): Promise<Response> {
     return axios.get(apiUrl(path), { withCredentials: true }).then(r => r.data as Response);
 }
 
-export function post<Request, Response>(path: string, body: Request): Promise<Response> {
+export function post<Request, Response>(path: string, body: Request = undefined): Promise<Response> {
     return axios.post(apiUrl(path), body, { withCredentials: true }).then(r => r.data as Response);
 }
 
-export function put<Request, Response>(path: string, body: Request): Promise<Response> {
+export function put<Request, Response>(path: string, body: Request = undefined): Promise<Response> {
     return axios.put(apiUrl(path), body, { withCredentials: true }).then(r => r.data as Response);
 }
 

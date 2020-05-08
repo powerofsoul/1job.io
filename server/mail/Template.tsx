@@ -102,3 +102,27 @@ export const ForgotPassTemplate: TemplateType<ForgotPassTemplate> = (variables) 
     </MailTemplate>
   )
 }
+
+type ChangeEmailTemplate = {
+  name: string;
+  newEmail: string;
+  hash: string;
+}
+
+export const ChangeMailTemplate: TemplateType<ChangeEmailTemplate> = (variables) => {
+  return renderEmail(
+    <MailTemplate title="You requested to change your email.">
+      <Item align="left">
+        <Span>
+          Hi {variables.name},
+          </Span>
+      </Item>
+      <Item align="left">
+        <Span>
+          You have requested to change your email to: {variables.newEmail};
+          Please go <A href={`${config.hostname}/change-email/${variables.hash}`}>here</A> in order to complete your action.
+          </Span>
+      </Item>
+    </MailTemplate>
+  )
+}

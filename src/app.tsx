@@ -30,6 +30,7 @@ import {
   Elements
 } from '@stripe/react-stripe-js';
 import EditJob from './pages/post/editJob';
+import ChangeEmail from './pages/token-pages/changeEmail';
 
 const AppBody = styled.div`
     display:flex;
@@ -55,10 +56,11 @@ const routes: Route[] = [
   { path: '/post/:id?', component: Post, logged: true },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
-  { path: '/activation/:activationString', component: Activation },
-  { path: '/forgotpass', component: ForgotPass },
   { path: '/company/:id', component: Company },
   { path: '/change-password/:token?', component: ChangePassword },
+  { path: '/activation/:activationString', component: Activation },
+  { path: '/forgotpass', component: ForgotPass },
+  { path: '/change-email/:hash', component: ChangeEmail },
   { path: '/', component: Index }
 ]
 

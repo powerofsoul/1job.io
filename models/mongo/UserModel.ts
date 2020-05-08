@@ -11,6 +11,10 @@ export const UserSchema = new Schema({
         required: true,
         unique: true
     },
+    newEmail: {
+        type: String, 
+        default: ""
+    },
     password: {
         type: String,
         required: true
@@ -24,6 +28,9 @@ export const UserSchema = new Schema({
         type: String, 
     },
     forgotPasswordString: {
+        type: String
+    },
+    newEmailString: {
         type: String
     }
 })
@@ -70,11 +77,21 @@ UserSchema.pre('save', function (next) {
     next();
 })
 
+UserSchema.pre('save', function (next) {
+    const user = this as UserDocument;
+
+    if (user.activationString) return next();
+    
+    user.activationString = md5(user.email + new Date().getTime());
+    next();
+})
+
 UserSchema.methods.toJSON = function() {
     const obj: UserDocument = this.toObject();
     delete obj.password;
     delete obj.activationString;
     delete obj.forgotPasswordString;
+    delete obj.newEmailString;
     return obj;
 }
 
