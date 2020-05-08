@@ -13,7 +13,7 @@ const EmployerProfileTab = (props: ProfileTabProps) => {
     const [companyDescription, setCompanyDescription] = useState(props.user?.companyDescription);
 
     return <Spin spinning={props.loading}>
-        <Form form={props.form} initialValues={props.user} {...props.layout} name="nest-messages" onFinish={props.onFinish} validateMessages={ValidateMessage}>
+        <Form initialValues={props.user} {...props.layout} name="nest-messages" onFinish={props.onFinish} validateMessages={ValidateMessage}>
             <Form.Item name={'companyName'} label="Company Name" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>

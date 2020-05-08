@@ -1,4 +1,4 @@
-import { Col, Row, Tabs } from "antd";
+import { Col, Row, Tabs, Spin } from "antd";
 import { useForm, FormInstance } from "antd/lib/form/util";
 import React, { useState } from "react";
 import { connect } from "react-redux";
@@ -15,6 +15,7 @@ import EmployerProfileTab from "./tabs/EmployerProfileTab";
 import { toast } from "react-toastify";
 import { UpdateUserResponse } from "../../../server/services/UserService";
 import { post } from "../../Utils";
+import EmployeeProfileTab from "./tabs/EmployeeProfileTab";
 
 interface Props {
     user: User;
@@ -36,11 +37,10 @@ const ProfileContainer = styled.div`
 
 export interface ProfileTabProps {
     loading: boolean;
-    form: FormInstance;
     layout: any;
     setLoading: (value: boolean) => void;
     onFinish: (values) => void;
-    
+
     user: Employer;
     setCurrentUser: (user) => void;
     refreshCurrentUser: () => void;
@@ -64,7 +64,7 @@ const Profile = (props: Props) => {
 
     const onFinish = async (user) => {
         setLoading(true);
-        
+
         const response: UpdateUserResponse = await post("/user/update", {
             user
         });
@@ -80,14 +80,13 @@ const Profile = (props: Props) => {
                 type: "error"
             })
         }
-        
+
         setLoading(false);
     }
 
     const tabProps = {
         loading: props.loading || loading,
-        form, 
-        layout ,
+        layout,
         setLoading,
         onFinish
     }
@@ -97,14 +96,12 @@ const Profile = (props: Props) => {
             <Col xs={24} lg={12}>
                 <Tabs size="large" defaultActiveKey="1">
                     <Tabs.TabPane tab="Profile" key="Employer">
-                        {
-                            props.user?.__t == "Employer" ?
-                            <EmployerProfileTab {...tabProps}/>
-                            : "TEST"
-                        }
+                        {!props.user && <Spin spinning/>}
+                        {props.user?.__t == "Employer" && <EmployerProfileTab {...tabProps} />}
+                        {props.user?.__t == "Employee" && <EmployeeProfileTab {...tabProps} />}
                     </Tabs.TabPane>
                     <Tabs.TabPane tab="Account" key="Employee">
-                        <UserProfileTab {...tabProps}/>
+                        <UserProfileTab {...tabProps} />
                     </Tabs.TabPane>
                 </Tabs>
             </Col>

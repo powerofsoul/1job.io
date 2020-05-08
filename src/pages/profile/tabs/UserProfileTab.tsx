@@ -35,7 +35,7 @@ const UserProfileTab = (props: ProfileTabProps) => {
     }
 
     return <Spin spinning={props.loading}>
-        <Form form={props.form} initialValues={props.user} {...props.layout} name="nest-messages" validateMessages={ValidateMessage}>
+        <Form initialValues={props.user} {...props.layout} name="nest-messages" validateMessages={ValidateMessage}>
             <Form.Item name={'email'}
                 label="Email"
                 rules={[{ type: 'email', required: true }]}

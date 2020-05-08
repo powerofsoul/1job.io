@@ -196,7 +196,7 @@ router.post("/changeEmail", isAuthenticated, (req, res) => {
                 message: "Invalid token"
             });
         } else {
-            const updatedResponse = await UserService.updateUser(user._id,
+            const updatedResponse = await UserService.updateUser(UserModel, user._id,
                 {
                     newEmailString: "",
                     newEmail: "",

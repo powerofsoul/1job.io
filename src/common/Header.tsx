@@ -11,6 +11,10 @@ import { User } from "../../models/User";
 import { Link } from "react-router-dom";
 import * as React from "react";
 import { SimpleContainer } from "../style/CommonStyles";
+import { Employee } from "../../models/Employee";
+import { Employer } from "../../models/Employer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Header = styled.div`
     width: 100%;
@@ -69,7 +73,7 @@ const HeaderDetails = styled(Col)`
 
 interface Props {
     loading: boolean;
-    currentUser?: User;
+    currentUser?: Employer | Employee;
     logOut: () => void;
     refreshCurrentUser: () => void;
 }
@@ -89,16 +93,12 @@ const component = (props: Props) => {
                     {props.currentUser ?
                         <div className="right">
                             <Link to="/profile">
-                                <Avatar className="avatar" style={{ backgroundColor: "white", verticalAlign: 'middle' }} src={props.currentUser?.avatar} size="large">
-                                    {/* 
-                                    //@ts-ignore */}
-                                    {props.currentUser.companyName}
-                                </Avatar>
-                                    {/* 
-                                    //@ts-ignore */}
-                                <Tag className="profile-link" color="green">{props.currentUser.companyName}</Tag>
+                                <Avatar className="avatar" style={{ backgroundColor: "white", verticalAlign: 'middle' }} src={props.currentUser?.avatar} size="large" />
+                                 My Profile
                             </Link>
-                            <a onClick={props.logOut}>Log out</a>
+                            <a onClick={props.logOut}>
+                                <FontAwesomeIcon icon={faSignOutAlt} />
+                            </a>
                         </div>
                         : <div className="header-buttons">
                             <Link to="/login">Log in</Link>

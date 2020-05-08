@@ -76,15 +76,19 @@ export function updateCurrentUser(user: Partial<Employer>,
         notifyNewEmail = true;
     }
 
-    return updateUser(currentUser._id, user, {
+    const model = currentUser.__t == "Employer" ? EmployerModel : EmployeeModel;
+
+    return updateUser(model, currentUser._id, user, {
         ...options,
         notifyNewEmail
     });
 }
 
-export function updateUser(_id: string, newUser: Partial<Employer | Employee>, options: UpdateUserOption = {}): Promise<UpdateUserResponse> {
+type UserModelType = typeof EmployerModel | typeof EmployeeModel | typeof UserModel
+
+export function updateUser(model: UserModelType, _id: string, newUser: Partial<Employer | Employee>, options: UpdateUserOption = {}): Promise<UpdateUserResponse> {
     return new Promise((resolve) => {
-        UserModel.findOneAndUpdate({ _id: _id }, newUser, { new: options.returnNewUser }, (err, user) => {
+        model.findOneAndUpdate({ _id: _id }, newUser, { new: options.returnNewUser }, (err, user) => {
             if (err) {
                 resolve({
                     success: false,
