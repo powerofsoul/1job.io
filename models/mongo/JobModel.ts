@@ -11,7 +11,7 @@ export const JobSchema = new Schema({
     },
     company: {
         type: Schema.Types.ObjectId, 
-        ref: 'User',
+        ref: 'Employer',
         required: true
     },
     description: {
