@@ -9,6 +9,6 @@ export const EmployeeSchema  = new Schema({
     lastName: String,
 })
 
-export type EmployerDocument = User & Employee & Document;
+export type EmployeeDocument = User & Employee & Document;
 
-export default UserModel.discriminator<EmployerDocument>("Employee", EmployeeSchema);
+export default UserModel.discriminator<EmployeeDocument>("Employee", EmployeeSchema);

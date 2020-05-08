@@ -12,4 +12,11 @@ export interface User {
     newEmailString: string;
     comparePassword?: (password: string) => Promise<boolean>
     generateForgotPass?: () => void;
+
+    __t: typeof UserType[number]
 }
+
+export const UserType = [
+    "Employer",
+    "Employee"
+] as const;

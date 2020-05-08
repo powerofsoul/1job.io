@@ -12,14 +12,14 @@ import ReactDOM from "react-dom";
 import * as React from "react";
 import { Link, BrowserRouter, Route, Switch } from 'react-router-dom'
 import Index from './pages';
-import Profile from './pages/profile';
-import Register from './pages/register';
+import Profile from './pages/profile/profile';
+import Register from './pages/register/register';
 import Login from './pages/login';
 import Job from './pages/job';
 import Post from './pages/post/post';
 import CurrentUserStore from './redux/stores/CurrentUserStore';
 import { bindActionCreators } from 'redux';
-import { User } from '../models/User';
+import { User, UserType } from '../models/User';
 import Company from './pages/company';
 import Activation from './pages/token-pages/activation';
 import ForgotPass from './pages/forgotpass';
@@ -47,21 +47,23 @@ interface Route {
   path: string,
   component: React.ComponentType<any>,
   logged?: boolean,
+  userType?: typeof UserType[number][]
 }
 
 const routes: Route[] = [
   { path: '/profile', component: Profile, logged: true },
-  { path: '/job/:id/edit', component: EditJob },
-  { path: '/job/:id', component: Job },
-  { path: '/post/:id?', component: Post, logged: true },
-  { path: '/login', component: Login },
-  { path: '/register', component: Register },
+  { path: '/job/:id/edit', component: EditJob, userType: ["Employer"] },
+  { path: '/post/:id?', component: Post, logged: true, userType: ["Employer"] },
+  { path: '/job/:id', component: Job},
   { path: '/company/:id', component: Company },
+
+  { path: '/login', component: Login},
+  { path: '/register', component: Register },
   { path: '/change-password/:token?', component: ChangePassword },
   { path: '/activation/:activationString', component: Activation },
   { path: '/forgotpass', component: ForgotPass },
   { path: '/change-email/:hash', component: ChangeEmail },
-  { path: '/', component: Index }
+  { path: '/', component: Index,}
 ]
 
 
@@ -87,14 +89,15 @@ const defineHistoryEvents = (history) => {
 const stripePromise = loadStripe('pk_test_rW1t6jhkIp6Yrf5Ytu0AMbiY');
 
 const Routes = (props: Props) => {
-  const isLogged = props.loading || props.user;
   const history = useHistory();
   defineHistoryEvents(history);
 
   return <Switch>
     {routes.map(r => {
-      const canAccess = isLogged || !r.logged;
-      const component = canAccess ? r.component : Login;
+      const validRouteForUser = props.loading || !r.userType || r.userType.includes(props.user?.__t);
+      const canAccess = !r.logged || validRouteForUser;
+      const component = canAccess ? r.component : r.logged ? Index : Login;
+      
 
       return <Route key={r.path} path={r.path} component={component} />
     })}

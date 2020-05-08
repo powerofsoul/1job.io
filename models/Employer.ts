@@ -6,4 +6,5 @@ export interface Employer extends User {
     companySize: number;
     companyWebsite: string;
     companyDescription: string;
+    __t: "Employer"
 }

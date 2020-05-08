@@ -31,3 +31,15 @@ export function uploadFile<Response>(name: string, file: File, path: string): Pr
         withCredentials: true
     });
 }
+
+export const ValidateMessage = {
+    required: '${label} is required!',
+    types: {
+        email: '${label} is not valid email!',
+        number: '${label} is not a valid number!',
+        url: '${label} is not a valid url'
+    },
+    number: {
+        range: '${label} must be between ${min} and ${max}',
+    }
+}

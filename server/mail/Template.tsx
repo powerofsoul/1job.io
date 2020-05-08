@@ -6,7 +6,7 @@ import styled from "styled-components";
 type TemplateType<T> = (variables: T) => string
 
 type WelcomeTemplate = {
-  companyName: string,
+  name: string,
   activationString: string;
   domain: string;
 }
@@ -59,7 +59,7 @@ export const WelcomeTemplate: TemplateType<WelcomeTemplate> = (variables) => {
     <MailTemplate title="Welcome">
       <Item align="left">
         <Span fontSize={20}>
-          Welcome {variables.companyName},
+          Welcome {variables.name},
           </Span>
       </Item>
       <Item align="left">

@@ -1,43 +1,60 @@
-import { User } from "../../models/User";
-import EmployerModel from "../../models/mongo/EmployerModel";
+import { User, UserType } from "../../models/User";
+import EmployerModel, { EmployerDocument } from "../../models/mongo/EmployerModel";
 import MailService from "./MailService";
 import config from "../config";
 import { WelcomeTemplate, ChangeMailTemplate } from "../mail/Template";
 import { ApiResponse } from "../../models/ApiResponse";
 import { Employer } from "../../models/Employer";
+import EmployeeModel, { EmployeeDocument } from "../../models/mongo/EmployeeModel";
+import { Employee } from "../../models/Employee";
+import UserModel, { UserDocument } from "../../models/mongo/UserModel";
 const md5 = require("md5");
 
 export function createUser(user: User): Promise<ApiResponse & { user?: User }> {
     return new Promise((resolve) => {
-        EmployerModel.create(user).then((u) => {
-            const template = WelcomeTemplate({
-                companyName: u?.companyName,
-                activationString: u.activationString,
-                domain: config.hostname
-            });
-            MailService.notify(user.email, "Welcome!", template);
-            resolve({
-                success: true,
-                message: "Please check your email for the activation link.",
-                user: u
-            })
-        }).catch((err) => {
-            let message = "Something went wrong. Please contact the administrator!";
-
-            if (err.keyPattern?.email == 1 || Object.keys(err.errors).indexOf("email") >= 0) {
-                message = "Email already used or incorrect.";
-            }
-
+        if (!user.__t || !UserType.includes(user.__t)) {
             resolve({
                 success: false,
-                message
+                message: "Invalid user type"
             })
-        });
-    })
+            return;
+        }
+
+        const model = user.__t == "Employer" ? EmployerModel : EmployeeModel;
+
+        model.create(user, (err, u: Employee | Employer) => {
+            if (err) {
+
+                let message = "Something went wrong. Please contact the administrator!";
+
+                if (err.keyPattern?.email == 1 || Object.keys(err.errors).indexOf("email") >= 0) {
+                    message = "Email already used or incorrect.";
+                }
+
+                resolve({
+                    success: false,
+                    message
+                })
+            } else {
+                const template = WelcomeTemplate({
+                    name: u.__t == "Employer" ? u.companyName : u.firstName,
+                    activationString: u.activationString,
+                    domain: config.hostname
+                });
+
+                MailService.notify(user.email, "Welcome!", template);
+                resolve({
+                    success: true,
+                    message: "Please check your email for the activation link.",
+                    user: u
+                })
+            }
+        })
+    });
 }
 
 export interface UpdateUserResponse extends ApiResponse {
-    user?: Employer;
+    user?: EmployerDocument | EmployeeDocument | UserDocument;
 }
 
 export interface UpdateUserOption {
@@ -48,7 +65,7 @@ export interface UpdateUserOption {
 export function updateCurrentUser(user: Partial<Employer>,
     currentUser: Employer,
     options: UpdateUserOption = { returnNewUser: true }): Promise<UpdateUserResponse> {
-        
+
     delete user.password;
 
     let notifyNewEmail = false;
@@ -65,9 +82,9 @@ export function updateCurrentUser(user: Partial<Employer>,
     });
 }
 
-export function updateUser(_id: string, newUser: Partial<Employer>, options: UpdateUserOption = {}): Promise<UpdateUserResponse> {
+export function updateUser(_id: string, newUser: Partial<Employer | Employee>, options: UpdateUserOption = {}): Promise<UpdateUserResponse> {
     return new Promise((resolve) => {
-        EmployerModel.findOneAndUpdate({ _id: _id }, newUser, { new: options.returnNewUser }, (err, user) => {
+        UserModel.findOneAndUpdate({ _id: _id }, newUser, { new: options.returnNewUser }, (err, user) => {
             if (err) {
                 resolve({
                     success: false,
@@ -76,13 +93,13 @@ export function updateUser(_id: string, newUser: Partial<Employer>, options: Upd
             } else {
                 resolve({
                     success: true,
-                    user: user
+                    user
                 })
 
                 if (options.notifyNewEmail) {
                     const changeMailTemplate = ChangeMailTemplate({
                         hash: user.newEmailString,
-                        name: user.companyName,
+                        name: user.__t == "Employer" ? (user as EmployerDocument).companyName : (user as EmployeeDocument).lastName,
                         newEmail: user.newEmail
                     });
 
