@@ -1,54 +1,22 @@
+import { Button, Form, Input, Spin } from "antd"
 import React, { useState } from "react"
-import { Button, Spin, Form, Input, InputNumber } from "antd"
-import { UpdateUserResponse } from "../../../../server/services/UserService"
-import { post, ValidateMessage } from "../../../Utils"
-import { toast } from "react-toastify"
-import { User } from "../../../../models/User"
-import { Link } from "react-router-dom";
-import AvatarUpload from "../../../common/AvatarUpload"
-import { FormInstance } from "antd/lib/form"
 import { connect } from "react-redux"
-import CurrentUserStore from "../../../redux/stores/CurrentUserStore"
+import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
 import { bindActionCreators } from "redux"
+import { UpdateUserResponse } from "../../../../server/services/UserService"
 import { IAppState } from "../../../redux/configureStore"
-import FormItem from "antd/lib/form/FormItem"
+import CurrentUserStore from "../../../redux/stores/CurrentUserStore"
+import { post, ValidateMessage } from "../../../Utils"
+import { ProfileTabProps } from "../profile"
 
-interface Props {
-    loading: boolean;
-    form: FormInstance;
-    layout: any;
-    setLoading: (value: boolean) => void;
-
-    user: User;
-    setCurrentUser: (user) => void;
-    refreshCurrentUser: () => void;
-}
-
-const UserProfileTab = (props: Props) => {
+const UserProfileTab = (props: ProfileTabProps) => {
     const [email, setEmail] = useState("");
     
-    const changeEmail = async () => {
-        props.setLoading(true);
-        
-        const response: UpdateUserResponse = await post("/user/update", {
-            user: {
-                email
-            }
-        });
-
-        if (response.success) {
-            toast("Email confirmation send. Please Check!", {
-                type: "success"
-            });
-
-            props.setCurrentUser(response.user);
-        } else {
-            toast("Something went wrong. Please try again later!", {
-                type: "error"
-            })
-        }
-
-        props.setLoading(false);
+    const changeEmail = () => {
+        props.onFinish({
+            email
+        })
     }
 
     const cancelMailChange = async () => {
@@ -89,7 +57,7 @@ const UserProfileTab = (props: Props) => {
     </Spin>
 }
 
-const mapStateToProps = (store: IAppState, ownProps): Partial<Props> => ({
+const mapStateToProps = (store: IAppState, ownProps): Partial<ProfileTabProps> => ({
     user: store.currentUserStore.user,
     ...ownProps
 })

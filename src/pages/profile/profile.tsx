@@ -1,5 +1,5 @@
 import { Col, Row, Tabs } from "antd";
-import { useForm } from "antd/lib/form/util";
+import { useForm, FormInstance } from "antd/lib/form/util";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
@@ -11,9 +11,13 @@ import { IAppState } from "../../redux/configureStore";
 import CurrentUserStore from "../../redux/stores/CurrentUserStore";
 import { SimpleContainer } from "../../style/CommonStyles";
 import UserProfileTab from "./tabs/UserProfileTab";
+import EmployerProfileTab from "./tabs/EmployerProfileTab";
+import { toast } from "react-toastify";
+import { UpdateUserResponse } from "../../../server/services/UserService";
+import { post } from "../../Utils";
 
 interface Props {
-    user: Employer;
+    user: User;
     loading: boolean;
     refreshCurrentUser?: () => void;
     setCurrentUser: (user: User) => void;
@@ -30,6 +34,19 @@ const ProfileContainer = styled.div`
     ${SimpleContainer}
 `;
 
+export interface ProfileTabProps {
+    loading: boolean;
+    form: FormInstance;
+    layout: any;
+    setLoading: (value: boolean) => void;
+    onFinish: (values) => void;
+    
+    user: Employer;
+    setCurrentUser: (user) => void;
+    refreshCurrentUser: () => void;
+}
+
+
 const Profile = (props: Props) => {
     const history = useHistory();
     const [loading, setLoading] = useState(false);
@@ -45,19 +62,49 @@ const Profile = (props: Props) => {
         }
     });
 
+    const onFinish = async (user) => {
+        setLoading(true);
+        
+        const response: UpdateUserResponse = await post("/user/update", {
+            user
+        });
+
+        if (response.success) {
+            toast("Profile saved!", {
+                type: "success"
+            });
+
+            props.setCurrentUser(response.user);
+        } else {
+            toast("Something went wrong. Please try again later!", {
+                type: "error"
+            })
+        }
+        
+        setLoading(false);
+    }
+
+    const tabProps = {
+        loading: props.loading || loading,
+        form, 
+        layout ,
+        setLoading,
+        onFinish
+    }
+
     return <ProfileContainer>
         <Row justify="center">
             <Col xs={24} lg={12}>
                 <Tabs size="large" defaultActiveKey="1">
                     <Tabs.TabPane tab="Profile" key="Employer">
-                        
+                        {
+                            props.user?.__t == "Employer" ?
+                            <EmployerProfileTab {...tabProps}/>
+                            : "TEST"
+                        }
                     </Tabs.TabPane>
                     <Tabs.TabPane tab="Account" key="Employee">
-                        <UserProfileTab loading={props.loading || loading} 
-                            form={form} 
-                            layout={layout} 
-                            setLoading={setLoading}
-                            />
+                        <UserProfileTab {...tabProps}/>
                     </Tabs.TabPane>
                 </Tabs>
             </Col>

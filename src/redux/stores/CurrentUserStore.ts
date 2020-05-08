@@ -1,9 +1,10 @@
 import { User } from "../../../models/User";
 import { get } from "../../Utils";
 import { Employer } from "../../../models/Employer";
+import { Employee } from "../../../models/Employee";
 
 export type CurrentUserStoreType = {
-    user?: Employer;
+    user?: Employer | Employee;
     loading: boolean;
 }
 
