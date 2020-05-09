@@ -40,7 +40,7 @@ const AppBody = styled.div`
     'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     'Noto Color Emoji';
 
-    font-size: 15px;
+    font-size: 17px;
 `;
 
 interface Route {
