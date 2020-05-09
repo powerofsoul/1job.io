@@ -66,8 +66,6 @@ export function updateCurrentUser(user: Partial<Employer>,
     currentUser: Employer,
     options: UpdateUserOption = { returnNewUser: true }): Promise<UpdateUserResponse> {
 
-    delete user.password;
-
     let notifyNewEmail = false;
     if (user.email && user.email != currentUser.email) {
         user.newEmail = user.email;
@@ -87,6 +85,7 @@ export function updateCurrentUser(user: Partial<Employer>,
 type UserModelType = typeof EmployerModel | typeof EmployeeModel | typeof UserModel
 
 export function updateUser(model: UserModelType, _id: string, newUser: Partial<Employer | Employee>, options: UpdateUserOption = {}): Promise<UpdateUserResponse> {
+    delete newUser.password;
     return new Promise((resolve) => {
         model.findOneAndUpdate({ _id: _id }, newUser, { new: options.returnNewUser }, (err, user) => {
             if (err) {
