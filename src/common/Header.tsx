@@ -15,6 +15,7 @@ import { Employee } from "../../models/Employee";
 import { Employer } from "../../models/Employer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import Space from "../style/Space";
 
 const Header = styled.div`
     width: 100%;
@@ -96,7 +97,7 @@ const component = (props: Props) => {
                                 <Avatar className="avatar" style={{ backgroundColor: "white", verticalAlign: 'middle' }} src={props.currentUser?.avatar} size="large" />
                                  My Profile
                             </Link>
-                            <a onClick={props.logOut}>
+                            <a style={{marginLeft: Space.sm}} onClick={props.logOut}>
                                 <FontAwesomeIcon icon={faSignOutAlt} />
                             </a>
                         </div>
