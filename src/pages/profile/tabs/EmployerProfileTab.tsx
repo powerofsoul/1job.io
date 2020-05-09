@@ -8,8 +8,9 @@ import { IAppState } from "../../../redux/configureStore"
 import CurrentUserStore from "../../../redux/stores/CurrentUserStore"
 import { ValidateMessage } from "../../../Utils"
 import { ProfileTabProps } from "../profile"
+import { Employer } from "../../../../models/Employer"
 
-const EmployerProfileTab = (props: ProfileTabProps) => {
+const EmployerProfileTab = (props: ProfileTabProps & {user?: Employer}) => {
     const [companyDescription, setCompanyDescription] = useState(props.user?.companyDescription);
 
     return <Spin spinning={props.loading}>

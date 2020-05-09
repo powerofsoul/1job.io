@@ -37,7 +37,7 @@ export function createUser(user: User): Promise<ApiResponse & { user?: User }> {
                 })
             } else {
                 const template = WelcomeTemplate({
-                    name: u.__t == "Employer" ? u.companyName : u.firstName,
+                    name: u.__t == "Employer" ? (u as Employer).companyName : u.firstName,
                     activationString: u.activationString,
                     domain: config.hostname
                 });

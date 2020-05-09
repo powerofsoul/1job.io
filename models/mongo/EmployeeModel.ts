@@ -7,6 +7,20 @@ import { Employee } from "../Employee";
 export const EmployeeSchema  = new Schema({
     firstName: String,
     lastName: String,
+    phone: String,
+    motto: String,
+    workExperience: [{
+        title: String,
+        companyName: String,
+        period: [Date],
+        location: String,
+        description: String,
+    }],
+    education: [],
+    skills: [String],
+    languages: [String],
+    interests: [String],
+    projects: []
 })
 
 export type EmployeeDocument = User & Employee & Document;

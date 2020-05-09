@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { UpdateUserResponse } from "../../../server/services/UserService";
 import { post } from "../../Utils";
 import EmployeeProfileTab from "./tabs/EmployeeProfileTab";
+import { Employee } from "../../../models/Employee";
 
 interface Props {
     user: User;
@@ -26,7 +27,10 @@ interface Props {
 
 const layout = {
     labelCol: { span: 6 },
-    wrapperCol: { span: 18 },
+    wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 18 },
+    },
 };
 
 const ProfileContainer = styled.div`
@@ -41,7 +45,7 @@ export interface ProfileTabProps {
     setLoading: (value: boolean) => void;
     onFinish: (values) => void;
 
-    user: Employer;
+    user: Employer | Employee;
     setCurrentUser: (user) => void;
     refreshCurrentUser: () => void;
 }
@@ -96,7 +100,7 @@ const Profile = (props: Props) => {
             <Col xs={24} lg={12}>
                 <Tabs size="large" defaultActiveKey="1">
                     <Tabs.TabPane tab="Profile" key="Employer">
-                        {!props.user && <Spin spinning/>}
+                        {!props.user && <Spin spinning />}
                         {props.user?.__t == "Employer" && <EmployerProfileTab {...tabProps} />}
                         {props.user?.__t == "Employee" && <EmployeeProfileTab {...tabProps} />}
                     </Tabs.TabPane>
