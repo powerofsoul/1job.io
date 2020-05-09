@@ -98,6 +98,7 @@ const Component = (props: Props) => {
                                     style={{ marginLeft: "8px" }}
                                     twoToneColor={colors.red}
                                     onClick={() => {
+                                        setDeletingFieldIndex(-1);
                                         remove(field.name);
                                     }}
                                 />
