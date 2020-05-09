@@ -33,4 +33,14 @@ EmployerSchema.pre('save', function (next) {
     next();
 })
 
+EmployerSchema.methods.toJSON = function() {
+    const obj = this.toObject();
+    delete obj.password;
+    delete obj.activationString;
+    delete obj.forgotPasswordString;
+    delete obj.newEmailString;
+    return obj;
+}
+
+
 export default UserModel.discriminator<EmployerDocument>("Employer", EmployerSchema);
