@@ -1,15 +1,14 @@
 import { Router } from "express";
 import { authenticate } from "passport";
-import { isAuthenticated } from "../middleware/middleware";
-import fs from "fs";
-import { User } from "../../models/User";
 import UserModel from "../../models/mongo/UserModel";
+import { User } from "../../models/User";
+import config from "../config";
+import { ForgotPassTemplate } from "../mail/Template";
+import { isAuthenticated } from "../middleware/middleware";
 import FileStore from "../services/FileService";
 import MailService from "../services/MailService";
-import { WelcomeTemplate, ForgotPassTemplate } from "../mail/Template";
-import config from "../config";
-import EmployerModel from "../../models/mongo/EmployerModel";
 import { UserService } from "../services/UserService";
+import JobModel from "../../models/mongo/JobModel";
 const path = require('path');
 
 const router = Router();
@@ -149,8 +148,27 @@ router.get('/me',
     (req, res) => {
         UserModel.findOne({
             _id: req.user._id
-        }).populate("_employer").then((u) => {
+        }).then((u) => {
             res.json(u);
+        })
+    }
+);
+
+router.get('/me/jobs',
+    isAuthenticated,
+    (req, res) => {
+        JobModel.find({
+            company: req.user
+        }).populate("company").then((jobs) => {
+            res.json({
+                success: true,
+                jobs
+            });
+        }).catch(()=> {
+            res.json({
+                success: false,
+                message: "Something went wrong"
+            })
         })
     }
 );

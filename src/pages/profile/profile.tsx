@@ -17,6 +17,7 @@ import { UpdateUserResponse } from "../../../server/services/UserService";
 import { post } from "../../Utils";
 import EmployeeProfileTab from "./tabs/EmployeeProfileTab";
 import { Employee } from "../../../models/Employee";
+import EmployerMyJobs from "./tabs/EmployerMyJobs";
 
 interface Props {
     user: User;
@@ -104,6 +105,11 @@ const Profile = (props: Props) => {
                         {props.user?.__t == "Employer" && <EmployerProfileTab {...tabProps} />}
                         {props.user?.__t == "Employee" && <EmployeeProfileTab {...tabProps} />}
                     </Tabs.TabPane>
+                    {
+                        props.user?.__t == "Employer" && <Tabs.TabPane tab="My Jobs" key="MyJobs">
+                                <EmployerMyJobs />
+                            </Tabs.TabPane>
+                    }
                     <Tabs.TabPane tab="Account" key="Employee">
                         <UserProfileTab {...tabProps} />
                     </Tabs.TabPane>
