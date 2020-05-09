@@ -16,11 +16,21 @@ export const EmployeeSchema  = new Schema({
         location: String,
         description: String,
     }],
-    education: [],
+    education: [{
+        study: String,
+        institution: String,
+        period: [Date],
+        courses: [String]
+    }],
     skills: [String],
     languages: [String],
     interests: [String],
-    projects: []
+    projects: [{
+        name: String,
+        link: String,
+        period: [Date],
+        description: String
+    }]
 })
 
 export type EmployeeDocument = User & Employee & Document;
