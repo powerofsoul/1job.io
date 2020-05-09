@@ -20,7 +20,7 @@ export default (field) => <Form.Item {...field}>
     <Form.Item
         name={[field.name, 'period']}
         rules={[{ type: 'array', required: true,  message: 'Period is required'  }]}>
-        <RangePicker picker="month" />
+        <RangePicker style={{width: "100%"}} picker="month" />
     </Form.Item>
     <Form.Item
         name={[field.name, 'description']}
