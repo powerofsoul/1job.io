@@ -12,6 +12,9 @@ import colors from '../style/Colors';
 import DeviceSize from '../style/DeviceSize';
 import { get, post } from "../Utils";
 import Space from "../style/Space";
+import { IAppState } from "../redux/configureStore";
+import { connect } from "react-redux";
+import { User } from "../../models/User";
 
 const IndexTop = styled.div`
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -91,7 +94,11 @@ const IndexBody = styled.div`
     }
 `;
 
-export default () => {
+interface Props {
+    user: User;
+}
+
+const Index = (props: Props) => {
     const [jobs, setJobs] = useState<Job[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -116,22 +123,27 @@ export default () => {
     return <div>
         <IndexTop>
             <div className="content">
-                <h1>Best place to get your career running.</h1>
+                <h1>The one place to get your career running.</h1>
                 <h2>
                     <TypistLoop interval={3000}>
                         {[
                             'Remote jobs for everyone.',
                             'Updated daily.',
-                            'Boost your career now!',
-                            'Always fresh!'
+                            'The one job you need.',
+                            'The one palce to find your employees'
                         ].map(text => <Typist key={text} startDelay={1000}>{text}</Typist>)}
                     </TypistLoop>
                 </h2>
-                <Link to="/post">
+                {props.user?.__t == "Employer" && <Link to="/post">
                     <Button type="primary" icon={<FormOutlined />} size='large'>
                         Post a job now!
                     </Button>
-                </Link>
+                </Link>}
+                {!props.user && <Link to="/login">
+                    <Button type="primary" size='large'>
+                        Start now!
+                    </Button>
+                </Link>}
             </div>
         </IndexTop>
         <IndexBody>
@@ -147,3 +159,7 @@ export default () => {
         </IndexBody>
     </div>
 }
+
+export default connect((store: IAppState) => ({
+    user: store.currentUserStore.user
+}))(Index);
