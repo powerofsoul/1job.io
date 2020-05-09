@@ -28,6 +28,6 @@ export default (field) => <Form.Item {...field}>
         name={[field.name, 'description']}
         rules={[{ required: true, message: 'Institution is required' }]}
     >
-        <Input placeholder="Description..." />
+        <Input.TextArea placeholder="Description..." />
     </Form.Item>
 </Form.Item>
