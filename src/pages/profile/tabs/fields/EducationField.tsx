@@ -1,7 +1,7 @@
 import { Form, Input, Select, DatePicker } from "antd";
 import React from "react";
 import moment from 'moment';
-import ArrayFormItem from "../ArrayFormItem";
+import ArrayFormItem from "./ArrayFormItem";
 import styled from "styled-components";
 
 const { RangePicker } = DatePicker;

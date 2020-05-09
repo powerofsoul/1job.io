@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Input, Spin } from "antd"
 import { MinusCircleOutlined, PlusOutlined, MinusCircleTwoTone } from "@ant-design/icons";
 import styled from "styled-components";
-import colors from "../../../style/Colors";
+import colors from "../../../../style/Colors";
 
 interface Props {
     className?: string;
