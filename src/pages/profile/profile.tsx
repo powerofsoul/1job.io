@@ -26,7 +26,7 @@ interface Props {
 
 const layout = {
     labelCol: { span: 6 },
-    wrapperCol: { span: 14 },
+    wrapperCol: { span: 18 },
 };
 
 const ProfileContainer = styled.div`

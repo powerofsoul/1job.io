@@ -12,10 +12,10 @@ const { TabPane } = Tabs;
 
 const layout = {
     labelCol: { span: 6 },
-    wrapperCol: { span: 14 },
+    wrapperCol: { span: 18 },
 };
 const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
+    wrapperCol: { offset: 12, span: 24 },
 };
 
 const Register = styled.div`
