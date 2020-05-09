@@ -26,6 +26,7 @@ export interface WorkExperience {
 
 export interface WorkProject {
     name: string;
+    link?: string;
     period: Period[];
     description: string;
 }

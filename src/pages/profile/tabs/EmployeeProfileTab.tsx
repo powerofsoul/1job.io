@@ -11,6 +11,7 @@ import WorkExperienceField from "./fields/WorkExperienceField"
 import { normalizeEmployee } from "../../../redux/stores/EmployeeUtils"
 import { Employee } from "../../../../models/Employee"
 import EducationField from "./fields/EducationField"
+import ProjectField from "./fields/ProjectField"
 
 // phone: String,
 //      
@@ -52,7 +53,7 @@ const EmployeeProfileTab = (props: ProfileTabProps) => {
                 addButtonText="Add education"
                 emptyFieldError="Please complete or delete this field."
                 wrapperCol={{ ...props.layout.wrapperCol }}
-                noLabelWrapperCol={noLabelWrapperCol} 
+                noLabelWrapperCol={noLabelWrapperCol}
                 field={EducationField} />
             <Divider>Skills</Divider>
             <ArrayFormItem name="skills"
@@ -73,6 +74,12 @@ const EmployeeProfileTab = (props: ProfileTabProps) => {
                 addButtonText="Add language"
                 placeholder="English..."
                 emptyFieldError="Please input a language or delete this field."
+                wrapperCol={{ ...props.layout.wrapperCol }}
+                noLabelWrapperCol={noLabelWrapperCol} />
+            <Divider>Projects</Divider>
+            <ArrayFormItem name="projects"
+                field={ProjectField}
+                addButtonText="Add project"
                 wrapperCol={{ ...props.layout.wrapperCol }}
                 noLabelWrapperCol={noLabelWrapperCol} />
             <Form.Item wrapperCol={noLabelWrapperCol}>
