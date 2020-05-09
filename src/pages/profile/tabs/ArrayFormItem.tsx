@@ -52,6 +52,11 @@ const DeletingOverlay = styled.div`
 
 const Component = (props: Props) => {
     const [deletingFieldIndex, setDeletingFieldIndex] = useState(-1);
+
+    React.useEffect(()=> {
+        setDeletingFieldIndex(-1);
+    }, [props])
+
     const simpleField = ((field) => <Form.Item
         {...field}
         validateTrigger={['onChange', 'onBlur']}
@@ -78,7 +83,7 @@ const Component = (props: Props) => {
           
                     {fields.map((field, index) => (
                         <Form.Item
-                            wrapperCol={{ ...(index === 0 ? props.wrapperCol : props.noLabelWrapperCol) }}
+                            wrapperCol={{ ...(index === 0 ? props.label ? props.wrapperCol : props.noLabelWrapperCol : props.noLabelWrapperCol) }}
                             label={index === 0 ? props.label : ''}
                             required={false}
                             key={field.key}

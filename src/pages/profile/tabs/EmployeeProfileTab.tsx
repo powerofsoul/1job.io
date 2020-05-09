@@ -1,4 +1,4 @@
-import { Button, Form, Input, Spin } from "antd"
+import { Button, Form, Input, Spin, Divider } from "antd"
 import React from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
@@ -40,41 +40,41 @@ const EmployeeProfileTab = (props: ProfileTabProps) => {
             <Form.Item name={'motto'} label="Motto">
                 <Input placeholder="Eg: There’s magic on the other side of fear." />
             </Form.Item>
+            <Divider>Work Experience</Divider>
             <ArrayFormItem name="workExperience"
                 addButtonText="Add work experience"
-                label="Work Experience"
                 emptyFieldError="Please input a skill name or delete this field."
                 wrapperCol={{ ...props.layout.wrapperCol }}
                 noLabelWrapperCol={noLabelWrapperCol}
                 field={WorkExperienceField} />
-            <ArrayFormItem name="skills"
-                addButtonText="Add skill"
-                label="Skills"
-                placeholder="I am goot at..."
-                emptyFieldError="Please input a skill name or delete this field."
-                wrapperCol={{ ...props.layout.wrapperCol }}
-                noLabelWrapperCol={noLabelWrapperCol} />
-            <ArrayFormItem name="interests"
-                addButtonText="Add interest"
-                label="Interests"
-                placeholder="I love cooking..."
-                emptyFieldError="Please input an interest or delete this field."
-                wrapperCol={{ ...props.layout.wrapperCol }}
-                noLabelWrapperCol={noLabelWrapperCol} />
-            <ArrayFormItem name="languages"
-                addButtonText="Add language"
-                label="Language"
-                placeholder="English..."
-                emptyFieldError="Please input a language or delete this field."
-                wrapperCol={{ ...props.layout.wrapperCol }}
-                noLabelWrapperCol={noLabelWrapperCol} />
+            <Divider>Education</Divider>
             <ArrayFormItem name="education"
                 addButtonText="Add education"
-                label="Education"
                 emptyFieldError="Please complete or delete this field."
                 wrapperCol={{ ...props.layout.wrapperCol }}
                 noLabelWrapperCol={noLabelWrapperCol} 
                 field={EducationField} />
+            <Divider>Skills</Divider>
+            <ArrayFormItem name="skills"
+                addButtonText="Add skill"
+                placeholder="I am goot at..."
+                emptyFieldError="Please input a skill name or delete this field."
+                wrapperCol={{ ...props.layout.wrapperCol }}
+                noLabelWrapperCol={noLabelWrapperCol} />
+            <Divider>Interests</Divider>
+            <ArrayFormItem name="interests"
+                addButtonText="Add interest"
+                placeholder="I love cooking..."
+                emptyFieldError="Please input an interest or delete this field."
+                wrapperCol={{ ...props.layout.wrapperCol }}
+                noLabelWrapperCol={noLabelWrapperCol} />
+            <Divider>Languages</Divider>
+            <ArrayFormItem name="languages"
+                addButtonText="Add language"
+                placeholder="English..."
+                emptyFieldError="Please input a language or delete this field."
+                wrapperCol={{ ...props.layout.wrapperCol }}
+                noLabelWrapperCol={noLabelWrapperCol} />
             <Form.Item wrapperCol={noLabelWrapperCol}>
                 <Button type="primary" htmlType="submit">
                     Submit
