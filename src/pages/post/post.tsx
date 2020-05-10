@@ -33,6 +33,8 @@ const PostPage = (props: CurrentUserStoreType) => {
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
 
+    const [canSwitchTabs, setCanSwitchTabs] = useState(true);
+
 
     const sendRequest = (token: any) => {
         setLoading(true);
@@ -46,6 +48,7 @@ const PostPage = (props: CurrentUserStoreType) => {
             });
             setJobHref(`/job/${response.job._id}`);
             setStep(2);
+            setCanSwitchTabs(false);
         }).catch(() => {
             toast("Something went wrong!");
         }).finally(() => {
@@ -57,25 +60,29 @@ const PostPage = (props: CurrentUserStoreType) => {
         {
             title: 'Create',
             content: <CreateStep form={form} initialValues={createStepValues} onFinish={(values) => {
-                setCreateStepValues(values)
-                setStep(1)
+                setCreateStepValues(values);
+                setStep(1);
+                setCanSwitchTabs(false);
             }} />,
+            disabled: canSwitchTabs
         },
         {
             title: 'Pay',
             content: <PayStep setLoading={setLoading} onFinish={(token) => sendRequest(token)} />,
+            disabled: canSwitchTabs
         },
         {
             title: 'Finish',
             content: <FinishStep jobHref={jobHref} />,
+            disabled: true
         },
     ];
 
     return <Post>
         <Spin spinning={loading} tip="Loading...">
-            <Steps className="steps" current={step}>
+            <Steps className="steps" current={step} onChange={setStep}>
                 {steps.map(item => (
-                    <Step key={item.title} title={item.title} />
+                    <Step key={item.title} title={item.title} status="wait" disabled={item.disabled}/>
                 ))}
             </Steps>
             <div>{steps[step].content}</div>
