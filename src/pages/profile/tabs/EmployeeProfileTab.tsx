@@ -41,6 +41,9 @@ const EmployeeProfileTab = (props: ProfileTabProps) => {
             <Form.Item name={'lastName'} label="Last Name" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
+            <Form.Item name={'title'} label="Title" rules={[{ required: true }]}>
+                <Input />
+            </Form.Item>
             <Form.Item name={'phone'} label="Phone">
                 <Input />
             </Form.Item>

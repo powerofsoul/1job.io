@@ -8,6 +8,7 @@ import { UserSchema } from "./UserModel";
 export const EmployeeSchema  = new Schema({
     firstName: String,
     lastName: String,
+    title: String,
     phone: String,
     motto: String,
     workExperience: [{

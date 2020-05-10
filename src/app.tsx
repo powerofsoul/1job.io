@@ -32,6 +32,7 @@ import {
 import EditJob from './pages/post/editJob';
 import ChangeEmail from './pages/token-pages/changeEmail';
 import JobApply from './pages/jobApply';
+import Applicants from './pages/applicants';
 
 const AppBody = styled.div`
     display:flex;
@@ -55,6 +56,7 @@ const routes: Route[] = [
   { path: '/profile', component: Profile, logged: true },
   { path: '/job/:id/edit', component: EditJob, userType: ["Employer"] },
   { path: '/job/:id/apply', component: JobApply, userType: ["Employee"] },
+  { path: '/job/:id/applicants', component: Applicants, userType: ["Employer"] },
   { path: '/post/:id?', component: Post, logged: true, userType: ["Employer"] },
   { path: '/job/:id', component: Job},
   { path: '/company/:id', component: Company },

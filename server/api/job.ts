@@ -1,7 +1,7 @@
 import { Router } from "express";
 import JobModel from "../../models/mongo/JobModel";
 import { Job } from "../../models/Job";
-import { isAuthenticated, isEmployee } from "../middleware/middleware";
+import { isAuthenticated, isEmployee, isEmployer } from "../middleware/middleware";
 import { Types } from "mongoose";
 import UserModel from "../../models/mongo/UserModel";
 import { payForJob as getJobIntent } from "../services/StripeService";
@@ -67,6 +67,23 @@ router.get('/:id', (req, res) => {
     JobModel.findOne({ _id: req.params.id })
         .populate("company")
         .then((job) => res.json(job))
+        .catch(() => res.status(404).json({ success: false }));
+});
+
+router.get('/:id/applicants', isEmployer, (req, res) => {
+    JobModel.findOne({ _id: req.params.id, company: req.user })
+        .populate("company")
+        .populate("applications")
+        .populate({
+            path: 'applications',
+            populate: {
+                path: "employee"
+            }
+        })
+        .then((job) => res.json({
+            success: true,
+            job
+        }))
         .catch(() => res.status(404).json({ success: false }));
 });
 

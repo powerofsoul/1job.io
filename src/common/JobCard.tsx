@@ -76,13 +76,15 @@ interface Props {
     job: Job,
     className?: string;
     hideLogo?: boolean;
+    to?: string;
 }
 
 const Component = (props: Props) => {
     const { job, className } = props;
     const history = useHistory();
+
     const goToJobPage = () => {
-        history.push(`/job/${job._id}`);
+        history.push(props.to || `/job/${job._id}`);
     }
 
     return <JobCard className={className} onClick={goToJobPage}>

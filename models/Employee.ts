@@ -5,7 +5,8 @@ import { Application } from "./Application";
 export interface Employee extends User {
     firstName: string;
     lastName: string;
-    phone: String,
+    phone: string,
+    title: string;
     motto: String,
     workExperience: WorkExperience[],
     education: Education[],

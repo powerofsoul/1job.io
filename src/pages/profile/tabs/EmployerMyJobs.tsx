@@ -30,6 +30,6 @@ export default () => {
 
     return <EmployerMyJobs tip="Loading" spinning={loading}>
         {!loading && jobs.length == 0 && "No jobs posted yet"}
-        {jobs?.map((j, i) => <JobCard hideLogo={true} job={j} key={i}/>)}
+        {jobs?.map((j, i) => <JobCard to={`/job/${j._id}/applicants`} hideLogo={true} job={j} key={i}/>)}
     </EmployerMyJobs>
 }
