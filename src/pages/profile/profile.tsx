@@ -38,6 +38,7 @@ const layout = {
 export interface ProfileTabProps {
     loading: boolean;
     layout: any;
+    form?: FormInstance;
     setLoading: (value: boolean) => void;
     onFinish: (values) => void;
 
@@ -51,6 +52,7 @@ const Profile = (props: Props) => {
     const history = useHistory();
     const [loading, setLoading] = useState(false);
     const [form] = useForm();
+    
     React.useEffect(() => {
         if (!props.loading && !props.user) {
             history.push("/login");
@@ -100,8 +102,8 @@ const Profile = (props: Props) => {
                       onChange={(key) => window.location.hash = key}>
                     <Tabs.TabPane tab="Profile" key="profile">
                         {!props.user && <Spin spinning />}
-                        {props.user?.__t == "Employer" && <EmployerProfileTab {...tabProps} />}
-                        {props.user?.__t == "Employee" && <EmployeeProfileTab {...tabProps} />}
+                        {props.user?.__t == "Employer" && <EmployerProfileTab {...tabProps} form={form} />}
+                        {props.user?.__t == "Employee" && <EmployeeProfileTab {...tabProps} form={form} />}
                     </Tabs.TabPane>
                     {
                         props.user?.__t == "Employer" && <Tabs.TabPane tab="My Jobs" key="myjobs">
@@ -109,7 +111,7 @@ const Profile = (props: Props) => {
                         </Tabs.TabPane>
                     }
                     <Tabs.TabPane tab="Account" key="account">
-                        <UserProfileTab {...tabProps} />
+                        <UserProfileTab {...tabProps} form={form} />
                     </Tabs.TabPane>
                 </Tabs>
             </Col>

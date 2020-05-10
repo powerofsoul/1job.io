@@ -12,7 +12,7 @@ import { ProfileTabProps } from "../profile"
 
 const UserProfileTab = (props: ProfileTabProps) => {
     const [email, setEmail] = useState("");
-    
+
     const changeEmail = () => {
         props.onFinish({
             email
@@ -35,7 +35,7 @@ const UserProfileTab = (props: ProfileTabProps) => {
     }
 
     return <Spin spinning={props.loading}>
-        <Form initialValues={props.user} {...props.layout} name="nest-messages" validateMessages={ValidateMessage}>
+        <Form form={props.form} initialValues={props.user} {...props.layout} name="nest-messages" validateMessages={ValidateMessage}>
             <Form.Item name={'email'}
                 label="Email"
                 rules={[{ type: 'email', required: true }]}
