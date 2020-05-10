@@ -51,7 +51,6 @@ const Profile = (props: Props) => {
     const history = useHistory();
     const [loading, setLoading] = useState(false);
     const [form] = useForm();
-
     React.useEffect(() => {
         if (!props.loading && !props.user) {
             history.push("/login");
@@ -94,18 +93,22 @@ const Profile = (props: Props) => {
     return <PageCardContainer>
         <Row justify="center">
             <Col xs={24} lg={18}>
-                <Tabs size="large" defaultActiveKey="1">
-                    <Tabs.TabPane tab="Profile" key="Employer">
+                <Tabs size="large" 
+                      activeKey={window.location.hash?.replace("#", "") || "profile"}
+                      defaultActiveKey="profile"
+
+                      onChange={(key) => window.location.hash = key}>
+                    <Tabs.TabPane tab="Profile" key="profile">
                         {!props.user && <Spin spinning />}
                         {props.user?.__t == "Employer" && <EmployerProfileTab {...tabProps} />}
                         {props.user?.__t == "Employee" && <EmployeeProfileTab {...tabProps} />}
                     </Tabs.TabPane>
                     {
-                        props.user?.__t == "Employer" && <Tabs.TabPane tab="My Jobs" key="MyJobs">
-                                <EmployerMyJobs />
-                            </Tabs.TabPane>
+                        props.user?.__t == "Employer" && <Tabs.TabPane tab="My Jobs" key="myjobs">
+                            <EmployerMyJobs />
+                        </Tabs.TabPane>
                     }
-                    <Tabs.TabPane tab="Account" key="Employee">
+                    <Tabs.TabPane tab="Account" key="account">
                         <UserProfileTab {...tabProps} />
                     </Tabs.TabPane>
                 </Tabs>
