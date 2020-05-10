@@ -3,7 +3,7 @@ import { Form, Spin, Select, Input, Radio, Button } from "antd"
 import { JobTypes, JobExeperienceLevels, JobCategories, JobRegions } from "../../../models/Job"
 import { FormInstance } from "antd/lib/form";
 import HtmlEditor from "../../common/HtmlEditor";
-import { useForm } from "antd/lib/form/Form";
+import ArrayFormItem from "../profile/tabs/fields/ArrayFormItem";
 
 const layout = {
     labelCol: { span: 4 },
@@ -81,6 +81,15 @@ export default (props: Props) => {
             </Form.Item>
             <Form.Item name={'applyOn'} label="Apply On" rules={[{ type: "url" }]}>
                 <Input placeholder="https://" />
+            </Form.Item>
+            <ArrayFormItem name="questions"
+                label="Questions"
+                addButtonText="Add question"
+                emptyFieldError="Please input a question or delete this field."
+                wrapperCol={{ ...layout.wrapperCol }}
+                noLabelWrapperCol={{ ...layout.wrapperCol, offset: 4 }} />
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
+                <small>*Questions are only available if the user will apply using 1job</small>
             </Form.Item>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }} style={{textAlign: "center"}}>
                 <Button type="primary" htmlType="submit">

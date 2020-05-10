@@ -14,7 +14,11 @@ export const ApplicationSchema = new Schema({
         ref: 'Employee',
         required: true
     },
-    coverLetter: String
+    coverLetter: String,
+    answers: [{
+        question: String,
+        answer: String
+    }],
 })
 
 

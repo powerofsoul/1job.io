@@ -14,6 +14,7 @@ export interface Job {
     postedOn: Date,
     paymentIntent: string,
     visa: boolean | undefined,
+    questions: string[],
     applications?: Application[]
 }
 

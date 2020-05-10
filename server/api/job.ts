@@ -147,7 +147,7 @@ router.put('/', isAuthenticated, (req, res) => {
 })
 
 router.post("/:id/apply", isEmployee, async (req, res) => {
-    const respose = await JobService.apply(req.params.id, req.user as Employee, req.body.coverLetter);
+    const respose = await JobService.apply(req.params.id, req.user as Employee, req.body.coverLetter, req.body.answers);
     res.json(respose);
 })
 

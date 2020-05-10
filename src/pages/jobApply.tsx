@@ -73,7 +73,11 @@ const JobApplyPage = (props: Props) => {
 
     const onFinish = (values) => {
         post(`/job/${id}/apply`, {
-            coverLetter: values.coverLetter
+            coverLetter: values.coverLetter,
+            answers: job.questions.map((q, i) => ({
+                question: q,
+                answer: values.questions[i]
+            }))
         }).then((response: ApiResponse) => {
             if (response.success) {
                 toast("You applied succesfully.", {
@@ -95,10 +99,12 @@ const JobApplyPage = (props: Props) => {
             <JobApplyStyled>
                 <Form onFinish={onFinish} wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
                     <h3 className="title">Applying for {job?.title} at {job?.company.companyName}</h3>
+                    {job?.questions.map((q, i) => <Form.Item label={q} name={["questions", i]} rules={[{ required: true, message: "Question is required" }]}>
+                        <Input.TextArea />
+                    </Form.Item>)}
                     <Form.Item label="Cover Letter" name="coverLetter">
                         <Input.TextArea style={{ minHeight: "150px" }} />
                     </Form.Item>
-
                     <Button type="primary" style={{ marginTop: Space.sm }} htmlType="submit">
                         Apply
                     </Button>
