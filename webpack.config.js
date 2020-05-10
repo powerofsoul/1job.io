@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require("webpack");
 
 module.exports = {
   entry: path.resolve(__dirname, "./src/app.tsx"),
@@ -27,5 +28,10 @@ module.exports = {
   optimization: {
     minimize: true
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      "STRIPE_PUBLIC_KEY": JSON.stringify(process.env.STRIPE_PUBLIC_KEY)
+    })
+  ],
   mode: "production"
 };

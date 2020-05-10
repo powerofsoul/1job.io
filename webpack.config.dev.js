@@ -5,7 +5,8 @@ const path = require('path');
 module.exports = {
     ...prodConfig,
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        ...prodConfig.plugins
     ],
     devtool: "source-map",
     devServer: {

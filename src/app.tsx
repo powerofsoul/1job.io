@@ -90,8 +90,9 @@ const defineHistoryEvents = (history) => {
     historyEventsAreDefined = true;
   }
 }
-const stripePromise = loadStripe('pk_test_rW1t6jhkIp6Yrf5Ytu0AMbiY');
 
+//@ts-ignore
+const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 const Routes = (props: Props) => {
   const history = useHistory();
   defineHistoryEvents(history);
