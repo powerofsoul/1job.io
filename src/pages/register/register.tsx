@@ -29,7 +29,7 @@ const Register = styled.div`
 
 export default () => {
     const history = useHistory();
-    const [userType, setUserType] = useState("employer");
+    const [userType, setUserType] = useState("Employer");
 
     const submit = (values) => {
         const user = {
