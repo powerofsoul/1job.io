@@ -19,9 +19,7 @@ import { ApiResponse } from "../../../models/ApiResponse";
 import PageCardContainer from "../../common/PageCardContainer";
 const { Step } = Steps;
 
-const Post = styled(Row)`
-    margin-top: ${Space.md};
-
+const Post = styled(PageCardContainer)`
     .steps {
         margin-bottom: ${Space.md};
     }
@@ -73,7 +71,7 @@ const PostPage = (props: CurrentUserStoreType) => {
         },
     ];
 
-    return <PageCardContainer>
+    return <Post>
         <Spin spinning={loading} tip="Loading...">
             <Steps className="steps" current={step}>
                 {steps.map(item => (
@@ -82,7 +80,7 @@ const PostPage = (props: CurrentUserStoreType) => {
             </Steps>
             <div>{steps[step].content}</div>
         </Spin>
-    </PageCardContainer>
+    </Post>
 }
 
 export default connect((store: IAppState) => store.currentUserStore)(PostPage);
