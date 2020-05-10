@@ -111,7 +111,7 @@ const Component = (props: Props) => {
                             onClick={() => {
                                 add();
                             }}
-                            style={{ width: '60%' }}
+                            style={{ width: '100%' }}
                         >
                             <PlusOutlined />{props.addButtonText}
                         </Button>

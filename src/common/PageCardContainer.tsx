@@ -17,10 +17,11 @@ const PageCardContainer = styled(Row)`
 interface Props {
     children: any;
     lg?: number
+    className?: string;
 }
 
 export default (props: Props) => {
-    return <PageCardContainer justify="center">
+    return <PageCardContainer justify="center" className={props.className}>
         <Col className="card" xs={22} lg={props.lg || 12}>
             {props.children}
         </Col>

@@ -18,7 +18,7 @@ import { Employee } from '../../models/Employee';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import PageCardContainer from '../common/PageCardContainer';
 
-const JobDetails = styled.div`
+const JobDetails = styled(PageCardContainer)`
     .JobDetailsHeader {
         align-items:center;
 
@@ -34,7 +34,6 @@ const JobDetails = styled.div`
     }
 
     .JobDetailsBody {
-        ${HoverableCard}
         .html-content {
             align-items:center;
             margin-top: 2rem;
@@ -88,9 +87,9 @@ const JobPage = (props: Props) => {
         }
     })
 
-    return <PageCardContainer>
-        <Row gutter={[50, 12]}>
-            <Col>
+    return <JobDetails>
+        <Row gutter={[50, 12]} justify="center">
+            <Col lg={6}>
                 <Skeleton avatar active loading={loading}>
                     <div className="JobDetailsHeader">
                         <div className="CompanyDetails">
@@ -99,7 +98,7 @@ const JobPage = (props: Props) => {
                     </div>
                 </Skeleton>
             </Col>
-            <Col>
+            <Col lg={18}>
                 <Skeleton paragraph={true} active loading={loading}>
                     <div className="JobDetailsBody">
                         <div>
@@ -124,7 +123,7 @@ const JobPage = (props: Props) => {
                 </Skeleton>
             </Col>
         </Row>
-    </PageCardContainer>
+    </JobDetails>
 }
 
 const mapStateToProps = (store: IAppState): Partial<Props> => ({
