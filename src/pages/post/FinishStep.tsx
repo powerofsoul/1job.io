@@ -13,7 +13,7 @@ interface Props {
 
 export default (props: Props) => {
     return <FinishStep>
-        <h3>You job was posted 🎉🎉</h3>
+        <h3>Your job was posted 🎉🎉</h3>
 
         <Link to={props.jobHref}>
             <Button type="primary">View Job</Button>
