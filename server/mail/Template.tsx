@@ -2,6 +2,7 @@ import React from "react";
 import { Email, Item, Span, A, renderEmail } from 'react-html-email'
 import config from "../config";
 import styled from "styled-components";
+import colors from "../../src/style/Colors";
 
 type TemplateType<T> = (variables: T) => string
 
@@ -21,11 +22,15 @@ interface Props {
 }
 
 const style = {
-    padding: '2rem',
+    backgroundColor: colors.white,
     border: '1px solid #ece9e9'
 }
 
 const headCSS = `
+  table {
+    background-color: ${colors.silver};
+    padding: 2rem;
+  }
   td {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
