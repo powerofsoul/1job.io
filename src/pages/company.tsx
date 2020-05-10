@@ -9,20 +9,7 @@ import { HoverableCard } from "../style/CommonStyles";
 import Space from "../style/Space";
 import CompanyJobsList from "../common/CompanyJobList";
 import { Employer } from "../../models/Employer";
-
-const CompanyPage = styled.div`
-    margin-top: ${Space.md};
-    margin-bottom: ${Space.md};
-
-    .main-col {
-        ${HoverableCard}
-    }
-
-    .company-job-list {
-        margin-top: ${Space.md};
-        margin-bottom: ${Space.md};
-    }
-`;
+import PageCardContainer from "../common/PageCardContainer";
 
 export default () => {
     const { id } = useParams();
@@ -43,18 +30,14 @@ export default () => {
         }
     })
 
-    return <CompanyPage>
-        <Row justify="center">
-            <Col className="main-col" md={12}>
-                <Skeleton loading={loading}>
-                    <CompanyCard hideViewMore user={company} />
-                    <div dangerouslySetInnerHTML={{__html: company?.companyDescription}} />
+    return <PageCardContainer>
+        <Skeleton loading={loading}>
+            <CompanyCard hideViewMore user={company} />
+            <div dangerouslySetInnerHTML={{ __html: company?.companyDescription }} />
 
-                    <div className="company-job-list">
-                        <CompanyJobsList companyId={company?._id}/>
-                    </div>
-                </Skeleton>
-            </Col>
-        </Row>
-    </CompanyPage>
+            <div className="company-job-list">
+                <CompanyJobsList companyId={company?._id} />
+            </div>
+        </Skeleton>
+    </PageCardContainer>
 }

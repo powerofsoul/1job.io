@@ -12,17 +12,7 @@ import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import { User } from '../../models/User';
 import React from "react";
 import { useHistory, useLocation } from 'react-router';
-
-const Login = styled.div`
-    margin-top: 2rem;
-    display: flex;
-
-    .form {
-        width: 300px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-`;
+import PageCardContainer from '../common/PageCardContainer';
 
 interface Props {
     setCurrentUser: (user: User) => void;
@@ -69,7 +59,7 @@ const Component = (props: Props) => {
         });
     }
 
-    return <Login>
+    return <PageCardContainer lg={6}>
         <Form
             name="normal_login"
             className="form"
@@ -108,7 +98,7 @@ const Component = (props: Props) => {
                 Or <Link to="/register"><span>register now!</span></Link>
             </Form.Item>
         </Form>
-    </Login>
+    </PageCardContainer>
 }
 
 export default connect(

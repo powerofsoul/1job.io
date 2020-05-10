@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { SimpleContainer } from '../../style/CommonStyles';
 import EmployeeRegister from './EmployeeRegister';
 import { User } from '../../../models/User';
+import PageCardContainer from '../../common/PageCardContainer';
 const { TabPane } = Tabs;
 
 const layout = {
@@ -19,8 +20,6 @@ const tailLayout = {
 };
 
 const Register = styled.div`
-    margin-top: 2rem;
-
     .ant-tabs-nav-scroll{
         text-align:center;
     }
@@ -37,7 +36,7 @@ export default () => {
             __t: userType
         } as User;
 
-        post("/user/register", {user}).then((response: { success: boolean, message: string }) => {
+        post("/user/register", { user }).then((response: { success: boolean, message: string }) => {
             if (response.success) {
                 toast(response.message, {
                     type: "success"
@@ -52,24 +51,22 @@ export default () => {
     }
 
     return <Register>
-        <Row justify="center">
-            <Col xs={24} lg={12}>
-                <Form
-                    {...layout}
-                    name="basic"
-                    initialValues={{ remember: true }}
-                    onFinish={submit}>
-                    <Tabs size="large" defaultActiveKey="1" onChange={setUserType}>
-                        <TabPane tab="Employer" key="Employer">
-                            <EmployerRegister onSubmit={submit} tailLayout={tailLayout} layout={layout} />
-                        </TabPane>
-                        <TabPane tab="Employee" key="Employee">
-                            <EmployeeRegister onSubmit={submit} tailLayout={tailLayout} layout={layout} />
-                        </TabPane>
-                    </Tabs>
-                </Form>
-            </Col>
-        </Row>
+        <PageCardContainer lg={8}>
+            <Form
+                {...layout}
+                name="basic"
+                initialValues={{ remember: true }}
+                onFinish={submit}>
+                <Tabs size="large" defaultActiveKey="1" onChange={setUserType}>
+                    <TabPane tab="Employer" key="Employer">
+                        <EmployerRegister onSubmit={submit} tailLayout={tailLayout} layout={layout} />
+                    </TabPane>
+                    <TabPane tab="Employee" key="Employee">
+                        <EmployeeRegister onSubmit={submit} tailLayout={tailLayout} layout={layout} />
+                    </TabPane>
+                </Tabs>
+            </Form>
+        </PageCardContainer>
     </Register>
 }
 

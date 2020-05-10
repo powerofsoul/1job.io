@@ -18,6 +18,7 @@ import { post } from "../../Utils";
 import EmployeeProfileTab from "./tabs/EmployeeProfileTab";
 import { Employee } from "../../../models/Employee";
 import EmployerMyJobs from "./tabs/EmployerMyJobs";
+import PageCardContainer from "../../common/PageCardContainer";
 
 interface Props {
     user: User;
@@ -33,12 +34,6 @@ const layout = {
         sm: { span: 18 },
     },
 };
-
-const ProfileContainer = styled.div`
-    margin-top: 2rem;
-
-    ${SimpleContainer}
-`;
 
 export interface ProfileTabProps {
     loading: boolean;
@@ -96,9 +91,9 @@ const Profile = (props: Props) => {
         onFinish
     }
 
-    return <ProfileContainer>
+    return <PageCardContainer>
         <Row justify="center">
-            <Col xs={24} lg={12}>
+            <Col xs={24} lg={18}>
                 <Tabs size="large" defaultActiveKey="1">
                     <Tabs.TabPane tab="Profile" key="Employer">
                         {!props.user && <Spin spinning />}
@@ -116,7 +111,7 @@ const Profile = (props: Props) => {
                 </Tabs>
             </Col>
         </Row>
-    </ProfileContainer>
+    </PageCardContainer>
 }
 
 const mapStateToProps = (store: IAppState): Partial<Props> => ({

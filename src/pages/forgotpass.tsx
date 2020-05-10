@@ -6,26 +6,27 @@ import { toast } from "react-toastify"
 import { ApiResponse } from "../../models/ApiResponse"
 import Space from "../style/Space"
 import { post } from "../Utils"
+import PageCardContainer from "../common/PageCardContainer"
 
 export default () => {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
 
-    const sendPassword = (values: {email: string}) => {
+    const sendPassword = (values: { email: string }) => {
         setLoading(true);
 
         post("/user/forgotpass", {
             email: values.email
-        }).then((response: ApiResponse)=> {
+        }).then((response: ApiResponse) => {
             toast(response.message, {
                 type: response.success ? "success" : "error"
             });
 
             setLoading(false);
-            if(response.success) {
+            if (response.success) {
                 history.push('/');
             }
-        }).catch(()=>{
+        }).catch(() => {
             toast("Something went wrong", {
                 type: "error"
             });
@@ -34,28 +35,26 @@ export default () => {
         })
     }
 
-    return <Row style={{ marginTop: Space.md }} justify="center">
-        <Col xs={11} md={7}>
-            <Spin spinning={loading} tip="Loading...">
-                <Form
-                    name="normal_login"
-                    className="form"
-                    initialValues={{ remember: true }}
-                    onFinish={sendPassword} >
-                   
+    return <PageCardContainer>
+        <Spin spinning={loading} tip="Loading...">
+            <Form
+                name="normal_login"
+                className="form"
+                initialValues={{ remember: true }}
+                onFinish={sendPassword} >
+
                 <Form.Item
-                        name="email"
-                        rules={[{ required: true, type: "email", message: 'Please input your Email!' }]}>
-                        <Input prefix={<MailOutlined className="site-form-item-icon" />}
-                            placeholder="Email" />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
-                            Send
+                    name="email"
+                    rules={[{ required: true, type: "email", message: 'Please input your Email!' }]}>
+                    <Input prefix={<MailOutlined className="site-form-item-icon" />}
+                        placeholder="Email" />
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        Send
                     </Button>
-                    </Form.Item>
-                </Form>
-            </Spin>
-        </Col>
-    </Row>
+                </Form.Item>
+            </Form>
+        </Spin>
+    </PageCardContainer>
 }

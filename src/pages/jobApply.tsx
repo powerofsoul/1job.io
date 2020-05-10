@@ -1,31 +1,17 @@
-import React, { useState, useEffect } from "react"
-import { Row, Col, Collapse, Input, Button, Form } from "antd"
-import styled from "styled-components"
-import { HoverableCard } from "../style/CommonStyles";
-import Space from "../style/Space";
-import { Employee } from "../../models/Employee";
-import { IAppState } from "../redux/configureStore";
+import { Button, Form, Input } from "antd";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import EmployeeProfileTab from "./profile/tabs/EmployeeProfileTab";
-import { get, post } from "../Utils";
-import { Job } from "../../models/Job";
 import { useHistory, useParams } from "react-router";
-import { response } from "express";
-import { ApiResponse } from "../../models/ApiResponse";
 import { toast } from "react-toastify";
 import { bindActionCreators } from "redux";
+import { ApiResponse } from "../../models/ApiResponse";
+import { Employee } from "../../models/Employee";
+import { Job } from "../../models/Job";
+import PageCardContainer from "../common/PageCardContainer";
+import { IAppState } from "../redux/configureStore";
 import CurrentUserStore from "../redux/stores/CurrentUserStore";
-const { Panel } = Collapse;
-
-const JobApplyStyled = styled.div`
-    margin-top: ${Space.sm};
-    margin-bottom: ${Space.sm};
-    ${HoverableCard}
-
-    .title {
-        text-align: center;
-    }
-`;
+import Space from "../style/Space";
+import { get, post } from "../Utils";
 
 interface Props {
     loading: boolean;
@@ -94,24 +80,20 @@ const JobApplyPage = (props: Props) => {
         })
     }
 
-    return <Row justify="center">
-        <Col xs={21} lg={12}>
-            <JobApplyStyled>
-                <Form onFinish={onFinish} wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
-                    <h3 className="title">Applying for {job?.title} at {job?.company.companyName}</h3>
-                    {job?.questions.map((q, i) => <Form.Item label={q} name={["questions", i]} rules={[{ required: true, message: "Question is required" }]}>
-                        <Input.TextArea />
-                    </Form.Item>)}
-                    <Form.Item label="Cover Letter" name="coverLetter">
-                        <Input.TextArea style={{ minHeight: "150px" }} />
-                    </Form.Item>
-                    <Button type="primary" style={{ marginTop: Space.sm }} htmlType="submit">
-                        Apply
+    return <PageCardContainer>
+        <Form onFinish={onFinish} wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
+            <h3 className="title">Applying for {job?.title} at {job?.company.companyName}</h3>
+            {job?.questions.map((q, i) => <Form.Item label={q} name={["questions", i]} rules={[{ required: true, message: "Question is required" }]}>
+                <Input.TextArea />
+            </Form.Item>)}
+            <Form.Item label="Cover Letter" name="coverLetter">
+                <Input.TextArea style={{ minHeight: "150px" }} />
+            </Form.Item>
+            <Button type="primary" style={{ marginTop: Space.sm }} htmlType="submit">
+                Apply
                     </Button>
-                </Form>
-            </JobApplyStyled>
-        </Col>
-    </Row>
+        </Form>
+    </PageCardContainer>
 }
 
 export default connect((store: IAppState): Partial<Props> => ({
@@ -119,4 +101,4 @@ export default connect((store: IAppState): Partial<Props> => ({
     loading: store.currentUserStore.loading,
 }),
     (dispatch) => bindActionCreators(CurrentUserStore.actionCreators, dispatch))
-(JobApplyPage);
+    (JobApplyPage);

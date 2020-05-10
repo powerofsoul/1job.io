@@ -9,6 +9,7 @@ import Space from "../style/Space"
 import { post } from "../Utils"
 import { ApiResponse } from "../../models/ApiResponse"
 import { toast } from "react-toastify"
+import PageCardContainer from "../common/PageCardContainer"
 
 interface Props {
     user: User;
@@ -32,8 +33,8 @@ const ChangePassword = (props: User) => {
         post("/user/changePass", {
             ...values,
             token
-        }).then((response: ApiResponse)=>{
-            if(response.success){
+        }).then((response: ApiResponse) => {
+            if (response.success) {
                 history.push('/');
                 toast("Password change", {
                     type: "success"
@@ -43,62 +44,60 @@ const ChangePassword = (props: User) => {
                     type: "error"
                 });
             }
-        }).catch(()=>{
+        }).catch(() => {
             toast("Something went wrong.", {
                 type: "error"
             });
-        }).finally(()=>{
+        }).finally(() => {
             setLoading(false);
         })
     }
 
-    return <Row style={{ marginTop: Space.md }} justify="center">
-        <Col md={12}>
-            <Spin spinning={loading} tip="Loading...">
-                <Form onFinish={changePass} {...layout}>
-                    {!token && <Form.Item
-                        label="Current Password"
-                        name="currentPassword"
-                        rules={[{ required: true, message: 'Please input your Password!' }]}>
-                        <Input.Password />
-                    </Form.Item>}
-                    <Form.Item
-                        label="Password"
-                        name="newPassword"
-                        rules={[{ required: true, message: 'Please input your password!' }]}>
-                        <Input.Password />
-                    </Form.Item>
-                    <Form.Item
-                        name="confirm"
-                        label="Confirm Password"
-                        dependencies={['password']}
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please confirm your password!',
+    return <PageCardContainer>
+        <Spin spinning={loading} tip="Loading...">
+            <Form onFinish={changePass} {...layout}>
+                {!token && <Form.Item
+                    label="Current Password"
+                    name="currentPassword"
+                    rules={[{ required: true, message: 'Please input your Password!' }]}>
+                    <Input.Password />
+                </Form.Item>}
+                <Form.Item
+                    label="Password"
+                    name="newPassword"
+                    rules={[{ required: true, message: 'Please input your password!' }]}>
+                    <Input.Password />
+                </Form.Item>
+                <Form.Item
+                    name="confirm"
+                    label="Confirm Password"
+                    dependencies={['password']}
+                    hasFeedback
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please confirm your password!',
+                        },
+                        ({ getFieldValue }) => ({
+                            validator(rule, value) {
+                                if (!value || getFieldValue('newPassword') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject('The two passwords that you entered do not match!');
                             },
-                            ({ getFieldValue }) => ({
-                                validator(rule, value) {
-                                    if (!value || getFieldValue('newPassword') === value) {
-                                        return Promise.resolve();
-                                    }
-                                    return Promise.reject('The two passwords that you entered do not match!');
-                                },
-                            }),
-                        ]}
-                    >
-                        <Input.Password />
-                    </Form.Item>
-                    <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                        <Button type="primary" htmlType="submit">
-                            Submit
+                        }),
+                    ]}
+                >
+                    <Input.Password />
+                </Form.Item>
+                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                    <Button type="primary" htmlType="submit">
+                        Submit
                     </Button>
-                    </Form.Item>
-                </Form>
-            </Spin>
-        </Col>
-    </Row>
+                </Form.Item>
+            </Form>
+        </Spin>
+    </PageCardContainer>
 }
 
 export default connect((store: IAppState): Partial<Props> => ({

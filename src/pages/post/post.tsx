@@ -16,6 +16,7 @@ import CreateStep from "./CreateStep";
 import PayStep from "./PayStep";
 import FinishStep from "./FinishStep";
 import { ApiResponse } from "../../../models/ApiResponse";
+import PageCardContainer from "../../common/PageCardContainer";
 const { Step } = Steps;
 
 const Post = styled(Row)`
@@ -72,18 +73,16 @@ const PostPage = (props: CurrentUserStoreType) => {
         },
     ];
 
-    return <Post justify="center">
-        <Col md={12}>
-            <Spin spinning={loading} tip="Loading...">
-                <Steps className="steps" current={step}>
-                    {steps.map(item => (
-                        <Step key={item.title} title={item.title} />
-                    ))}
-                </Steps>
-                <div>{steps[step].content}</div>
-            </Spin>
-        </Col>
-    </Post>
+    return <PageCardContainer>
+        <Spin spinning={loading} tip="Loading...">
+            <Steps className="steps" current={step}>
+                {steps.map(item => (
+                    <Step key={item.title} title={item.title} />
+                ))}
+            </Steps>
+            <div>{steps[step].content}</div>
+        </Spin>
+    </PageCardContainer>
 }
 
 export default connect((store: IAppState) => store.currentUserStore)(PostPage);
