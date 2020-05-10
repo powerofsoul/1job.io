@@ -54,7 +54,9 @@ interface Props {
 }
 
 const applyButton = (user: User | Employee, jobId: string) => {
-    if(!user) return;
+    if(!user) {
+        return <Link to="/login" className="ant-btn ant-btn-primary">Log in to apply with 1job</Link>
+    };
     if(user.__t != "Employee") {
         return;
     }
@@ -63,7 +65,7 @@ const applyButton = (user: User | Employee, jobId: string) => {
     if(employee.applications.some(e=> e.job == jobId)) {
         return <span><CheckCircleTwoTone twoToneColor={colors.green}/> You applied succesfully</span>
     } else {
-        return <Link to={`/job/${jobId}/apply`}>Apply using your 1job Profile</Link>
+        return <Link className="ant-btn ant-btn-primary" to={`/job/${jobId}/apply`}>Apply using your 1job Profile</Link>
     }
 }
 
@@ -115,7 +117,7 @@ const JobPage = (props: Props) => {
                                     Edit
                             </Link>
                             }
-                            {job?.applyOn && <a className="ant-btn ant-btn-primary" href={job?.applyOn}>Apply on company page</a>}
+                            {job?.applyOn &&  <a className="ant-btn ant-btn-primary" href={job?.applyOn}>Apply on company page</a>}
                             {applyButton(props.currentUser, job?._id)}
                         </div>
                         <div className="html-content">
