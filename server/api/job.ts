@@ -122,44 +122,35 @@ router.put('/', isAuthenticated, (req, res) => {
         job.postedOn = new Date();
 
         const jobModel = new JobModel(job);
-        if(req.body.token == undefined){
+        if (req.body.token == undefined) {
             res.json({
                 success: false,
                 message: "Invalid token from payment"
             })
             return;
         }
-        jobModel.validate((err) => {
-            if (err) {
+        getJobIntent(req.body.token).then(async (payment) => {
+            if (payment.status == "succeeded" || payment.status == "processing") {
+                jobModel.paymentIntent = req.body.token;
+                const job = await jobModel.save();
+
                 res.json({
-                    success: false,
-                    message: "Invalid job content. Please make sure you filled every required field."
+                    success: true,
+                    message: "Job created",
+                    job
                 });
             } else {
-                getJobIntent(req.body.token).then(async (payment) => {
-                    if (payment.status == "succeeded") {
-                        jobModel.paymentIntent = req.body.token;
-                        const job = await jobModel.save();
-
-                        res.json({
-                            success: true,
-                            message: "Job created",
-                            job
-                        });
-                    } else {
-                        res.json({
-                            success: false,
-                            message: payment.last_payment_error
-                        })
-                    }
-                }).catch((err) => {
-                    res.json({
-                        success: false,
-                        message: "Something went wrong"
-                    });
-                });
+                res.json({
+                    success: false,
+                    message: payment.last_payment_error
+                })
             }
-        })
+        }).catch((err) => {
+            res.json({
+                success: false,
+                message: "Something went wrong"
+            });
+        });
     }
 })
 

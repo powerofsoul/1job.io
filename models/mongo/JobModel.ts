@@ -12,31 +12,25 @@ export const JobSchema = new Schema({
     company: {
         type: Schema.Types.ObjectId,
         ref: 'Employer',
-        required: true
     },
     description: {
         type: String,
-        required: true
     },
     type: {
         type: String,
         enum: JobTypes,
-        required: true
     },
     experienceLevel: {
         type: [String],
         enum: JobExeperienceLevels,
-        required: true
     },
     regions: {
         type: [String],
         enum: JobRegions,
-        required: true
     },
     category: {
         type: String,
         enum: JobCategories,
-        required: true
     },
     visa: {
         type: Boolean
