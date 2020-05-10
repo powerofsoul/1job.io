@@ -16,7 +16,7 @@ import { HoverableCard } from "../style/CommonStyles";
 import Space from '../style/Space';
 import { Employee } from '../../models/Employee';
 import { CheckCircleTwoTone } from '@ant-design/icons';
-import PageCardContainer from '../common/PageCardContainer';
+import PageCardContainer, { HeaderItem } from '../common/PageCardContainer';
 
 const JobDetails = styled(PageCardContainer)`
     .JobDetailsHeader {
@@ -87,7 +87,12 @@ const JobPage = (props: Props) => {
         }
     })
 
-    return <JobDetails>
+    const header: HeaderItem[] = [
+        {name: job?.company.companyName, to: `/company/${job?.company._id}` },
+        {name: job?.title}
+    ]
+
+    return <JobDetails header={header}>
         <Row gutter={[50, 12]} justify="center">
             <Col lg={6}>
                 <Skeleton avatar active loading={loading}>

@@ -92,25 +92,29 @@ const Profile = (props: Props) => {
         onFinish
     }
 
-    return <PageCardContainer>
+    const header = [
+        {name: "Profile", to: "/profile"},
+        {name: window.location.hash.replace("#", "")}
+    ]
+
+    return <PageCardContainer header={header}>
         <Row justify="center">
             <Col xs={24} lg={18}>
                 <Tabs size="large" 
-                      activeKey={window.location.hash?.replace("#", "") || "profile"}
-                      defaultActiveKey="profile"
-
+                      activeKey={window.location.hash?.replace("#", "") || "Profile"}
+                      defaultActiveKey="Profile"
                       onChange={(key) => window.location.hash = key}>
-                    <Tabs.TabPane tab="Profile" key="profile">
+                    <Tabs.TabPane tab="Profile" key="Profile">
                         {!props.user && <Spin spinning />}
                         {props.user?.__t == "Employer" && <EmployerProfileTab {...tabProps} form={form} />}
                         {props.user?.__t == "Employee" && <EmployeeProfileTab {...tabProps} form={form} />}
                     </Tabs.TabPane>
                     {
-                        props.user?.__t == "Employer" && <Tabs.TabPane tab="My Jobs" key="myjobs">
+                        props.user?.__t == "Employer" && <Tabs.TabPane tab="My Jobs" key="MyJobs">
                             <EmployerMyJobs />
                         </Tabs.TabPane>
                     }
-                    <Tabs.TabPane tab="Account" key="account">
+                    <Tabs.TabPane tab="Account" key="Account">
                         <UserProfileTab {...tabProps} form={form} />
                     </Tabs.TabPane>
                 </Tabs>

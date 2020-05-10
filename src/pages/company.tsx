@@ -9,7 +9,7 @@ import { HoverableCard } from "../style/CommonStyles";
 import Space from "../style/Space";
 import CompanyJobsList from "../common/CompanyJobList";
 import { Employer } from "../../models/Employer";
-import PageCardContainer from "../common/PageCardContainer";
+import PageCardContainer, { HeaderItem } from "../common/PageCardContainer";
 
 export default () => {
     const { id } = useParams();
@@ -30,7 +30,11 @@ export default () => {
         }
     })
 
-    return <PageCardContainer>
+    const header: HeaderItem[] = [
+        {name: company?.companyName}
+    ]
+
+    return <PageCardContainer header={header}>
         <Skeleton loading={loading}>
             <CompanyCard hideViewMore user={company} />
             <div dangerouslySetInnerHTML={{ __html: company?.companyDescription }} />

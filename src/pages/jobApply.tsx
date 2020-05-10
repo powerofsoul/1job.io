@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import { ApiResponse } from "../../models/ApiResponse";
 import { Employee } from "../../models/Employee";
 import { Job } from "../../models/Job";
-import PageCardContainer from "../common/PageCardContainer";
+import PageCardContainer, { HeaderItem } from "../common/PageCardContainer";
 import { IAppState } from "../redux/configureStore";
 import CurrentUserStore from "../redux/stores/CurrentUserStore";
 import Space from "../style/Space";
@@ -80,7 +80,13 @@ const JobApplyPage = (props: Props) => {
         })
     }
 
-    return <PageCardContainer>
+    const header: HeaderItem[] = [
+        {name: job?.company.companyName, to: `/company/${job?.company._id}`},
+        {name: job?.title, to: `/job/${job?._id}`},
+        {name: "Application"}
+    ]
+
+    return <PageCardContainer header={header}>
         <Form onFinish={onFinish} wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
             <h3 className="title">Applying for {job?.title} at {job?.company.companyName}</h3>
             {job?.questions.map((q, i) => <Form.Item label={q} name={["questions", i]} rules={[{ required: true, message: "Question is required" }]}>

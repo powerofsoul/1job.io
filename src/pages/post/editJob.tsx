@@ -67,8 +67,13 @@ const EditJobPage = (props: Props) => {
             toast("Something went wrong!");
         })
     }
+    const header = [
+        {name: initialValues?.company.companyName, to: "/profile#MyJobs"},
+        {name: initialValues?.title, to: `/job/${initialValues?._id}`},
+        {name: "Edit"}
+    ]
 
-    return <PageCardContainer>
+    return <PageCardContainer header={header}>
         <CreateStep nextButtonText="Update" form={form} jobLoading={loading} onFinish={onFinish} initialValues={initialValues} />
     </PageCardContainer>
 }
