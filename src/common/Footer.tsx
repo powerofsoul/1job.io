@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import DeviceSize from "../style/DeviceSize";
 import colors from "../style/Colors";
 import React from "react";
+import { FacebookFilled, LinkedinFilled } from "@ant-design/icons";
 
 const {Footer} = Layout;
 const StyledFooter = styled(Footer)`
@@ -41,10 +42,8 @@ export default () => {
             <Col xs={24} md={12}>
                  <FooterDetails>
                      <div className="links">
-                        <Link className="link" to="/">Home</Link>
-                        {/* <Link className="link" to="/aboutus">About Us</Link>
-                        <Link className="link" to="/help">Help</Link>
-                        <Link className="link" to="/contact">Contact</Link> */}
+                        <a target="_blank" href="https://www.linkedin.com/company/1jobdotio"><LinkedinFilled style={{fontSize: "2rem"}} /></a>
+                        <a target="_blank" href="https://www.facebook.com/1JOB-100100101713880"><FacebookFilled style={{fontSize: "2rem"}}/></a>
                     </div>
                  </FooterDetails>
             </Col>
