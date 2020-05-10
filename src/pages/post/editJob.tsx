@@ -11,10 +11,7 @@ import { connect } from "react-redux";
 import Space from "../../style/Space";
 import { useForm } from "antd/lib/form/Form";
 import { Row, Col } from "antd";
-
-const Edit = styled.div`
-    margin-top: ${Space.md};
-`;
+import PageCardContainer from "../../common/PageCardContainer";
 
 interface Props {
     user: User;
@@ -44,7 +41,7 @@ const EditJobPage = (props: Props) => {
     }
 
     React.useEffect(() => {
-        if(props.userLoading) {
+        if (props.userLoading) {
             return;
         }
 
@@ -71,13 +68,9 @@ const EditJobPage = (props: Props) => {
         })
     }
 
-    return <Edit>
-        <Row justify="center">
-            <Col lg={16}>
-                <CreateStep nextButtonText="Update" form={form} jobLoading={loading} onFinish={onFinish} initialValues={initialValues} />
-            </Col>
-        </Row>
-    </Edit>
+    return <PageCardContainer>
+        <CreateStep nextButtonText="Update" form={form} jobLoading={loading} onFinish={onFinish} initialValues={initialValues} />
+    </PageCardContainer>
 }
 
 export default connect((store: IAppState): Partial<Props> => ({
