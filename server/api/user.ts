@@ -148,7 +148,7 @@ router.get('/me',
     (req, res) => {
         UserModel.findOne({
             _id: req.user._id
-        }).then((u) => {
+        }).populate("applications").then((u) => {
             res.json(u);
         })
     }

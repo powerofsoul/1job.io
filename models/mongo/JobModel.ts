@@ -10,7 +10,7 @@ export const JobSchema = new Schema({
         maxlength: 100
     },
     company: {
-        type: Schema.Types.ObjectId, 
+        type: Schema.Types.ObjectId,
         ref: 'Employer',
         required: true
     },
@@ -47,6 +47,10 @@ export const JobSchema = new Schema({
     paymentIntent: {
         type: String
     },
+    applications: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Application',
+    }],
     postedOn: Date,
 })
 
@@ -57,12 +61,12 @@ JobSchema.pre('save', function (next) {
     const job = this as JobDocument;
 
     if (!job.isModified('description')) return next();
-    
+
     job.description = xss(job.description);
     next();
 })
 
-UserSchema.methods.toJSON = function() {
+UserSchema.methods.toJSON = function () {
     const obj: JobDocument = this.toObject();
     delete obj.paymentIntent;
     return obj;

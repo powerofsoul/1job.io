@@ -1,4 +1,5 @@
 import { Employer } from "./Employer";
+import { Application } from "./Application";
 
 export interface Job {
     _id?: string;
@@ -12,7 +13,8 @@ export interface Job {
     applyOn?: string,
     postedOn: Date,
     paymentIntent: string,
-    visa: boolean | undefined
+    visa: boolean | undefined,
+    applications?: Application[]
 }
 
 export const JobCategories = [

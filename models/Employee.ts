@@ -1,5 +1,6 @@
 import { User } from "./User";
 import { Moment } from "moment";
+import { Application } from "./Application";
 
 export interface Employee extends User {
     firstName: string;
@@ -12,6 +13,7 @@ export interface Employee extends User {
     languages: string[],
     interests: string[],
     projects: WorkProject[];
+    applications?: Application[];
 }
 
 type Period = String | Date | Moment;

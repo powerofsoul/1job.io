@@ -12,6 +12,7 @@ import { normalizeEmployee } from "../../../redux/stores/EmployeeUtils"
 import { Employee } from "../../../../models/Employee"
 import EducationField from "./fields/EducationField"
 import ProjectField from "./fields/ProjectField"
+import { useForm } from "antd/lib/form/util"
 
 // phone: String,
 //      
@@ -19,6 +20,7 @@ import ProjectField from "./fields/ProjectField"
 //     projects: []
 
 const EmployeeProfileTab = (props: ProfileTabProps) => {
+    const [form] = useForm();
     const noLabelWrapperCol = {
         ...props.layout,
         sm: {
@@ -27,8 +29,12 @@ const EmployeeProfileTab = (props: ProfileTabProps) => {
         }
     }
 
+    React.useEffect(() => {
+        form.resetFields()
+    }, [props.user])
+
     return <Spin spinning={props.loading}>
-        <Form initialValues={normalizeEmployee(props.user as Employee)} {...props.layout} name="nest-messages" onFinish={props.onFinish} validateMessages={ValidateMessage}>
+        <Form form={form} initialValues={normalizeEmployee(props.user as Employee)} {...props.layout} name="nest-messages" onFinish={props.onFinish} validateMessages={ValidateMessage}>
             <Form.Item name={'firstName'} label="First Name" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>

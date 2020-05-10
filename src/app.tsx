@@ -31,6 +31,7 @@ import {
 } from '@stripe/react-stripe-js';
 import EditJob from './pages/post/editJob';
 import ChangeEmail from './pages/token-pages/changeEmail';
+import JobApply from './pages/jobApply';
 
 const AppBody = styled.div`
     display:flex;
@@ -53,6 +54,7 @@ interface Route {
 const routes: Route[] = [
   { path: '/profile', component: Profile, logged: true },
   { path: '/job/:id/edit', component: EditJob, userType: ["Employer"] },
+  { path: '/job/:id/apply', component: JobApply, userType: ["Employee"] },
   { path: '/post/:id?', component: Post, logged: true, userType: ["Employer"] },
   { path: '/job/:id', component: Job},
   { path: '/company/:id', component: Company },

@@ -1,11 +1,13 @@
 import { Router } from "express";
 import JobModel from "../../models/mongo/JobModel";
 import { Job } from "../../models/Job";
-import { isAuthenticated } from "../middleware/middleware";
+import { isAuthenticated, isEmployee } from "../middleware/middleware";
 import { Types } from "mongoose";
 import UserModel from "../../models/mongo/UserModel";
 import { payForJob as getJobIntent } from "../services/StripeService";
 import EmployerModel from "../../models/mongo/EmployerModel";
+import { JobService } from "../services/JobService";
+import { Employee } from "../../models/Employee";
 const router = Router();
 
 router.get('/all', async (req, res) => {
@@ -142,7 +144,11 @@ router.put('/', isAuthenticated, (req, res) => {
             }
         })
     }
+})
 
+router.post("/:id/apply", isEmployee, async (req, res) => {
+    const respose = await JobService.apply(req.params.id, req.user as Employee, req.body.coverLetter);
+    res.json(respose);
 })
 
 export default router;

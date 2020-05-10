@@ -14,6 +14,8 @@ import CompanyCard from '../common/CompanyCard';
 import { User } from '../../models/User';
 import { HoverableCard } from "../style/CommonStyles";
 import Space from '../style/Space';
+import { Employee } from '../../models/Employee';
+import { CheckCircleTwoTone } from '@ant-design/icons';
 
 const JobDetails = styled.div`
     padding-top: 5rem;
@@ -49,6 +51,20 @@ const JobDetails = styled.div`
 `;
 interface Props {
     currentUser?: User;
+}
+
+const applyButton = (user: User | Employee, jobId: string) => {
+    if(!user) return;
+    if(user.__t != "Employee") {
+        return;
+    }
+
+    const employee = user as Employee;
+    if(employee.applications.some(e=> e.job == jobId)) {
+        return <span><CheckCircleTwoTone twoToneColor={colors.green}/> You applied succesfully</span>
+    } else {
+        return <Link to={`/job/${jobId}/apply`}>Apply using your 1job Profile</Link>
+    }
 }
 
 const JobPage = (props: Props) => {
@@ -99,7 +115,8 @@ const JobPage = (props: Props) => {
                                     Edit
                             </Link>
                             }
-                            {job?.applyOn && <a className="ant-btn ant-btn-primary" href={job?.applyOn}>Apply now</a>}
+                            {job?.applyOn && <a className="ant-btn ant-btn-primary" href={job?.applyOn}>Apply on company page</a>}
+                            {applyButton(props.currentUser, job?._id)}
                         </div>
                         <div className="html-content">
                             <div className="ql-editor no-padding" dangerouslySetInnerHTML={{ __html: job?.description }} />

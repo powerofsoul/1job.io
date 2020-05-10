@@ -31,7 +31,11 @@ export const EmployeeSchema  = new Schema({
         link: String,
         period: [Date],
         description: String
-    }]
+    }],
+    applications: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Application',
+    }],
 })
 
 EmployeeSchema.methods.toJSON = function() {
