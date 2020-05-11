@@ -57,6 +57,7 @@ export default () => {
     return <Applications header={header}>
         <Spin spinning={!job} tip="Loading...">
             <h2>{job?.title}</h2>
+            {job?.applications.length == 0 && "No applicants yet. We will notify you when something happens."}
             <Collapse
                 defaultActiveKey={['1']}
             >
