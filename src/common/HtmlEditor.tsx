@@ -26,7 +26,7 @@ const formats = [
 
 const HmlEditor = styled(Editor)`
     .ql-editor{
-        min-height:200px;
+        height:500px;
     }
 `;
 
