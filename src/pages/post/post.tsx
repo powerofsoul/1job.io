@@ -2,7 +2,7 @@ import { Form, Input, InputNumber, Button, Select, Radio, Spin, Steps, Row, Col 
 import HtmlEditor from "../../common/HtmlEditor";
 import styled from "styled-components";
 import { JobCategories, JobExeperienceLevels, JobRegions, Job, JobTypes } from "../../../models/Job";
-import { put, get } from "../../Utils";
+import { put, get, post } from "../../Utils";
 import { toast } from "react-toastify";
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router";
@@ -24,6 +24,7 @@ const Post = styled(PageCardContainer)`
         margin-bottom: ${Space.md};
     }
 `;
+export type PaymentIntentResponse = ApiResponse & { secret?: string };
 
 const PostPage = (props: CurrentUserStoreType) => {
     const { id } = useParams();
@@ -35,6 +36,18 @@ const PostPage = (props: CurrentUserStoreType) => {
 
     const [canSwitchTabs, setCanSwitchTabs] = useState(true);
 
+
+    const [paymentIntent, setPaymentIntent] = useState<PaymentIntentResponse>({
+        success: false
+    });
+
+    React.useEffect(() => {
+        if (!paymentIntent.success) {
+            post("/payment/createIntent").then((response: PaymentIntentResponse) => {
+                setPaymentIntent(response)
+            });
+        }
+    }, [])
 
     const sendRequest = (token: any) => {
         setLoading(true);
@@ -68,7 +81,7 @@ const PostPage = (props: CurrentUserStoreType) => {
         },
         {
             title: 'Pay',
-            content: <PayStep setLoading={setLoading} onFinish={(token) => sendRequest(token)} />,
+            content: <PayStep setLoading={setLoading} onFinish={(token) => sendRequest(token)} paymentIntent={paymentIntent}/>,
             disabled: canSwitchTabs
         },
         {
@@ -82,7 +95,7 @@ const PostPage = (props: CurrentUserStoreType) => {
         <Spin spinning={loading} tip="Loading...">
             <Steps className="steps" current={step} onChange={setStep}>
                 {steps.map(item => (
-                    <Step key={item.title} title={item.title} status="wait" disabled={item.disabled}/>
+                    <Step key={item.title} title={item.title} status="wait" disabled={item.disabled} />
                 ))}
             </Steps>
             <div>{steps[step].content}</div>

@@ -11,6 +11,7 @@ import Space from '../../style/Space';
 import { toast } from 'react-toastify';
 import { post } from '../../Utils';
 import { ApiResponse } from '../../../models/ApiResponse';
+import { PaymentIntentResponse } from './post';
 
 const PayStep = styled.div`
   .pay-btn {
@@ -43,7 +44,8 @@ const PayStep = styled.div`
 interface Props {
   onFinish: (token: any) => void;
   setLoading?: (value: boolean) => void;
-}
+  paymentIntent: PaymentIntentResponse;
+} 
 
 export default (props: Props) => {
   const stripe = useStripe();
@@ -59,10 +61,8 @@ export default (props: Props) => {
 
     props.setLoading(true);
     try {
-      const paymentIntent: ApiResponse = await post("/payment/createIntent", {});
-
-      if (paymentIntent.success) {
-        const result = await stripe.confirmCardPayment(paymentIntent.secret, {
+      if (props.paymentIntent.success) {
+        const result = await stripe.confirmCardPayment(props.paymentIntent.secret, {
           payment_method: {
             card: elements.getElement(CardElement),
             billing_details: {
@@ -88,7 +88,7 @@ export default (props: Props) => {
         props.setLoading(false);
       }
     } catch (err) {
-      toast("Something went wrong!", {
+      toast(err, {
         type: "error"
       })
       props.setLoading(false);
@@ -108,7 +108,7 @@ export default (props: Props) => {
             Pay $49.99 & Post
           </Button>
           <small>* Your job will be available on our website for 30 days.</small>
-          <br/>
+          <br />
           <small>** You can do unlimited free edits to your jobs.</small>
         </form>
       </Col>
