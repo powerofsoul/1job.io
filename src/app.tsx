@@ -33,6 +33,8 @@ import EditJob from './pages/post/editJob';
 import ChangeEmail from './pages/token-pages/changeEmail';
 import JobApply from './pages/jobApply';
 import Applicants from './pages/applicants';
+import privacy from './pages/privacy';
+import tos from './pages/tos';
 
 const AppBody = styled.div`
     display:flex;
@@ -67,6 +69,8 @@ const routes: Route[] = [
   { path: '/activation/:activationString', component: Activation },
   { path: '/forgotpass', component: ForgotPass },
   { path: '/change-email/:hash', component: ChangeEmail },
+  { path: '/privacy', component: privacy},
+  { path: '/tos', component: tos},
   { path: '/', component: Index,}
 ]
 

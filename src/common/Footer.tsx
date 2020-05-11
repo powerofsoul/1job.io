@@ -19,6 +19,9 @@ const FooterDetails = styled.div`
     text-align: right;
     
     .links {
+        display: flex;
+        align-items: center;
+
         ${DeviceSize.xs} {
             margin-left: unset;
         }
@@ -42,8 +45,10 @@ export default () => {
             <Col xs={24} md={12}>
                  <FooterDetails>
                      <div className="links">
-                        <a target="_blank" href="https://www.linkedin.com/company/1jobdotio"><LinkedinFilled style={{fontSize: "2rem"}} /></a>
-                        <a target="_blank" href="https://www.facebook.com/1JOB-100100101713880"><FacebookFilled style={{fontSize: "2rem"}}/></a>
+                        <Link className="link" to="/tos">Terms of Service</Link>
+                        <Link className="link" to="/privacy">Privacy Policy</Link>
+                        <a target="_blank" className="link" href="https://www.linkedin.com/company/1jobdotio"><LinkedinFilled style={{fontSize: "2rem"}} /></a>
+                        <a target="_blank" className="link" href="https://www.facebook.com/1JOB-100100101713880"><FacebookFilled style={{fontSize: "2rem"}}/></a>
                     </div>
                  </FooterDetails>
             </Col>
