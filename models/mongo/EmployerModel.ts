@@ -39,6 +39,9 @@ EmployerSchema.methods.toJSON = function() {
     delete obj.activationString;
     delete obj.forgotPasswordString;
     delete obj.newEmailString;
+    if(!obj.isAdmin){
+        delete obj.isAdmin;
+    }
     return obj;
 }
 

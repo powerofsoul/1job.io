@@ -92,7 +92,7 @@ UserSchema.pre('save', function (next) {
 
     if (!user.isModified('isAdmin')) return next();
     user.isAdmin = false;
-    
+
     next();
 })
 
@@ -102,6 +102,9 @@ UserSchema.methods.toJSON = function() {
     delete obj.activationString;
     delete obj.forgotPasswordString;
     delete obj.newEmailString;
+    if(!obj.isAdmin){
+        delete obj.isAdmin;
+    }
     return obj;
 }
 
