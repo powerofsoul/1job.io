@@ -1,7 +1,7 @@
 import { IAppState } from '../redux/configureStore';
 import { Job } from '../../models/Job';
 import { connect } from 'react-redux';
-import { Tag, Row, Col, Skeleton, Avatar } from "antd";
+import { Tag, Row, Col, Skeleton, Avatar, Button } from "antd";
 import colors from '../style/Colors';
 import styled from 'styled-components';
 import { get } from '../Utils';
@@ -118,6 +118,7 @@ const JobPage = (props: Props) => {
                                     Edit
                             </Link>
                             }
+                            {job?.company._id == props.currentUser?._id && <Link to={`/job/${job?._id}/applicants`}><Button type="primary">View Applicants</Button></Link>}
                             {job?.applyOn &&  <a className="ant-btn ant-btn-primary" href={job?.applyOn}>Apply on company page</a>}
                             {applyButton(props.currentUser, job?._id)}
                         </div>
