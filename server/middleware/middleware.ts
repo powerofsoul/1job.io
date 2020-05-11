@@ -23,3 +23,11 @@ export const isEmployer: RequestHandler = (req, res, next) => {
         res.status(401).send("Unauthenticated");
     }
 }
+
+export const isAdmin: RequestHandler = (req, res, next) => {
+    if(req.isAuthenticated() && req.user.isAdmin){
+        next();
+    } else{
+        res.status(401).send("Unauthenticated");
+    }
+}

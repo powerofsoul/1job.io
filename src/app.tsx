@@ -35,6 +35,7 @@ import JobApply from './pages/jobApply';
 import Applicants from './pages/applicants';
 import privacy from './pages/privacy';
 import tos from './pages/tos';
+import admin from './pages/admin';
 
 const AppBody = styled.div`
     display:flex;
@@ -71,6 +72,7 @@ const routes: Route[] = [
   { path: '/change-email/:hash', component: ChangeEmail },
   { path: '/privacy', component: privacy},
   { path: '/tos', component: tos},
+  { path: '/admin', component: admin},
   { path: '/', component: Index,}
 ]
 

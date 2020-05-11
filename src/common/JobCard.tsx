@@ -90,7 +90,7 @@ const Component = (props: Props) => {
     return <JobCard className={className} onClick={goToJobPage}>
         <Skeleton avatar active loading={!job}>
             {!props.hideLogo && <div>
-                <Avatar className="avatar" shape="square" src={job.company.avatar} />
+                <Avatar className="avatar" shape="square" src={job.company?.avatar} />
             </div>}
             <div className="job-card-data">
                 <div className="header">
@@ -108,7 +108,7 @@ const Component = (props: Props) => {
                     </h3>
                     <h4>
                         <FontAwesomeIcon className="icon" icon={faBuilding} />
-                        {job.company.companyName}
+                        {job.company?.companyName}
                     </h4>
                 </div>
                 <div className="footer">

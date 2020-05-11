@@ -88,7 +88,7 @@ const JobPage = (props: Props) => {
     })
 
     const header: HeaderItem[] = [
-        {name: job?.company.companyName, to: `/company/${job?.company._id}` },
+        {name: job?.company?.companyName, to: `/company/${job?.company?._id}` },
         {name: job?.title}
     ]
 
@@ -113,12 +113,12 @@ const JobPage = (props: Props) => {
                             {job?.title}
                         </h1>
                         <div className="action-buttons">
-                            {job?.company._id == props.currentUser?._id &&
+                            {job?.company?._id == props.currentUser?._id &&
                                 <Link to={`/job/${job?._id}/edit`} className="ant-btn ant-btn-primary">
                                     Edit
                             </Link>
                             }
-                            {job?.company._id == props.currentUser?._id && <Link to={`/job/${job?._id}/applicants`}><Button type="primary">View Applicants</Button></Link>}
+                            {job?.company?._id == props.currentUser?._id && <Link to={`/job/${job?._id}/applicants`}><Button type="primary">View Applicants</Button></Link>}
                             {job?.applyOn &&  <a className="ant-btn ant-btn-primary" href={job?.applyOn}>Apply on company page</a>}
                             {applyButton(props.currentUser, job?._id)}
                         </div>

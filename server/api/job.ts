@@ -4,7 +4,6 @@ import { Job } from "../../models/Job";
 import { isAuthenticated, isEmployee, isEmployer } from "../middleware/middleware";
 import { Types } from "mongoose";
 import UserModel from "../../models/mongo/UserModel";
-import { payForJob as getJobIntent } from "../services/StripeService";
 import EmployerModel from "../../models/mongo/EmployerModel";
 import { JobService } from "../services/JobService";
 import { Employee } from "../../models/Employee";
@@ -98,59 +97,12 @@ router.get('/user/:companyId', async (req, res) => {
 
 
 router.put('/', isAuthenticated, (req, res) => {
-    const job = {
-        ...req.body.job,
-        company: req.user._id,
-    }
-
+    const job = req.body.job;
+    
     if (job._id) {
-        JobModel.updateOne({ _id: job._id, company: req.user }, job)
-            .then((r) => {
-                if (r.n == 0) {
-                    res.status(401).json({
-                        success: false,
-                        message: "Unable to find requested job"
-                    });
-                } else {
-                    res.json({
-                        success: true
-                    })
-                }
-            })
-            .catch((err) => res.status(500).json(err));
+        JobService.update(job, req.user).then((r) => res.send(r)).catch((err) => res.status(500).send(err));
     } else {
-        job.postedOn = new Date();
-
-        const jobModel = new JobModel(job);
-        if (req.body.token == undefined) {
-            res.json({
-                success: false,
-                message: "Invalid token from payment"
-            })
-            return;
-        }
-        getJobIntent(req.body.token).then(async (payment) => {
-            if (payment.status == "succeeded" || payment.status == "processing") {
-                jobModel.paymentIntent = req.body.token;
-                const job = await jobModel.save();
-
-                res.json({
-                    success: true,
-                    message: "Job created",
-                    job
-                });
-            } else {
-                res.json({
-                    success: false,
-                    message: payment.last_payment_error
-                })
-            }
-        }).catch((err) => {
-            res.json({
-                success: false,
-                message: "Something went wrong"
-            });
-        });
+        JobService.create(job, req.user, req.body.token).then((r) => res.send(r)).catch((err) => res.status(500).send(err));;
     }
 })
 

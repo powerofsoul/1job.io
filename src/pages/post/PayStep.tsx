@@ -72,7 +72,7 @@ export default (props: Props) => {
         });
 
         if (result.error) {
-          toast("Something went wrong", {
+          toast(result.error.message || "Something went wrong", {
             type: "error"
           });
           props.setLoading(false);

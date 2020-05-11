@@ -32,7 +32,8 @@ export const UserSchema = new Schema({
     },
     newEmailString: {
         type: String
-    }
+    },
+    isAdmin: Boolean
 })
 
 export type UserDocument = User & Document;
@@ -83,6 +84,15 @@ UserSchema.pre('save', function (next) {
     if (user.activationString) return next();
     
     user.activationString = md5(user.email + new Date().getTime());
+    next();
+})
+
+UserSchema.pre('save', function (next) {
+    const user = this as UserDocument;
+
+    if (!user.isModified('isAdmin')) return next();
+    user.isAdmin = false;
+    
     next();
 })
 

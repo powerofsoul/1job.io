@@ -1,5 +1,3 @@
-import { EmployerDocument } from "./mongo/EmployerModel";
-
 export interface User {
     _id?: string;
     email: string;
@@ -12,6 +10,7 @@ export interface User {
     newEmailString: string;
     comparePassword?: (password: string) => Promise<boolean>
     generateForgotPass?: () => void;
+    isAdmin: boolean;
 
     __t: typeof UserType[number]
 }
