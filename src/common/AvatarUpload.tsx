@@ -13,8 +13,11 @@ interface Props {
 
 export default (props: Props) => {
     const [avatarUrl, setAvatarUrl] = useState(props.avatarUrl);
-
     const [loading, setLoading] = useState(false);
+
+    React.useEffect(()=>{
+        setAvatarUrl(props.avatarUrl);
+    }, [props.avatarUrl])
 
     const handleChange = (info) => {
         setLoading(true)

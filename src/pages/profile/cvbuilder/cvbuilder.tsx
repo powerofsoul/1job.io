@@ -4,10 +4,15 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { IAppState } from "../../../redux/configureStore";
 import { Employee } from "../../../../models/Employee";
-import { Spin, Row, Col } from "antd";
+import { Spin, Row, Col, Button } from "antd";
 import EditableInput from "./components/EditableInput";
+import EditableWorkExperience from "./components/EditableWorkExperience";
 import AvatarUpload from "../../../common/AvatarUpload";
 import colors from "../../../style/Colors";
+import Space from "../../../style/Space";
+import moment from "moment";
+import EditableEducation from "./components/EditableEducation";
+import EditablePersonalProjects from "./components/EditablePersonalProjects";
 
 const CvBuilder = styled.div`
     font-family: 'Raleway', sans-serif;
@@ -35,7 +40,7 @@ const CvBuilderHeader = styled.div`
 `;
 
 const CvBuilderBody = styled.div`
-
+    margin-top: ${Space.md};
 `;
 
 interface Props {
@@ -50,7 +55,7 @@ const Component = (props: Props) => {
         setUser(props.user);
     }, [props.user]);
 
-    return <PageCardContainer>
+    return <PageCardContainer lg={18}>
         <Spin spinning={props.loading} tip="Loading...">
             <CvBuilder>
                 <CvBuilderHeader>
@@ -100,7 +105,104 @@ const Component = (props: Props) => {
                     </Row>
                 </CvBuilderHeader>
                 <CvBuilderBody>
-                    
+                    <Row gutter={[10, 10]}>
+                        <Col xs={16}>
+                            <h2>Work History</h2>
+                            {user?.workExperience.map((we, i) => <EditableWorkExperience workExperience={we} onChange={(we) => setUser({
+                                ...user,
+                                workExperience: [
+                                    ...user.workExperience.slice(0, i),
+                                    we,
+                                    ...user.workExperience.slice(i + 1)
+                                ]
+                            })}
+                            onDelete={()=> setUser({
+                                ...user,
+                                workExperience: [
+                                    ...user.workExperience.slice(0, i),
+                                    ...user.workExperience.slice(i + 1)
+                                ]
+                            })} />)}
+                            <Button type="dashed" onClick={() => {
+                                setUser({
+                                    ...user,
+                                    workExperience: [
+                                        ...user.workExperience,
+                                        {
+                                            companyName: "",
+                                            title: "",
+                                            description: "",
+                                            location: "",
+                                            period: [new Date().toISOString(), new Date().toISOString()]
+                                        }
+                                    ]
+                                })
+                            }}>+ Add Work Experience</Button>
+                        </Col>
+                        <Col xs={8}>
+                            <h2>Education</h2>
+                            {user?.education.map((ed, i) => <EditableEducation education={ed} onChange={(ed) => setUser({
+                                ...user,
+                                education: [
+                                    ...user.education.slice(0, i),
+                                    ed,
+                                    ...user.education.slice(i + 1)
+                                ]
+                            })}
+                            onDelete={()=> setUser({
+                                ...user,
+                                education: [
+                                    ...user.education.slice(0, i),
+                                    ...user.education.slice(i + 1)
+                                ]
+                            })} />)}
+                            <Button type="dashed" onClick={() => {
+                                setUser({
+                                    ...user,
+                                    education: [
+                                        ...user.education,
+                                        {
+                                            courses: [],
+                                            institution: "",
+                                            study: "",
+                                            period: [new Date().toISOString(), new Date().toISOString()]
+                                        }
+                                    ]
+                                })
+                            }}>+ Add Education</Button>
+                            <h2>Personal Projects</h2>
+
+                            {user?.projects.map((p, i) => <EditablePersonalProjects workProject={p} onChange={(p) => setUser({
+                                ...user,
+                                projects: [
+                                    ...user.projects.slice(0, i),
+                                    p,
+                                    ...user.projects.slice(i + 1)
+                                ]
+                            })}
+                            onDelete={()=> setUser({
+                                ...user,
+                                projects: [
+                                    ...user.projects.slice(0, i),
+                                    ...user.projects.slice(i + 1)
+                                ]
+                            })} />)}
+                            <Button type="dashed" onClick={() => {
+                                setUser({
+                                    ...user,
+                                    projects: [
+                                        ...user.projects,
+                                        {
+                                           description:"",
+                                           name:"",
+                                           link: "",
+                                           period: [new Date().toISOString(), new Date().toISOString()]
+                                        }
+                                    ]
+                                })
+                            }}>+ Add Education</Button>
+                        </Col>
+                    </Row>
                 </CvBuilderBody>
             </CvBuilder>
         </Spin>
