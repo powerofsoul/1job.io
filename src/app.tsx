@@ -36,6 +36,7 @@ import Applicants from './pages/applicants';
 import privacy from './pages/privacy';
 import tos from './pages/tos';
 import admin from './pages/admin';
+import CvBuilder from './pages/profile/cvbuilder/cvbuilder';
 
 const AppBody = styled.div`
     display:flex;
@@ -56,6 +57,7 @@ interface Route {
 }
 
 const routes: Route[] = [
+  { path: '/profile/cvbuilder', component: CvBuilder, logged: true },
   { path: '/profile', component: Profile, logged: true },
   { path: '/job/:id/edit', component: EditJob, userType: ["Employer"] },
   { path: '/job/:id/apply', component: JobApply, userType: ["Employee"] },
