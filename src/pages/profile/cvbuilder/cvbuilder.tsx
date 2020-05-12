@@ -48,6 +48,113 @@ interface Props {
     loading: boolean;
 }
 
+const WorkExperienceCol = (user: Employee, setUser: (user: Employee) => void) => {
+    return <>
+        <h2>Work History</h2>
+        {user?.workExperience.map((we, i) => <EditableWorkExperience workExperience={we} onChange={(we) => setUser({
+            ...user,
+            workExperience: [
+                ...user.workExperience.slice(0, i),
+                we,
+                ...user.workExperience.slice(i + 1)
+            ]
+        })}
+            onDelete={() => setUser({
+                ...user,
+                workExperience: [
+                    ...user.workExperience.slice(0, i),
+                    ...user.workExperience.slice(i + 1)
+                ]
+            })} />)}
+        <Button type="dashed" onClick={() => {
+            setUser({
+                ...user,
+                workExperience: [
+                    ...user.workExperience,
+                    {
+                        companyName: "",
+                        title: "",
+                        description: "",
+                        location: "",
+                        period: [new Date().toISOString(), new Date().toISOString()]
+                    }
+                ]
+            })
+        }}>+ Add Work Experience</Button>
+    </>
+}
+
+const EducationCol = (user, setUser) => {
+    return <>
+        <h2>Education</h2>
+        {user?.education.map((ed, i) => <EditableEducation education={ed} onChange={(ed) => setUser({
+            ...user,
+            education: [
+                ...user.education.slice(0, i),
+                ed,
+                ...user.education.slice(i + 1)
+            ]
+        })}
+            onDelete={() => setUser({
+                ...user,
+                education: [
+                    ...user.education.slice(0, i),
+                    ...user.education.slice(i + 1)
+                ]
+            })} />)}
+        <Button type="dashed" onClick={() => {
+            setUser({
+                ...user,
+                education: [
+                    ...user.education,
+                    {
+                        courses: [],
+                        institution: "",
+                        study: "",
+                        period: [new Date().toISOString(), new Date().toISOString()]
+                    }
+                ]
+            })
+        }}>+ Add Education</Button>
+    </>
+}
+
+const ProjectCol = (user, setUser) => {
+    return <>
+        <h2>Personal Projects</h2>
+
+        {user?.projects.map((p, i) => <EditablePersonalProjects workProject={p} onChange={(p) => setUser({
+            ...user,
+            projects: [
+                ...user.projects.slice(0, i),
+                p,
+                ...user.projects.slice(i + 1)
+            ]
+        })}
+            onDelete={() => setUser({
+                ...user,
+                projects: [
+                    ...user.projects.slice(0, i),
+                    ...user.projects.slice(i + 1)
+                ]
+            })} />)}
+        <Button type="dashed" onClick={() => {
+            setUser({
+                ...user,
+                projects: [
+                    ...user.projects,
+                    {
+                        description: "",
+                        name: "",
+                        link: "",
+                        period: [new Date().toISOString(), new Date().toISOString()]
+                    }
+                ]
+            })
+        }}>+ Add Projects</Button>
+    </>
+}
+
 const Component = (props: Props) => {
     const [user, setUser] = useState<Employee>();
 
@@ -107,100 +214,11 @@ const Component = (props: Props) => {
                 <CvBuilderBody>
                     <Row gutter={[10, 10]}>
                         <Col xs={16}>
-                            <h2>Work History</h2>
-                            {user?.workExperience.map((we, i) => <EditableWorkExperience workExperience={we} onChange={(we) => setUser({
-                                ...user,
-                                workExperience: [
-                                    ...user.workExperience.slice(0, i),
-                                    we,
-                                    ...user.workExperience.slice(i + 1)
-                                ]
-                            })}
-                            onDelete={()=> setUser({
-                                ...user,
-                                workExperience: [
-                                    ...user.workExperience.slice(0, i),
-                                    ...user.workExperience.slice(i + 1)
-                                ]
-                            })} />)}
-                            <Button type="dashed" onClick={() => {
-                                setUser({
-                                    ...user,
-                                    workExperience: [
-                                        ...user.workExperience,
-                                        {
-                                            companyName: "",
-                                            title: "",
-                                            description: "",
-                                            location: "",
-                                            period: [new Date().toISOString(), new Date().toISOString()]
-                                        }
-                                    ]
-                                })
-                            }}>+ Add Work Experience</Button>
+                            {WorkExperienceCol(user, setUser)}
                         </Col>
                         <Col xs={8}>
-                            <h2>Education</h2>
-                            {user?.education.map((ed, i) => <EditableEducation education={ed} onChange={(ed) => setUser({
-                                ...user,
-                                education: [
-                                    ...user.education.slice(0, i),
-                                    ed,
-                                    ...user.education.slice(i + 1)
-                                ]
-                            })}
-                            onDelete={()=> setUser({
-                                ...user,
-                                education: [
-                                    ...user.education.slice(0, i),
-                                    ...user.education.slice(i + 1)
-                                ]
-                            })} />)}
-                            <Button type="dashed" onClick={() => {
-                                setUser({
-                                    ...user,
-                                    education: [
-                                        ...user.education,
-                                        {
-                                            courses: [],
-                                            institution: "",
-                                            study: "",
-                                            period: [new Date().toISOString(), new Date().toISOString()]
-                                        }
-                                    ]
-                                })
-                            }}>+ Add Education</Button>
-                            <h2>Personal Projects</h2>
-
-                            {user?.projects.map((p, i) => <EditablePersonalProjects workProject={p} onChange={(p) => setUser({
-                                ...user,
-                                projects: [
-                                    ...user.projects.slice(0, i),
-                                    p,
-                                    ...user.projects.slice(i + 1)
-                                ]
-                            })}
-                            onDelete={()=> setUser({
-                                ...user,
-                                projects: [
-                                    ...user.projects.slice(0, i),
-                                    ...user.projects.slice(i + 1)
-                                ]
-                            })} />)}
-                            <Button type="dashed" onClick={() => {
-                                setUser({
-                                    ...user,
-                                    projects: [
-                                        ...user.projects,
-                                        {
-                                           description:"",
-                                           name:"",
-                                           link: "",
-                                           period: [new Date().toISOString(), new Date().toISOString()]
-                                        }
-                                    ]
-                                })
-                            }}>+ Add Education</Button>
+                            {EducationCol(user, setUser)}
+                            {ProjectCol(user, setUser)}
                         </Col>
                     </Row>
                 </CvBuilderBody>
