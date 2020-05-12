@@ -125,6 +125,10 @@ export default () => {
                             </TabPane>
                             <TabPane tab="Other Info" key="4">
                                 <div className="tab-element">
+                                    <h3>Location</h3>
+                                    {employee.location}
+                                </div>
+                                <div className="tab-element">
                                     <h3>Motto</h3>
                                     {employee.motto}
                                 </div>

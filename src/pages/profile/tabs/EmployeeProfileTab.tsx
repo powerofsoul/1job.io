@@ -47,6 +47,9 @@ const EmployeeProfileTab = (props: ProfileTabProps) => {
             <Form.Item name={'phone'} label="Phone">
                 <Input />
             </Form.Item>
+            <Form.Item name={'location'} label="Location">
+                <Input />
+            </Form.Item>
             <Form.Item name={'motto'} label="Motto">
                 <Input placeholder="Eg: There’s magic on the other side of fear." />
             </Form.Item>

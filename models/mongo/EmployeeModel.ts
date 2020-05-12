@@ -10,6 +10,7 @@ export const EmployeeSchema  = new Schema({
     lastName: String,
     title: String,
     phone: String,
+    location: String,
     motto: String,
     workExperience: [{
         title: String,

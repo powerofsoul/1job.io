@@ -6,6 +6,7 @@ export interface Employee extends User {
     firstName: string;
     lastName: string;
     phone: string,
+    location: string,
     title: string;
     motto: String,
     workExperience: WorkExperience[],
