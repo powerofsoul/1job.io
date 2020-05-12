@@ -9,15 +9,20 @@ interface Props {
     onChange: (value) => void
     disabled?: boolean
     isNumber?: boolean,
-    minHeight?: string;
+    style?: "nostyle" | "textarea"
 }
 
 const EditableInput = styled.span`
-    input {
+    .value {
+        white-space: break-spaces;
+    }
+    .ant-input {
         box-shadow : none;  
         outline: none;
         border: 0;
-        display: inline
+        display: inline;
+        background-color: transparent;
+        padding: 0;
     }
 
     .placeholder {
@@ -27,15 +32,15 @@ const EditableInput = styled.span`
 
 export default (props: Props) => {
     const [isEditing, setIsEditing] = useState(false);
-    const CurrentInput = props.isNumber ? InputNumber : Input.TextArea;
+    const CurrentInput = props.isNumber ? InputNumber : (props.style == "nostyle" ? Input : Input.TextArea);
 
     return <EditableInput>
-        {!isEditing && <span onClick={() => !props.disabled && setIsEditing(true)}>
+        {!isEditing && <span className="value" onClick={() => !props.disabled && setIsEditing(true)}>
             {props.value
                 ? props.value :
-                <span className="placeholder">{props.placeHolder}</span>}
+                props.placeHolder}
         </span>}
-        {isEditing && <CurrentInput style={{minHeight: props.minHeight}} autoFocus placeholder={props.placeHolder} defaultValue={props.value as any} onBlur={(e) => {
+        {isEditing && <CurrentInput autoSize autoFocus placeholder={props.placeHolder} defaultValue={props.value as any} onBlur={(e) => {
             props.onChange(e.target.value);
             setIsEditing(false);
         }} />}
