@@ -12,21 +12,24 @@ import { faTag, faLevelUpAlt } from '@fortawesome/free-solid-svg-icons'
 
 const JobCard = styled.div`
     min-height: 5rem;
-    padding: 1rem;
+
     display: flex;
     margin-bottom: 1rem;
-    cursor: pointer;
 
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
+    &.default {
+        cursor: pointer;
+        padding: 1rem;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
 
-    &:hover {
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    }
+        &:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
 
-    .header, .footer {
-        align-items:center;
-        width: 100%;
+        .header, .footer {
+            align-items:center;
+            width: 100%;
+        }
     }
 
     .footer {
@@ -76,7 +79,9 @@ interface Props {
     job: Job,
     className?: string;
     hideLogo?: boolean;
+    hideCompany?:boolean;
     to?: string;
+    style?: "compact" | "default"
 }
 
 const Component = (props: Props) => {
@@ -87,7 +92,7 @@ const Component = (props: Props) => {
         history.push(props.to || `/job/${job._id}`);
     }
 
-    return <JobCard className={className} onClick={goToJobPage}>
+    return <JobCard className={`${className} ${props.style == "default" ? "default" : ""}`} onClick={goToJobPage}>
         <Skeleton avatar active loading={!job}>
             {!props.hideLogo && <div>
                 <Avatar className="avatar" shape="square" src={job.company?.avatar} />
@@ -106,10 +111,10 @@ const Component = (props: Props) => {
                         <FontAwesomeIcon className="icon" icon={faUser} />
                         {job.title}
                     </h3>
-                    <h4>
+                    {!props.hideCompany && <h4>
                         <FontAwesomeIcon className="icon" icon={faBuilding} />
                         {job.company?.companyName}
-                    </h4>
+                    </h4>}
                 </div>
                 <div className="footer">
                     <div className="tags">
@@ -135,7 +140,9 @@ const Component = (props: Props) => {
 }
 
 Component.defaultProps = {
-    hideLogo: false
+    hideLogo: false,
+    hideCompany: false,
+    style: "default"
 } as Partial<Props>
 
 export default Component;

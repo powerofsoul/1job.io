@@ -1,22 +1,20 @@
-import { IAppState } from '../redux/configureStore';
-import { Job } from '../../models/Job';
-import { connect } from 'react-redux';
-import { Tag, Row, Col, Skeleton, Avatar, Button } from "antd";
-import colors from '../style/Colors';
-import styled from 'styled-components';
-import { get } from '../Utils';
-import { useState, useEffect } from 'react';
-import moment from 'moment';
-import React from "react";
-import { useParams, Link } from "react-router-dom";
-import { useHistory } from 'react-router';
-import CompanyCard from '../common/CompanyCard';
-import { User } from '../../models/User';
-import { HoverableCard } from "../style/CommonStyles";
-import Space from '../style/Space';
-import { Employee } from '../../models/Employee';
 import { CheckCircleTwoTone } from '@ant-design/icons';
+import { Button, Col, Row, Skeleton } from "antd";
+import React, { useEffect, useState } from "react";
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
+import { Link, useParams } from "react-router-dom";
+import styled from 'styled-components';
+import { Employee } from '../../models/Employee';
+import { Job } from '../../models/Job';
+import { User } from '../../models/User';
+import CompanyCard from '../common/CompanyCard';
 import PageCardContainer, { HeaderItem } from '../common/PageCardContainer';
+import { IAppState } from '../redux/configureStore';
+import colors from '../style/Colors';
+import Space from '../style/Space';
+import { get } from '../Utils';
+import JobCard from "../common/JobCard";
 
 const JobDetails = styled(PageCardContainer)`
     .JobDetailsHeader {
@@ -106,12 +104,7 @@ const JobPage = (props: Props) => {
             <Col lg={18}>
                 <Skeleton paragraph={true} active loading={loading}>
                     <div className="JobDetailsBody">
-                        <div>
-                            Posted {moment(job?.postedOn).fromNow()}
-                        </div>
-                        <h1>
-                            {job?.title}
-                        </h1>
+                        <JobCard job={job} hideLogo hideCompany style="compact"/>
                         <div className="action-buttons">
                             {job?.company?._id == props.currentUser?._id &&
                                 <Link to={`/job/${job?._id}/edit`} className="ant-btn ant-btn-primary">
@@ -122,7 +115,9 @@ const JobPage = (props: Props) => {
                             {job?.applyOn &&  <a className="ant-btn ant-btn-primary" href={job?.applyOn}>Apply on company page</a>}
                             {applyButton(props.currentUser, job?._id)}
                         </div>
+                      
                         <div className="html-content">
+                            <h3>Job Description:</h3>
                             <div className="ql-editor no-padding" dangerouslySetInnerHTML={{ __html: job?.description }} />
                         </div>
                     </div>
