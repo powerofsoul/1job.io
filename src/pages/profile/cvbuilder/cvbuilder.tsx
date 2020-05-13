@@ -13,6 +13,7 @@ import Space from "../../../style/Space";
 import moment from "moment";
 import EditableEducation from "./components/EditableEducation";
 import EditablePersonalProjects from "./components/EditablePersonalProjects";
+import EditableStringArray from "./components/EditableStringArray";
 
 const CvBuilder = styled.div`
     font-family: 'Raleway', sans-serif;
@@ -154,6 +155,20 @@ const ProjectCol = (user, setUser) => {
         }}>+ Add Projects</Button>
     </>
 }
+
+const SkillsCol = (user: Employee, setUser) => <EditableStringArray array={user.skills} onChange={(skills)=> {
+    setUser({
+        ...user, 
+        skills
+    })  
+}}/>
+
+const InterestsCol = (user: Employee, setUser) => <EditableStringArray array={user.interests} onChange={(interests)=> {
+    setUser({
+        ...user, 
+        interests
+    })  
+}}/>
 
 const Component = (props: Props) => {
     const [user, setUser] = useState<Employee>();
