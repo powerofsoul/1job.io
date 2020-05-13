@@ -35,7 +35,9 @@ import JobApply from './pages/jobApply';
 import Applicants from './pages/applicants';
 import privacy from './pages/privacy';
 import tos from './pages/tos';
-import admin from './pages/admin';
+import admin from './pages/admin/admin';
+import Blog from './pages/blog';
+import BlogPost from './pages/blogpost';
 
 const AppBody = styled.div`
     display:flex;
@@ -63,6 +65,8 @@ const routes: Route[] = [
   { path: '/post/:id?', component: Post, logged: true, userType: ["Employer"] },
   { path: '/job/:id', component: Job},
   { path: '/company/:id', component: Company },
+  { path: '/blog/:title', component: BlogPost },
+  { path: '/blog', component: Blog },
 
   { path: '/login', component: Login},
   { path: '/register', component: Register },
