@@ -5,6 +5,14 @@ import { get } from "../Utils";
 import { BlogPost } from "../../models/BlogPost";
 import { Spin } from "antd";
 import moment from "moment";
+import styled from "styled-components";
+
+const BlogPostStyle = styled(PageCardContainer)`
+    .title {
+        margin-bottom: 5px;
+    }
+
+`;
 
 export default () => {
     const {title} = useParams();
@@ -20,11 +28,11 @@ export default () => {
     }, []);
 
 
-    return <PageCardContainer>
+    return <BlogPostStyle>
         <Spin spinning={!blogPost}>
-            <h2>{blogPost?.title}</h2>
+            <h2 className="title">{blogPost?.title}</h2>
             <small>{blogPost && moment(blogPost.postedOn).fromNow() }</small>
             <div className="ql-editor" dangerouslySetInnerHTML={{__html: blogPost?.content}}/>
         </Spin>
-</PageCardContainer>
+</BlogPostStyle>
 }

@@ -17,6 +17,14 @@ const Blog = styled(PageCardContainer)`
         margin-top: ${Space.sm};
         margin-bottom: ${Space.sm};
     }
+
+    .title {
+        margin-bottom: 0px;
+    }
+
+    .posted-time {
+        margin-bottom: ${Space.sm};
+    }
 `;
 
 export default () => {
@@ -39,8 +47,8 @@ export default () => {
         <Spin spinning={loading}>
             <h2>1 Job Blog</h2>
             {blogs?.map((b, i) => <div key={b.title} onClick={()=>goToBlog(b.title)} className="blog-card">
-                <h3>{b.title}</h3>
-                <div>
+                <h3 className="title">{b.title}</h3>
+                <div className="posted-time">
                     <small>{moment(b.postedOn).fromNow()}</small>
                 </div>
                 {b.preview}
