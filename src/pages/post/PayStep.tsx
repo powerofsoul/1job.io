@@ -12,6 +12,10 @@ import { toast } from 'react-toastify';
 import { post } from '../../Utils';
 import { ApiResponse } from '../../../models/ApiResponse';
 import { PaymentIntentResponse } from './post';
+import { LockFilled } from '@ant-design/icons';
+import colors from '../../style/Colors';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 const PayStep = styled.div`
   .pay-btn {
@@ -107,6 +111,8 @@ export default (props: Props) => {
           <Button htmlType="submit" style={{ width: "100%" }} className="pay-btn" type="primary" disabled={!stripe}>
             Pay $49.99 & Post
           </Button>
+          <small><FontAwesomeIcon icon={faLock} style={{color: colors.green}} /> SSL Secure Payment</small>
+          <br />
           <small>* Your job will be available on our website for 30 days.</small>
           <br />
           <small>** You can do unlimited free edits to your jobs.</small>
