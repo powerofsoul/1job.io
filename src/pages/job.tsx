@@ -41,6 +41,7 @@ const JobDetails = styled(PageCardContainer)`
     .action-buttons {
         .ant-btn {
             margin-right: ${Space.md};
+            margin-top: ${Space.sm};
         }
     }
 `;
