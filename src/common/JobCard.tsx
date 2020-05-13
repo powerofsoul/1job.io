@@ -89,7 +89,7 @@ const Component = (props: Props) => {
     const history = useHistory();
 
     const goToJobPage = () => {
-        history.push(props.to || `/job/${job._id}`);
+        history.push(props.to || `/job/${job._id}/${job.title.replace(/\s+/g, "-")}`);
     }
 
     return <JobCard className={`${className} ${props.style == "default" ? "default" : ""}`} onClick={goToJobPage}>
