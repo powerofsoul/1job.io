@@ -16,6 +16,7 @@ const Blog = styled(PageCardContainer)`
 
         margin-top: ${Space.sm};
         margin-bottom: ${Space.sm};
+        cursor: pointer;
     }
 
     .title {
