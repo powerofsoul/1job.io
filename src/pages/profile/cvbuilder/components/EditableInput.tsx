@@ -20,9 +20,10 @@ const EditableInput = styled.span`
         box-shadow : none;  
         outline: none;
         border: 0;
-        display: inline;
+   
         background-color: transparent;
         padding: 0;
+        width: 80%;
     }
 
     .placeholder {
