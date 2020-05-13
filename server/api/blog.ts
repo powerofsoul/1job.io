@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { isAdmin } from "../middleware/middleware";
-import BlogPost from "../../models/mongo/BlogPost";
+import BlogPost from "../../models/mongo/BlogPostModel";
+import { BlogService } from "../services/BlogService";
 const router = Router();
 
 router.get("/", (req, res) => {
@@ -21,22 +22,14 @@ router.get("/:title", (req, res) => {
     })
 })
 
-router.put("/", isAdmin, (req, res) => {
-    BlogPost.create({
-        ...req.body.blogPost, 
-        author: req.user,
-        postedOn: new Date()
-    }).then(() => {
-        res.json({
-            success: true,
-            message: "Blog post posted"
-        })
-    }).catch(()=> {
-        res.json({
-            success: false,
-            message: "Something went wrong"
-        })
-    })
+router.put("/", isAdmin, async (req, res) => {
+    if(req.body.blogPost._id) {
+        const response = await BlogService.update(req.body.blogPost._id, req.body.blogPost);
+        res.json(response);
+    } else {
+        const response = await BlogService.create(req.body.blogPost, req.user);
+        res.json(response);
+    }
 })
 
 export default router;
