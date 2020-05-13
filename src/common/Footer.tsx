@@ -45,6 +45,7 @@ export default () => {
             <Col xs={24} md={12}>
                  <FooterDetails>
                      <div className="links">
+                        <Link className="link" to="/blog">Blog</Link>
                         <Link className="link" to="/tos">Terms of Service</Link>
                         <Link className="link" to="/privacy">Privacy Policy</Link>
                         <a target="_blank" className="link" href="https://www.linkedin.com/company/1jobdotio"><LinkedinFilled style={{fontSize: "2rem"}} /></a>
