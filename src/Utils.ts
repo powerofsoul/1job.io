@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const baseUrl = window.location.host == "localhost"
+export const API_END_POINT = window.location.host == "localhost"
     || window.location.host == "localhost:8080"
     || window.location.host == "127.0.0.1"
     || window.location.host.includes("webpack://")
     ? "http://localhost:3000" : `https://api.${window.location.host}`;
 
-export const apiUrl = (path) => `${baseUrl}${path}`;
+export const apiUrl = (path) => `${API_END_POINT}${path}`;
 
 export function get<Response>(path: string): Promise<Response> {
     return axios.get(apiUrl(path), { withCredentials: true }).then(r => r.data as Response);

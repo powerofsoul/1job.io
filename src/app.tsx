@@ -39,6 +39,7 @@ import admin from './pages/admin/admin';
 import Blog from './pages/blog';
 import BlogPost from './pages/blogpost';
 import CvBuilder from './pages/profile/cvbuilder/cvbuilder';
+import Interview from './pages/interview';
 
 const AppBody = styled.div`
     display:flex;
@@ -69,6 +70,7 @@ const routes: Route[] = [
   { path: '/company/:id', component: Company },
   { path: '/blog/:title', component: BlogPost },
   { path: '/blog', component: Blog },
+  { path: '/interview', component: Interview},
 
   { path: '/login', component: Login},
   { path: '/register', component: Register },

@@ -7,10 +7,12 @@ import config from "./config";
 import { connect } from "mongoose";
 import UserModel from "../models/mongo/UserModel";
 import { User } from "../models/User";
+import createSocketRoutes from "./sockets/createSocketRoutes";
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session')
 const fileUpload = require("express-fileupload");
-var cors = require('cors');
+const socketIo = require("socket.io");
+const cors = require('cors');
 
 passport.serializeUser(function (user: User, done) {
     done(null, user._id);
@@ -42,6 +44,7 @@ connect(
 );
 
 const server = express();
+
 server.use(cors({
     origin: config.cors,
     credentials: true
@@ -64,7 +67,12 @@ server.use(fileUpload({
 
 server.get("/", (req, res) => res.send("Alive"));
 server.use('/', router);
-server.listen(config.port, (err?: any) => {
+
+const app = server.listen(config.port, (err?: any) => {
     if (err) throw err;
     console.log(`> Ready on localhost:${config.port} - env ${config.env}`);
 });
+
+const io = socketIo();
+io.listen(app);
+createSocketRoutes(io);
