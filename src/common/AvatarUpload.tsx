@@ -7,6 +7,7 @@ import { apiUrl, post, uploadFile } from "../Utils";
 
 interface Props {
     value?: string;
+    className?: string;
     onChange?: (url: string) => void;
 }
 
@@ -14,9 +15,13 @@ export default (props: Props) => {
     const [avatarUrl, setAvatarUrl] = useState(props.value);
     const [loading, setLoading] = useState(false);
 
+    React.useEffect(()=>{
+        setAvatarUrl(props.value);
+    }, [props.value])
+
     const handleChange = (info) => {
-        setLoading(true)    
-           
+        setLoading(true)
+
         if (info.file.status === 'done') {
             setAvatarUrl(info.file.response.url);
             setLoading(false);
@@ -58,7 +63,7 @@ export default (props: Props) => {
     return <Upload
         name="avatar"
         listType="picture-card"
-        className="avatar-uploader"
+        className={`avatar-uploader ${props.className}`}
         showUploadList={false}
         action={apiUrl("/user/uploadImage")}
         withCredentials={true}

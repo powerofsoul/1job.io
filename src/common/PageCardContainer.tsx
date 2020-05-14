@@ -51,6 +51,7 @@ export interface HeaderItem {
 
 interface Props {
     children: any;
+    xs?: number;
     lg?: number
     className?: string;
     header?: HeaderItem[]
@@ -58,7 +59,7 @@ interface Props {
 
 export default (props: Props) => {
     return <PageCardContainer justify="center" className={props.className}>
-        <Col className="card" xs={22} lg={props.lg || 12}>
+        <Col className="card" xs={props.xs || 22} lg={props.lg || 12}>
             <div className="shiny-top-border" />
             {props.header && <Breadcrumb className="breadcrumb">
                 <Breadcrumb.Item>
