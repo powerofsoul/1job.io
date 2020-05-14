@@ -25,7 +25,7 @@ if (config.env == "development") {
         });
 
         const params = {
-            Bucket: config.uplods_bucket,
+            Bucket: config.uploads_bucket,
             Key: path.join("uploads", name),
             Body: file
         };

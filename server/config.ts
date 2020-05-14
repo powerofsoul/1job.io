@@ -14,5 +14,5 @@ export default {
     hostname: process.env.HOST || "http://localhost:8080",
     chargeAmount: parseInt(process.env.PRICE) || 4999,
     stripe_secret: process.env.STRIPE_SECRET,
-    uplods_bucket: process.env.UPLOADS_BUCKET || "1job-uploads"
+    uploads_bucket: process.env.UPLOADS_BUCKET || "1job-uploads"
 }
