@@ -77,7 +77,7 @@ export default (props: Props) => {
                     <Radio value={undefined}>Don't Specify</Radio>
                 </Radio.Group>
             </Form.Item>
-            <Form.Item name={'customLogo'} label="CustomLogo">
+            <Form.Item name={'customLogo'} label="Custom Logo">
                 <AvatarUpload />
             </Form.Item>
             <Form.Item name={'description'} label="Job Description" rules={[{ required: true }]}>
