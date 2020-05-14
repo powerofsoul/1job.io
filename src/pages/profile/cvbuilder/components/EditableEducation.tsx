@@ -8,6 +8,7 @@ import { MinusCircleTwoTone, MinusCircleFilled } from "@ant-design/icons";
 import colors from "../../../../style/Colors";
 import { Tag, Button } from "antd";
 import BaseEditableContent from "./BaseEditableContent";
+import EditableStringArray from "./EditableStringArray";
 
 interface Props {
     education: Education;
@@ -48,46 +49,12 @@ export default (props: Props) => {
             })} />
         </div>
         <div>
-            {props.education?.courses.map((course, i) => <Tag color="green" >
-                <h3>
-                    <EditableInput key={course} value={course}
-                        placeHolder="Course"
-                        style="nostyle"
-                        onChange={
-                            (value) => props.onChange({
-                                ...props.education,
-                                courses: [
-                                    ...props.education.courses.slice(0, i),
-                                    value,
-                                    ...props.education.courses.slice(i + 1),
-                                ]
-                            })
-                        } />
-
-                    <MinusCircleTwoTone className="delete-course-icon" twoToneColor={colors.red} onClick={
-                        () => props.onChange({
-                            ...props.education,
-                            courses: [
-                                ...props.education.courses.slice(0, i),
-                                ...props.education.courses.slice(i + 1),
-                            ]
-                        })
-                    } />
-                </h3>
-            </Tag>)}
-            <div>
-                <Button type="dashed" className="add-course" onClick={
-                    () => props.onChange({
-                        ...props.education,
-                        courses: [
-                            ...props.education.courses,
-                            "Course"
-                        ]
-                    })
-                }>
-                    + Add course
-                </Button>
-            </div>
+            <EditableStringArray name="course" array={props.education?.courses} onChange={(courses) => {
+                props.onChange({
+                    ...props.education,
+                    courses
+                })
+            }}/>
         </div>
     </EditableWorkExperience>
 }
