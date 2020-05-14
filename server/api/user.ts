@@ -9,6 +9,7 @@ import FileStore from "../services/FileService";
 import MailService from "../services/MailService";
 import { UserService } from "../services/UserService";
 import JobModel from "../../models/mongo/JobModel";
+import { v4 as uuidv4 } from 'uuid';
 const path = require('path');
 
 const router = Router();
@@ -226,14 +227,10 @@ router.post("/changeEmail", isAuthenticated, (req, res) => {
     })
 })
 
-router.post("/uploadAvatar", isAuthenticated, (req, res) => {
-    const avatarName = `avatar/${req.user._id}${path.extname(req.files.avatar.name)}`;
+router.post("/uploadImage", isAuthenticated, (req, res) => {
+    const avatarName = `${uuidv4()}${path.extname(req.files.avatar.name)}`;
     FileStore.upload(req.files.avatar.data, avatarName).then(async (url) => {
         const urlWithtime = `${url}?date=${new Date().getTime()}`;
-
-        await UserModel.update(req.user, {
-            avatar: urlWithtime
-        })
 
         res.json({
             success: true,

@@ -16,6 +16,7 @@ export interface Job {
     visa: boolean | undefined,
     questions: string[],
     applications?: Application[]
+    customLogo?: string;
 }
 
 export const JobCategories = [

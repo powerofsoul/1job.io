@@ -4,6 +4,7 @@ import { JobTypes, JobExeperienceLevels, JobCategories, JobRegions } from "../..
 import { FormInstance } from "antd/lib/form";
 import HtmlEditor from "../../common/HtmlEditor";
 import ArrayFormItem from "../profile/tabs/fields/ArrayFormItem";
+import AvatarUpload from "../../common/AvatarUpload";
 
 const layout = {
     labelCol: { span: 4 },
@@ -75,6 +76,9 @@ export default (props: Props) => {
                     <Radio value={false}>No</Radio>
                     <Radio value={undefined}>Don't Specify</Radio>
                 </Radio.Group>
+            </Form.Item>
+            <Form.Item name={'customLogo'} label="CustomLogo">
+                <AvatarUpload />
             </Form.Item>
             <Form.Item name={'description'} label="Job Description" rules={[{ required: true }]}>
                 <HtmlEditor />

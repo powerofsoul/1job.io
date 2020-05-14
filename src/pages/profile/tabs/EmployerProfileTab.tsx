@@ -11,8 +11,6 @@ import { ProfileTabProps } from "../profile"
 import { Employer } from "../../../../models/Employer"
 
 const EmployerProfileTab = (props: ProfileTabProps & {user?: Employer}) => {
-    const [companyDescription, setCompanyDescription] = useState(props.user?.companyDescription);
-
     return <Spin spinning={props.loading}>
         <Form initialValues={props.user} {...props.layout} name="nest-messages" onFinish={props.onFinish} validateMessages={ValidateMessage}>
             <Form.Item name={'companyName'} label="Company Name" rules={[{ required: true }]}>
@@ -25,12 +23,10 @@ const EmployerProfileTab = (props: ProfileTabProps & {user?: Employer}) => {
                 <Input />
             </Form.Item>
             <Form.Item name={'avatar'} label="Logo">
-                <Form.Item name="dragger" valuePropName="fileList" noStyle>
-                    <AvatarUpload avatarUrl={props.user?.avatar} afterUpload={props.refreshCurrentUser} />
-                </Form.Item>
+                <AvatarUpload />
             </Form.Item>
-            <Form.Item label="Company Description">
-                <HtmlEditor value={companyDescription} onChange={setCompanyDescription} />
+            <Form.Item  name={'companyDescription'} label="Company Description">
+                <HtmlEditor />
             </Form.Item>
             <Form.Item wrapperCol={{ ...props.layout.wrapperCol, offset: 6 }}>
                 <Button type="primary" htmlType="submit">

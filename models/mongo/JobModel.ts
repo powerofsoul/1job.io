@@ -45,6 +45,7 @@ export const JobSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Application',
     }],
+    customLogo: String,
     questions: [String],
     postedOn: Date,
 })

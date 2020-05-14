@@ -5,9 +5,13 @@ import { toast } from "react-toastify";
 import React from "react";
 import { apiUrl, post, uploadFile } from "../Utils";
 
-export default (props: { avatarUrl?: string, afterUpload: (url: string) => void }) => {
-    const [avatarUrl, setAvatarUrl] = useState(props.avatarUrl);
+interface Props {
+    value?: string;
+    onChange?: (url: string) => void;
+}
 
+export default (props: Props) => {
+    const [avatarUrl, setAvatarUrl] = useState(props.value);
     const [loading, setLoading] = useState(false);
 
     const handleChange = (info) => {
@@ -16,7 +20,7 @@ export default (props: { avatarUrl?: string, afterUpload: (url: string) => void 
         if (info.file.status === 'done') {
             setAvatarUrl(info.file.response.url);
             setLoading(false);
-            props.afterUpload(info.file.response.url);
+            props.onChange(info.file.response.url);
         }
     };
 
@@ -56,7 +60,7 @@ export default (props: { avatarUrl?: string, afterUpload: (url: string) => void 
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action={apiUrl("/user/uploadAvatar")}
+        action={apiUrl("/user/uploadImage")}
         withCredentials={true}
         beforeUpload={beforeUpload}
         onChange={handleChange}
