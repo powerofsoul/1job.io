@@ -70,7 +70,7 @@ const routes: Route[] = [
   { path: '/company/:id', component: Company },
   { path: '/blog/:title', component: BlogPost },
   { path: '/blog', component: Blog },
-  { path: '/interview', component: Interview},
+  // { path: '/interview', component: Interview},
 
   { path: '/login', component: Login},
   { path: '/register', component: Register },
