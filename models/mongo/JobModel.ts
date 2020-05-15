@@ -48,6 +48,10 @@ export const JobSchema = new Schema({
     customLogo: String,
     questions: [String],
     postedOn: Date,
+    disabled: {
+        type: Boolean,
+        default: false
+    }
 })
 
 

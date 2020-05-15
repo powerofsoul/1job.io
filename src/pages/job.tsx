@@ -13,8 +13,10 @@ import PageCardContainer, { HeaderItem } from '../common/PageCardContainer';
 import { IAppState } from '../redux/configureStore';
 import colors from '../style/Colors';
 import Space from '../style/Space';
-import { get } from '../Utils';
+import { get, post } from '../Utils';
 import JobCard from "../common/JobCard";
+import { toast } from 'react-toastify';
+import { ApiResponse } from '../../models/ApiResponse';
 
 const JobDetails = styled(PageCardContainer)`
     .JobDetailsHeader {
@@ -81,15 +83,44 @@ const JobPage = (props: Props) => {
     }
 
     useEffect(() => {
-        if (loading) {
-            fetch();
-        }
-    })
+        fetch();
+    }, [])
 
     const header: HeaderItem[] = [
         {name: job?.company?.companyName, to: `/company/${job?.company?._id}` },
         {name: job?.title}
     ]
+
+    const ownerButtons = (user: User, job: Job) => {
+        const disableJob = () => {
+            post(`/job/${job?._id}/changeStatus`, {
+                disabled: !job?.disabled
+            }).then((response: ApiResponse) => {
+                toast(response.message, {
+                    type: response.success ? "success" : "error"
+                });
+            
+                setJob({
+                    ...job,
+                    disabled: !job.disabled
+                })
+            }).catch(() => {
+                toast("Something went wrong", {
+                    type:"error"
+                });
+            })
+        }
+    
+        if(!user || !job) return;
+    
+        if(user?._id == job?.company?._id) {
+            return <> 
+                <Link to={`/job/${job?._id}/applicants`}><Button type="primary">View Applicants</Button></Link>
+                <Button type="primary" onClick={disableJob} danger>{job?.disabled ? "Restore" : "Hide Job"}</Button>
+            </>
+        }
+    
+    }
 
     return <JobDetails header={header}>
         <Row gutter={[50, 12]} justify="center">
@@ -112,7 +143,7 @@ const JobPage = (props: Props) => {
                                     Edit
                             </Link>
                             }
-                            {job?.company?._id == props.currentUser?._id && <Link to={`/job/${job?._id}/applicants`}><Button type="primary">View Applicants</Button></Link>}
+                            {ownerButtons(props.currentUser, job)}
                             {job?.applyOn &&  <a className="ant-btn ant-btn-primary" href={job?.applyOn}>Apply on company page</a>}
                             {applyButton(props.currentUser, job?._id)}
                         </div>

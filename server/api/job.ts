@@ -10,7 +10,7 @@ import { Employee } from "../../models/Employee";
 const router = Router();
 
 router.get('/all', async (req, res) => {
-    const jobs = await JobModel.find().populate("company").sort({ postedOn: "desc" });
+    const jobs = await JobModel.find({disabled: false}).populate("company").sort({ postedOn: "desc" });
     res.json(jobs);
 });
 
@@ -93,6 +93,27 @@ router.get('/user/:companyId', async (req, res) => {
         .populate("company")
         .then((jobs) => res.json({ jobs }))
         .catch(() => res.status(404).json({ success: false }));
+})
+
+router.post("/:id/changeStatus", isAuthenticated, (req, res) => {
+    JobModel.updateOne({
+        _id: req.params.id,
+        company: req.user,
+    }, {
+        disabled: req.body.disabled
+    }, (err, raw) => {
+        if(err){
+            res.send({
+                success: false,
+                message: "Something went wrong"
+            });
+        } else {
+            res.json({
+                success: true,
+                message: "Your job post status changed"
+            });
+        }
+    })
 })
 
 

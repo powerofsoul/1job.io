@@ -17,6 +17,7 @@ export interface Job {
     questions: string[],
     applications?: Application[]
     customLogo?: string;
+    disabled: boolean;
 }
 
 export const JobCategories = [
