@@ -73,6 +73,6 @@ const app = server.listen(config.port, (err?: any) => {
     console.log(`> Ready on localhost:${config.port} - env ${config.env}`);
 });
 
-const io = socketIo();
-io.listen(app);
-createSocketRoutes(io);
+// const io = socketIo();
+// io.listen(app);
+// createSocketRoutes(io);
