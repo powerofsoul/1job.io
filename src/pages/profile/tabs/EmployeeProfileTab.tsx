@@ -1,10 +1,10 @@
-import { Button, Form, Input, Spin, Divider } from "antd"
-import React from "react"
+import { Button, Form, Input, Spin, Divider, Upload } from "antd"
+import React, { useRef, useState } from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import { IAppState } from "../../../redux/configureStore"
 import CurrentUserStore from "../../../redux/stores/CurrentUserStore"
-import { ValidateMessage } from "../../../Utils"
+import { ValidateMessage, apiUrl, put, uploadFile } from "../../../Utils"
 import { ProfileTabProps } from "../profile"
 import ArrayFormItem from "./fields/ArrayFormItem"
 import WorkExperienceField from "./fields/WorkExperienceField"
@@ -13,11 +13,11 @@ import { Employee } from "../../../../models/Employee"
 import EducationField from "./fields/EducationField"
 import ProjectField from "./fields/ProjectField"
 import { useForm } from "antd/lib/form/util"
-
-// phone: String,
-//      
-//     education: [],
-//     projects: []
+import { UploadOutlined } from "@ant-design/icons"
+import { toast } from "react-toastify"
+import { ApiResponse } from "../../../../models/ApiResponse"
+import PdfPreview from "../../../common/PdfPreview"
+import Space from "../../../style/Space"
 
 const EmployeeProfileTab = (props: ProfileTabProps) => {
     const [form] = useForm();
@@ -33,7 +33,64 @@ const EmployeeProfileTab = (props: ProfileTabProps) => {
         form.resetFields()
     }, [props.user])
 
+    const [resumee, setResumee] = useState((props.user as Employee)?.resumee);
+    const fileRef = useRef<HTMLInputElement>();
+
+    const onResumeeUpload = (event) => {
+        const file = event.target.files[0] as File;
+        if (file.type != "application/pdf") {
+            toast("Please upload a pdf file", {
+                type: "error"
+            });
+
+            return;
+        }
+        const isLt10M = file.size / 1024 / 1024 < 10;
+        if (!isLt10M) {
+            toast("Resumee must be smaller than 10MB", {
+                type: "error"
+            });
+
+            return;
+        }
+
+        props.setLoading(true);
+        uploadFile("resumee", file, "/user/uploadResumee").then((response: ApiResponse & { url: string }) => {
+            if (response.success) {
+                props.refreshCurrentUser();
+                setResumee(response.url);
+            } else {
+                toast(response.message || "Something went wrong", {
+                    type: "error"
+                })
+            }
+        }).catch(() => {
+            toast("Something went wrong.", {
+                type: "error"
+            })
+        }).finally(() => {
+            props.setLoading(false);
+        })
+    }
+
+
     return <Spin spinning={props.loading}>
+        <Divider>File Resumee</Divider>
+        <div style={{textAlign:"center",}}>
+            {resumee && <div>
+                <PdfPreview url={resumee}/>
+            </div>}
+
+            <Button style={{marginTop: Space.sm}} onClick={() => {
+                fileRef.current.value = null;
+                fileRef.current?.click()
+            }}>
+                <UploadOutlined /> Click to Upload Resumee
+            </Button>
+            <input ref={fileRef} type="file" style={{ display: "none" }} onChange={onResumeeUpload} />
+        </div>
+
+        <Divider>Resumee</Divider>
         <Form form={form} initialValues={normalizeEmployee(props.user as Employee)} {...props.layout} name="nest-messages" onFinish={props.onFinish} validateMessages={ValidateMessage}>
             <Form.Item name={'firstName'} label="First Name" rules={[{ required: true }]}>
                 <Input />

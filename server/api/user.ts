@@ -4,12 +4,13 @@ import UserModel from "../../models/mongo/UserModel";
 import { User } from "../../models/User";
 import config from "../config";
 import { ForgotPassTemplate } from "../mail/Template";
-import { isAuthenticated } from "../middleware/middleware";
+import { isAuthenticated, isEmployee } from "../middleware/middleware";
 import FileStore from "../services/FileService";
 import MailService from "../services/MailService";
 import { UserService } from "../services/UserService";
 import JobModel from "../../models/mongo/JobModel";
 import { v4 as uuidv4 } from 'uuid';
+import EmployeeModel from "../../models/mongo/EmployeeModel";
 const path = require('path');
 
 const router = Router();
@@ -235,6 +236,27 @@ router.post("/uploadImage", isAuthenticated, (req, res) => {
         res.json({
             success: true,
             url: urlWithtime
+        })
+    }).catch((err) => res.status(500));
+})
+
+router.post("/uploadResumee", isAuthenticated, isEmployee, (req, res) => {
+    const resumee = `${req.user._id}_resumee${path.extname(req.files.resumee.name)}`;
+    FileStore.upload(req.files.resumee.data, resumee).then(async (url) => {
+        const urlWithtime = `${url}?date=${new Date().getTime()}`;
+        EmployeeModel.updateOne({_id: req.user._id}, {
+            resumee: url
+        }).then(() => {
+            res.json({
+                success: true,
+                url: urlWithtime,
+                message: "Resumee uploaded"
+            })
+        }).catch(() => {
+            res.json({
+                success: false,
+                message: "Someting went wrong."
+            })
         })
     }).catch((err) => res.status(500));
 })

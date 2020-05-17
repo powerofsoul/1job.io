@@ -12,6 +12,7 @@ export const EmployeeSchema  = new Schema({
     phone: String,
     location: String,
     motto: String,
+    resumee: String,
     workExperience: [{
         title: String,
         companyName: String,

@@ -29,7 +29,7 @@ export function uploadFile<Response>(name: string, file: File, path: string): Pr
             'Content-Type': 'multipart/form-data'
         },
         withCredentials: true
-    });
+    }).then(r => r.data as Response);
 }
 
 export const ValidateMessage = {
