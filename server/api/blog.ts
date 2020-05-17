@@ -5,7 +5,7 @@ import { BlogService } from "../services/BlogService";
 const router = Router();
 
 router.get("/", (req, res) => {
-    BlogPost.find().then((doc) => {
+    BlogPost.find().sort({ postedOn: "desc" }).then((doc) => {
         res.json(doc);
     })
 })
