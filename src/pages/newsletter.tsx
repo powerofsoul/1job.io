@@ -14,7 +14,7 @@ const validLinkedin = async (rule, value: string) => {
     ];
 
     if (!validLinkedinUrls.some((l) => value?.indexOf(l) == 0)) {
-        throw new Error("Invalid LinkedIn Url.")
+        throw new Error("Invalid LinkedIn url.")
     }
 }
 
@@ -49,7 +49,7 @@ export default () => {
 
             <Form.Item name="linkedinUrl" label="LinkedIn" rules={[
                 { required: true, message: "Please enter your LinkedIn url." },
-                { type: "url", message: "Please enter a valid url!" },
+                { type: "url", message: "Please enter a valid url." },
                 { validator: validLinkedin }
             ]}>
                 <Input />
