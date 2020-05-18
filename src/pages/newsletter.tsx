@@ -52,7 +52,7 @@ export default () => {
                 { type: "url", message: "Please enter a valid url." },
                 { validator: validLinkedin }
             ]}>
-                <Input />
+                <Input placeholder="https://www.linkedin.com/in/JohnDoe"/>
             </Form.Item>
 
             <Form.Item>
