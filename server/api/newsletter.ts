@@ -1,6 +1,7 @@
 import { Router } from "express";
 import NewsletterModel from "../../models/mongo/NewsletterModel";
 import { isAdmin } from "../middleware/middleware";
+import MailService from "../services/MailService";
 const router = Router();
 
 router.post('/subscribe', (req, res) => {
@@ -11,6 +12,8 @@ router.post('/subscribe', (req, res) => {
             success: true,
             message: successMessage
         });
+
+        MailService.notify("florinmunteanu96@gmail.com", "New subscriber", `New subscriber ${JSON.stringify(req.body.subscription)}`);
     }).catch(err => {
         if(err.code == 11000) {
             res.send({
