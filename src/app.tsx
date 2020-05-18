@@ -40,6 +40,7 @@ import Blog from './pages/blog';
 import BlogPost from './pages/blogpost';
 import CvBuilder from './pages/profile/cvbuilder/cvbuilder';
 import Interview from './pages/interview';
+import newsletter from './pages/newsletter';
 
 const AppBody = styled.div`
     display:flex;
@@ -72,6 +73,7 @@ const routes: Route[] = [
   { path: '/blog', component: Blog },
   // { path: '/interview', component: Interview},
 
+  { path: '/newsletter', component: newsletter },
   { path: '/login', component: Login},
   { path: '/register', component: Register },
   { path: '/change-password/:token?', component: ChangePassword },

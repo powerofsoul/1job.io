@@ -6,6 +6,7 @@ import user from "./api/user";
 import payment from "./api/payment";
 import admin from "./api/admin";
 import blog from "./api/blog";
+import newsletter from "./api/newsletter";
 
 const routes = [
     { path: "/health", module: health },
@@ -13,7 +14,8 @@ const routes = [
     { path: "/job", module: job },
     { path: "/user", module: user },
     { path: "/admin", module: admin },
-    { path: "/blog", module: blog }
+    { path: "/blog", module: blog },
+    { path: "/newsletter", module: newsletter }
 ]
 
 routes.forEach(r=> router.use(r.path, r.module));
