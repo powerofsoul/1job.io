@@ -39,7 +39,6 @@ import admin from './pages/admin/admin';
 import Blog from './pages/blog';
 import BlogPost from './pages/blogpost';
 import CvBuilder from './pages/profile/cvbuilder/cvbuilder';
-import Interview from './pages/interview';
 import newsletter from './pages/newsletter';
 
 const AppBody = styled.div`
