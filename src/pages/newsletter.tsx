@@ -13,7 +13,7 @@ const validLinkedin = async (rule, value: string) => {
         "https://linkedin.com/in/"
     ];
 
-    if (!validLinkedinUrls.some((l) => value?.indexOf(l) == 0)) {
+    if (!validLinkedinUrls.some((l) => value?.toLocaleLowerCase().indexOf(l) == 0)) {
         throw new Error("Invalid LinkedIn url.")
     }
 }
