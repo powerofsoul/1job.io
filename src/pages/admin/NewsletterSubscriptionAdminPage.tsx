@@ -47,6 +47,9 @@ export default () => {
             title: 'LinkedIn Url',
             dataIndex: 'linkedinUrl',
             key: 'linkedinUrl',
+            render: (value) => {
+                return <a href={value} target="_blank">link</a>
+            }
         },
         {
             title: 'Approved',
