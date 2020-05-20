@@ -11,6 +11,7 @@ import { ApiResponse } from "../../../models/ApiResponse"
 import { toast } from "react-toastify"
 import { Tabs } from "antd"
 import CreateBlogPost from "./CreateBlogPost"
+import NewsletterSubscriptionAdminPage from "./NewsletterSubscriptionAdminPage"
 const { TabPane } = Tabs;
 
 interface Props {
@@ -41,6 +42,10 @@ const Admin = (props: Props) => {
             <TabPane tab="Blog Post" key="2">
                 <h2>Create a Blog Post</h2>
                 <CreateBlogPost />
+            </TabPane>
+            <TabPane tab="Newsletter Subscriptions" key="3">
+                <h2>Administrate subscriptions</h2>
+                <NewsletterSubscriptionAdminPage />
             </TabPane>
         </Tabs>
     </PageCardContainer>

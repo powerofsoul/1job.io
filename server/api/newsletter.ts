@@ -32,9 +32,13 @@ router.post('/subscribe', (req, res) => {
     })
 });
 
-router.post("/approve", isAdmin, (req, res) => {
-    NewsletterModel.updateOne({_id: req.body._id}, {
-        approved: req.body.approved
+router.get("/all", isAdmin, (req, res) =>{
+    NewsletterModel.find().then((docs) => res.json(docs));
+});
+
+router.post("/changeStatus", isAdmin, (req, res) => {
+    NewsletterModel.updateOne({_id: req.body.id}, {
+        approved: req.body.status
     }).then(() => {
         res.send({
             success: true,
