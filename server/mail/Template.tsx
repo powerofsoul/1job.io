@@ -131,3 +131,22 @@ export const ChangeMailTemplate: TemplateType<ChangeEmailTemplate> = (variables)
     </MailTemplate>
   )
 }
+
+export const NewsletterTemplate = () => {
+  return renderEmail(
+    <MailTemplate title="You requested to change your email.">
+      <Item align="left">
+        <Span>
+          Hi,
+          </Span>
+      </Item>
+      <Item align="left">
+        <Span>
+            Thanks for subscribing to our newsletter. 
+            Your LinkedIn account is under review. After the review process, you will receive our personalized weekly newsletter. If you got any questions feel free to contact 
+            &nbsp;<a href="mailto:support@1job.io">support@1job.io</a>.
+        </Span>
+      </Item>
+    </MailTemplate>
+  )
+}
