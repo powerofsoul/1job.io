@@ -33,7 +33,7 @@ const Admin = (props: Props) => {
         return <Login />
     }
 
-    return <PageCardContainer>
+    return <PageCardContainer lg={20}>
         <Tabs size="large" defaultActiveKey="1">
             <TabPane tab="Job Post" key="1">
                 <h2>POST A JOB</h2>

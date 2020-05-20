@@ -1,9 +1,10 @@
-import React, { useState } from "react"
-import { Newsletter } from "../../../models/Newsletter";
-import { get, post } from "../../Utils";
-import { Spin, Button, Table, Tag, Select, Input } from "antd";
+import { Button, Input, Select, Spin, Table } from "antd";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { ApiResponse } from "../../../models/ApiResponse";
+import { JobCategories } from "../../../models/Job";
+import { Newsletter } from "../../../models/Newsletter";
+import { get, post } from "../../Utils";
 
 export default () => {
     const [subscriptions, setSubscriptions] = useState<Newsletter[]>();
@@ -58,7 +59,6 @@ export default () => {
             render: (value, record) => {
                 return <Select defaultValue={record.approved ? "yes" : "no"} onChange={(value) => {
                     record.approved = value == "yes";
-                    setSubscriptions(subscriptions);
                 }}>
                     <Select.Option value="yes">Yes</Select.Option>
                     <Select.Option value="no">No</Select.Option>
@@ -70,9 +70,11 @@ export default () => {
             dataIndex: 'role',
             key: 'role',
             render: (value, record: Newsletter) => {
-                return <Input defaultValue={value} onChange={(e) => {
-                    record.role = e.target.value
-                }} />
+                return <Select style={{width: "100%"}} defaultValue={value} onChange={(value) => {
+                    record.role = value
+                }}>
+                    {JobCategories.map((j)=> <Select.Option value={j} key={j}>{j}</Select.Option>)}
+                </Select>
             }
         },
         {
