@@ -150,7 +150,7 @@ const AppWrapper = () => {
   const appStore = configureStore();
 
   return <Provider store={appStore}>
-    <ToastContainer position="top-right"
+    <ToastContainer position="bottom-right"
       autoClose={3000} />
     <AppBody>
       <ConnectedApp />
