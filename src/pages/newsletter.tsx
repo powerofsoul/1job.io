@@ -40,7 +40,7 @@ export default () => {
     }
     return <PageCardContainer>
         <h2>Subscribe to Weekly Email Notification</h2>
-        <p>All jobs will be fine tuned for your needs after we take a look on your linkedin profile.</p>
+        <p>All jobs will be fine tuned for your needs after we take a look on your LinkedIn profile.</p>
 
         <Form wrapperCol={{ xs: 24 }} labelCol={{ span: 24 }} onFinish={onFinish}>
             <Form.Item name="email" label="Email" rules={[{ required: true, message: "Please enter an email address." }, { type: "email", message: "Please enter a valid email!" }]}>
