@@ -3,4 +3,7 @@ export interface Newsletter {
     email: string;
     linkedinUrl: string;
     approved?: boolean;
+
+    country: string;
+    role: string;
 }

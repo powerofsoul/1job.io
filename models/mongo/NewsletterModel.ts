@@ -17,7 +17,12 @@ export const NewsletterSchema = new Schema({
     approved: {
         type: Boolean,
         default: false
-    }
+    },
+    country: {
+        type: String, 
+        default: "",
+    },
+    role: String
 })
 
 

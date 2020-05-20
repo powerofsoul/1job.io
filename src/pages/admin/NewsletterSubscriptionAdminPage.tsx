@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Newsletter } from "../../../models/Newsletter";
 import { get, post } from "../../Utils";
-import { Spin, Button, Table, Tag } from "antd";
+import { Spin, Button, Table, Tag, Select, Input } from "antd";
 import { toast } from "react-toastify";
 import { ApiResponse } from "../../../models/ApiResponse";
 
@@ -17,13 +17,18 @@ export default () => {
     }, []);
 
 
-    const onStatusToggle = (id: string, status: boolean) => {
+    const update = (id: string, newsletter: Partial<Newsletter>) => {
         setLoading(true);
-        post("/newsletter/changeStatus", {
-            id, status
-        }).then((response: ApiResponse) => {
+        post("/newsletter/update", {
+            id, newsletter
+        }).then((response: ApiResponse & {newsletter: Newsletter}) => {
             toast(response.message);
-            subscriptions.find((s) => s._id == id).approved = status;
+            let index = subscriptions.findIndex((s) => s._id == response.newsletter._id);
+            setSubscriptions([
+                ...subscriptions.slice(0, index),
+                response.newsletter,
+                ...subscriptions.slice(index+1)
+            ]);
         }).catch(() => {
             toast("Somthing went wrong!")
         }).finally(() => {
@@ -48,15 +53,42 @@ export default () => {
             dataIndex: 'approved',
             key: 'approved',
             render: (value, record) => {
-                return <Tag color={value ? "green" : "red"}>
-                    {value ? "Yes" : "No"}
-                </Tag>
+                return <Select defaultValue={record.approved ? "yes" : "no"} onChange={(value) => {
+                    record.approved = value == "yes";
+                    setSubscriptions(subscriptions);
+                }}>
+                    <Select.Option value="yes">Yes</Select.Option>
+                    <Select.Option value="no">No</Select.Option>
+                </Select>
+            }
+        },
+        {
+            title: 'Role',
+            dataIndex: 'role',
+            key: 'role',
+            render: (value, record: Newsletter) => {
+                return <Input defaultValue={value} onChange={(e) => {
+                    record.role = e.target.value
+                }} />
+            }
+        },
+        {
+            title: 'Country',
+            dataIndex: 'country',
+            key: 'country',
+            render: (value, record: Newsletter) => {
+                return <Input defaultValue={value} onChange={(e) => {
+                    record.country = e.target.value
+                }} />
             }
         },
         {
             title: "Actions",
             render: (value, record) => {
-                return <Button type="primary" onClick={() => onStatusToggle(record._id, !record.approved)}>Toggle Status</Button>
+                return <Button type="primary" 
+                    onClick={() => update(record._id, record)}>
+                    Update
+                </Button>
             }
         }
     ];

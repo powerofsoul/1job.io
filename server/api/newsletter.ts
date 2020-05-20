@@ -36,13 +36,14 @@ router.get("/all", isAdmin, (req, res) =>{
     NewsletterModel.find().then((docs) => res.json(docs));
 });
 
-router.post("/changeStatus", isAdmin, (req, res) => {
-    NewsletterModel.updateOne({_id: req.body.id}, {
-        approved: req.body.status
-    }).then(() => {
+router.post("/update", isAdmin, (req, res) => {
+    NewsletterModel.findOneAndUpdate({_id: req.body.id}, {
+        ...req.body.newsletter
+    }, {new: true}).then((newsletter) => {
         res.send({
             success: true,
-            message: "done"
+            message: "Newsletter updated",
+            newsletter
         })
     }).catch((err) => {
         res.send({
