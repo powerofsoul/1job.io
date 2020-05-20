@@ -140,7 +140,7 @@ router.post("/forgotpass", (req, res) => {
     }).catch(() => {
         res.json({
             success: true,
-            message: "Please check your inbox 2!"
+            message: "Please check your inbox!"
         });
     })
 })
