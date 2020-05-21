@@ -82,7 +82,7 @@ export default () => {
             dataIndex: 'country',
             key: 'country',
             render: (value, record: Newsletter) => {
-                return <Input defaultValue={value} onChange={(e) => {
+                return <Input key={record._id + ""} defaultValue={value} onChange={(e) => {
                     record.country = e.target.value
                 }} />
             }
@@ -99,6 +99,6 @@ export default () => {
     ];
 
     return <Spin spinning={loading}>
-        <Table dataSource={subscriptions} columns={columns} />;
+        <Table rowKey={(row) => row._id} dataSource={subscriptions} columns={columns} />;
     </Spin>
 }
