@@ -12,7 +12,7 @@ PRODUCTION_BRANCH="master"
 
 NODE_ENV=''
 CLOUDFRONT_DIST_ID=''
-EB_APP="jobs-remotely"
+EB_APP="1job"
 
 if [[ $CIRCLE_BRANCH == $PRODUCTION_BRANCH ]]; then
   NODE_ENV="production"

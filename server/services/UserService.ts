@@ -1,13 +1,13 @@
-import { User, UserType } from "../../models/User";
-import EmployerModel, { EmployerDocument } from "../../models/mongo/EmployerModel";
-import MailService from "./MailService";
-import config from "../config";
-import { WelcomeTemplate, ChangeMailTemplate } from "../mail/Template";
 import { ApiResponse } from "../../models/ApiResponse";
+import { Employee } from "../../models/Employee";
 import { Employer } from "../../models/Employer";
 import EmployeeModel, { EmployeeDocument } from "../../models/mongo/EmployeeModel";
-import { Employee } from "../../models/Employee";
+import EmployerModel, { EmployerDocument } from "../../models/mongo/EmployerModel";
 import UserModel, { UserDocument } from "../../models/mongo/UserModel";
+import { User, UserType } from "../../models/User";
+import config from "../config";
+import { ChangeMailTemplate, WelcomeTemplate } from "../mail/Template";
+import MailService from "./MailService";
 const md5 = require("md5");
 
 export function createUser(user: User): Promise<ApiResponse & { user?: User }> {
@@ -22,7 +22,7 @@ export function createUser(user: User): Promise<ApiResponse & { user?: User }> {
 
         const model = user.__t == "Employer" ? EmployerModel : EmployeeModel;
 
-        model.create(user, (err, u: Employee | Employer) => {
+        model.create(user, (err: any, u: Employee | Employer) => {
             if (err) {
 
                 let message = "Something went wrong. Please contact the administrator!";
@@ -31,6 +31,7 @@ export function createUser(user: User): Promise<ApiResponse & { user?: User }> {
                     message = "Email already used or incorrect.";
                 }
 
+                console.error(err);
                 resolve({
                     success: false,
                     message
@@ -84,7 +85,7 @@ export function updateCurrentUser(user: Partial<Employer>,
 
 type UserModelType = typeof EmployerModel | typeof EmployeeModel | typeof UserModel
 
-export function updateUser(model: UserModelType, _id: string, newUser: Partial<Employer | Employee>, options: UpdateUserOption = {}): Promise<UpdateUserResponse> {
+export function updateUser(model: any, _id: string, newUser: Partial<Employer | Employee>, options: UpdateUserOption = {}): Promise<UpdateUserResponse> {
     delete newUser.password;
     return new Promise((resolve) => {
         model.findOneAndUpdate({ _id: _id }, newUser, { new: options.returnNewUser }, (err, user) => {

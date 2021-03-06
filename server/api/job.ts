@@ -101,7 +101,7 @@ router.post("/:id/changeStatus", isAuthenticated, (req, res) => {
         company: req.user,
     }, {
         disabled: req.body.disabled
-    }, (err, raw) => {
+    }, {}, (err, raw) => {
         if(err){
             res.send({
                 success: false,

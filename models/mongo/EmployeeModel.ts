@@ -42,7 +42,7 @@ export const EmployeeSchema  = new Schema({
 })
 
 EmployeeSchema.methods.toJSON = function() {
-    const obj = this.toObject();
+    const obj = this.toObject() as Employee;
     delete obj.password;
     delete obj.activationString;
     delete obj.forgotPasswordString;

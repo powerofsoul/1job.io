@@ -34,7 +34,7 @@ EmployerSchema.pre('save', function (next) {
 })
 
 EmployerSchema.methods.toJSON = function() {
-    const obj = this.toObject();
+    const obj = this.toObject() as Employer;
     delete obj.password;
     delete obj.activationString;
     delete obj.forgotPasswordString;
