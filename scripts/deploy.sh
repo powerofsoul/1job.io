@@ -24,7 +24,7 @@ fi
 
 npm i && npm run build:front
 
-S3_BUCKET="jobs-remotely-$NODE_ENV"
+S3_BUCKET="1job.io"
 echo "Deploying to the $S3_BUCKET bucket"
 
 aws s3 sync public/ "s3://$S3_BUCKET" --acl public-read --delete --exclude "uploads/*"
