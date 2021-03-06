@@ -67,7 +67,7 @@ JobSchema.pre('save', function (next) {
 })
 
 UserSchema.methods.toJSON = function () {
-    const obj: JobDocument = this.toObject();
+    const obj = this.toObject() as Job;
     delete obj.paymentIntent;
     return obj;
 }

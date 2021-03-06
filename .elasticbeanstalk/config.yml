@@ -1,13 +1,13 @@
 branch-defaults:
   master:
-    environment: jobs-remotely
+    environment: 1job-env
     group_suffix: null
 environment-defaults:
   production:
     branch: null
     repository: null
 global:
-  application_name: jobs-remotely-api
+  application_name: 1job
   branch: null
   default_ec2_keyname: null
   default_platform: Docker
